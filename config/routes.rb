@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :restaurants, controllers: { registrations: 'restaurants/registrations' }
   resources :restaurants do 
     resources :food_items
   end

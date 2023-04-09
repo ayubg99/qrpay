@@ -1,4 +1,8 @@
 class Restaurant < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
     include Rails.application.routes.url_helpers
     has_one_attached :qrcode, dependent: :destroy
     has_many :food_items
