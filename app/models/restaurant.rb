@@ -1,6 +1,7 @@
 class Restaurant < ApplicationRecord
     include Rails.application.routes.url_helpers
     has_one_attached :qrcode, dependent: :destroy
+    has_many :food_items
 
     before_commit :generate_qrcode, on: :create
     
