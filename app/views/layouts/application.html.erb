@@ -10,11 +10,35 @@
   </head>
 
   <body>
-    <% if restaurant_signed_in? %>
-      <%= link_to "Sign Out", destroy_restaurant_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Sign In", new_restaurant_session_path %>
-    <% end %>
+    
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <%= link_to 'QR-PAY', root_path, class: 'navbar-brand' %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <%= link_to 'Restaurantes', restaurants_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <% if restaurant_signed_in? %>
+            <%= link_to "Sign Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
+            <% else %>
+              <%= link_to "Iniciar sesión", new_restaurant_session_path, class: 'nav-link' %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'solicita una demo', new_restaurant_registration_path, class: 'btn btn-primary btn-lg' %>
+          </li>
+          
+        </ul>
+      </div>
+    </nav>
     <%= yield %>
+    <footer class="text-center py-3">
+      <p>&copy; 2023 QR-PAY. All rights reserved.</p>
+    </footer>
   </body>
 </html>
