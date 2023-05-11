@@ -1,0 +1,177 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ @import "bootstrap";
+ 
+ // Custom Navbar Styles
+
+// Change the background color of the navbar
+.navbar {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    color:rgb(128, 0, 255) !important;
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    background: none;
+    color:rgb(128, 0, 255);
+    font-weight: bold;
+}
+  
+  // Change the color of the navbar links
+  .navbar-nav .nav-link {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  // Change the hover color of the navbar links
+  .navbar-nav .nav-link:hover {
+    color:rgb(128, 0, 255);
+    font-size: 14px;
+    background: none;
+  }
+
+  .ml-auto {
+    margin-left: auto;
+  }
+  
+  // Change the active link color
+  .navbar-nav .nav-link.active {
+    color: #007bff;
+  }
+  
+  // Change the color of the toggler icon
+  .navbar-toggler-icon {
+    color: #333;
+  }
+  
+  // Change the hover color of the toggler icon
+  .navbar-toggler:hover .navbar-toggler-icon {
+    color: #555;
+  }
+  
+  // Increase the padding between navbar links
+  .navbar-nav {
+    .nav-item {
+      margin-right: 10px;
+      .btn-primary {
+        font-size: 14px;
+        background-color: rgb(128, 0, 255);
+        border-color: rgb(128, 0, 255);
+        color: #ffffff;
+        &:hover {
+          background-color: #ffffff;
+          border-color: rgb(128, 0, 255);
+          color: rgb(128, 0, 255);
+        }
+      }
+    }
+  }
+  
+  // Add a box shadow to the navbar
+  .navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding-left: 15px;
+  }
+  
+  // Change the height of the navbar
+  .navbar {
+    min-height: 60px;
+  }
+
+  
+// Jumbotron Styles
+.jumbotron {
+    background-color: #f8f9fa;
+    padding-top: 100px;
+    margin-bottom: 50px;
+    h1 {
+      color: #333;
+      font-weight: bold;
+    }
+    p {
+      color: #ffffff;
+    }
+    .btn-primary {
+      background-color: rgb(128, 0, 255);
+      border-color: rgb(128, 0, 255);
+      color: #ffffff;
+      &:hover {
+        background-color: #ffffff;
+        border-color: rgb(128, 0, 255);
+        color: rgb(128, 0, 255);
+      }
+    }
+  }
+
+  .jumbotron-bg {
+    background-color: #fff;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    height: 440px;
+  }
+  
+  // Features Section Styles
+  .container {
+    .col-md-4 {
+     text-align: center;
+      h5 {
+        margin-top: 10px;
+        margin-bottom: 40px;
+        color: #333;
+      }
+      p {
+        color: #777;
+      }
+    }
+  }
+  
+  // Footer Styles
+  footer {
+    margin-top: 100px;
+    background-color: #ffffff;
+    color: #777;
+  }
+
+  .scan-image {
+    height: 140px;
+    width: 140px;
+  }
+
+  .description-qr {
+    font-size: 18px;
+    margin-bottom: 70px;
+  }
+
+
+  .btn-primary {
+    background-color: rgb(128, 0, 255);
+    border-color: rgb(128, 0, 255);
+    color: #ffffff;
+    &:hover {
+      background-color: #ffffff;
+      border-color: rgb(128, 0, 255);
+      color: rgb(128, 0, 255);
+    }
+  }
+
+  .restaurant-demo-btn {
+    margin-top: 15px;
+  }
