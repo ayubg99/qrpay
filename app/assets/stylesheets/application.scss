@@ -106,7 +106,7 @@
       font-weight: bold;
     }
     p {
-      color: #ffffff;
+      color: #333;
     }
     .btn-primary {
       background-color: rgb(128, 0, 255);
@@ -164,14 +164,31 @@
   .btn-primary {
     background-color: rgb(128, 0, 255);
     border-color: rgb(128, 0, 255);
-    color: #ffffff;
+    color: #ffffff !important;
     &:hover {
       background-color: #ffffff;
       border-color: rgb(128, 0, 255);
-      color: rgb(128, 0, 255);
+      color: rgb(128, 0, 255) !important;
     }
   }
 
   .restaurant-demo-btn {
     margin-top: 15px;
+  }
+
+  .margin-top-container {
+    margin-top: 40px;
+  }
+
+  .qr-code {
+    width: 70px;
+    height: 70px;
+  }
+
+  .download-qr-code {
+    margin-bottom: 10px;
+  }
+
+  .tables-margin-top {
+    margin-top: 20px;
   }

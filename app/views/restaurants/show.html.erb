@@ -1,21 +1,24 @@
-<p id="notice"><%= notice %></p>
+<div class="container margin-top-container">
+  <h2>
+    <%= @restaurant.name %>
+  </h2>
+  <%= link_to 'Editar restaurante', edit_restaurant_path(@restaurant), class: "btn btn-primary" %>
+  <%= link_to 'nueva tabla', new_restaurant_table_path(@restaurant), class: "btn btn-primary" %>
+  <%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary" %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @restaurant.name %>
-</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+      </div>
+      <div class="col-md-2 tables-margin-top">
+        <% @restaurant.tables.each do |table| %>
+          <h5>Tabla <%= table.table_number %></h5>
+          <%= image_tag(url_for(table.qrcode), class: "qr-code") %>
+          <%= link_to 'Descargar', download_qr_code_restaurant_table_path(@restaurant, table, format: :png), target: '_blank', class: "btn btn-primary download-qr-code" %>
+        <% end %>
+      </div>
+    </div>
+    
+  </div>
 
-<p>
-  <strong>Address:</strong>
-  <%= @restaurant.address %>
-</p>
-
-<p>
-  <strong>Phone number:</strong>
-  <%= @restaurant.phone_number %>
-</p>
-
-<%= image_tag(url_for(@restaurant.qrcode)) %>
-
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to 'Back', restaurants_path %>
+</div>
