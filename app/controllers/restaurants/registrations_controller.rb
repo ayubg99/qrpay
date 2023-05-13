@@ -66,11 +66,11 @@ class Restaurants::RegistrationsController < Devise::RegistrationsController
 
   private
     def sign_up_params
-      params.require(:restaurant).permit(:name, :address, :email, :password, :password_confirmation, :address, :phone_number, :qrcode)
+      params.require(:restaurant).permit(:name, :address, :email, :password, :password_confirmation, :address, :phone_number)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
-      params.require(:restaurant).permit(:name, :address, :email, :password, :password_confirmation, :address, :phone_number, :qrcode)
+      params.require(:restaurant).permit(:name, :address, :email, :password, :password_confirmation, :address, :phone_number)
     end
 end
