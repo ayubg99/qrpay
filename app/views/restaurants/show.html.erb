@@ -8,7 +8,20 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-7">
+      <div class="col-md-7 tables-margin-top">
+      <% @restaurant.food_items.each do |food_item| %>
+        <div class="row">
+          <div class="col-md-3">
+            <h5><%= food_item.name %></h5>
+          </div>
+          <div class="col-md-6">
+            <p><%= simple_format(food_item.description) %></p>
+          </div>
+          <div class="col-md-3">
+            <h5><%= food_item.price %>€</h5>
+          </div>
+        </div>
+      <% end %>
       </div>
       <div class="col-md-2 tables-margin-top">
         <% @restaurant.tables.each do |table| %>

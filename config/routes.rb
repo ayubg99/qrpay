@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :contacts
   resources :tables
   root 'welcome#index'
   devise_for :restaurants, controllers: { registrations: 'restaurants/registrations' }
@@ -10,4 +11,5 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :contacts, only: [:new, :create]
 end
