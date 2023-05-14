@@ -25,6 +25,8 @@
     <%= form.label :price %>
     <%= form.number_field :price %>
   </div>
+
+  <%= form.file_field :image, direct_upload: true %>
   
   <div class="actions">
     <%= form.submit %>

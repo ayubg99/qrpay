@@ -286,3 +286,16 @@
       line-height: 2.5;
     }
   }
+
+  .menu-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menu-item {
+    text-align: center;
+    margin-bottom: 20px;
+  }
