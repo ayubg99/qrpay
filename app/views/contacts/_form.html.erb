@@ -1,0 +1,70 @@
+
+
+<div class="container demo-form" style="margin-top: 100px;">
+<h2 class="heading-section text-center">Contacto</h2>      
+
+  <div class="row justify-content-center">
+          <div class="col-md-7 d-flex align-items-stretch">
+          
+            <div class="contact-wrap w-100 p-md-5 p-4">
+                <%= form_with(model: contact, local: true,  class: "contact-form") do |form| %>
+                  <div class="row">
+                    <% if contact.errors.any? %>
+                      <div id="error_explanation">
+                        <h2><%= pluralize(contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
+
+                        <ul>
+                        <% contact.errors.full_messages.each do |message| %>
+                          <li><%= message %></li>
+                        <% end %>
+                        </ul>
+                      </div>
+                    <% end %>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <%= form.text_field :first_name, placeholder: "Nombre", class: "form-control" %>
+                      </div>
+                    </div>
+                      
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <%= form.text_field :last_name, placeholder: "Apellido", class: "form-control" %>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :email, placeholder: "Correo electronico", class: "form-control" %>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :address, placeholder: "Direccion", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :phone_number, placeholder: "Numero de telefono", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :restaurant_name, placeholder: "Nombre de restaurante", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="actions text-center">
+                      <%= form.submit "solicita una demo", class: "btn btn-primary restaurant-demo-btn btn-lg" %>
+                    </div>
+                  </div>
+                <% end %>
+            </div>
+          </div>
+
+
+  </div>
+    </div>
+

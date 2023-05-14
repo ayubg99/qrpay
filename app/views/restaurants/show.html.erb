@@ -8,7 +8,21 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-7">
+      <div class="col-md-7 tables-margin-top">
+      <% @restaurant.food_items.each do |food_item| %>
+        <div class="row">
+          <div class="col-2 col-sm-2 col-md-2">
+            <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
+          </div>
+          <div class="col-7 col-sm-7 col-md-7">
+            <h5><%= food_item.name %></h5>
+            <p><%= simple_format(food_item.description) %></p>
+          </div>
+          <div class="col-3 col-sm-3 col-md-3">
+            <h5><%= food_item.price %>€</h5>
+          </div>
+        </div>
+      <% end %>
       </div>
       <div class="col-md-2 tables-margin-top">
         <% @restaurant.tables.each do |table| %>
