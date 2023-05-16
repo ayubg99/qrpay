@@ -11,7 +11,6 @@ class SpecialMenusController < ApplicationController
 
   def new
     @special_menu = @restaurant.special_menus.build
-    @special_menu.special_menu_items.build
   end
 
   def edit
@@ -60,10 +59,10 @@ class SpecialMenusController < ApplicationController
 
     def set_restaurant 
       @restaurant = Restaurant.friendly.find(params[:restaurant_id])
-  end
+    end
 
     # Only allow a list of trusted parameters through.
     def special_menu_params
-      params.require(:special_menu).permit(:name, :restaurant_id, food_item_ids: [])
+      params.require(:special_menu).permit(:name, :restaurant_id)
     end
 end

@@ -6,10 +6,25 @@
       <div class="col-md-7 tables-margin-top">
       <h2 class="menu-name">Menú</h2>
       <% @restaurant.special_menus.each do |special_menu| %>
+        <%= link_to 'special menu', new_restaurant_special_menu_food_type_path(@restaurant, special_menu), class: "btn btn-primary" %>
+        <%= form_tag '', method: :post do %>
         <h4><%= special_menu.name %></h4>
-        <% special_menu.food_items.each do |food_item| %>
-          <p><%= food_item.name %></p>
+        <div class="row">
+        <div class="col-8 col-sm-8 col-md-8">
+        <% special_menu.food_types.each do |food_type| %>
+          <h5><%= food_type.name %></h5>
+            <% food_type.food_items.each do |food_item| %>
+              <h6><%= radio_button_tag 'food_item_name', food_item.name %> <%= food_item.name %></h6>
+            <% end %>
         <% end %>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2">
+          <h6>9’50€</h6> <%= submit_tag '+', class: "btn btn-primary", style: "font-wight:bold; font-size: 20px" %>
+        </div>
+        <p>*Escoge un principal, una bebida y un postre</p>
+        </div>
+      <% end %>
+
       <% end %>
       <% @restaurant.categories.each do |category| %>
         <h4><%= category.name %></h4>
@@ -23,7 +38,7 @@
               <p><%= simple_format(food_item.description) %></p>
             </div>
             <div class="col-3 col-sm-3 col-md-3">
-              <h5><%= food_item.price %>€</h5>
+              <h6><%= food_item.price %>€</h6>
             </div>
           </div>
         <% end %>

@@ -16,14 +16,6 @@
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-  <% @restaurant.food_items.each do |food_item| %>
-    <%= check_box_tag 'special_menu[food_item_ids][]', food_item.id %>
-    <%= label_tag food_item.name %>
-    <br>
-  <% end %>
-  </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>
