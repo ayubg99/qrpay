@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_13_190433) do
+ActiveRecord::Schema.define(version: 2023_05_14_192141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 2023_05_13_190433) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_categories_on_restaurant_id"
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -54,7 +62,20 @@ ActiveRecord::Schema.define(version: 2023_05_13_190433) do
     t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_food_items_on_category_id"
     t.index ["restaurant_id"], name: "index_food_items_on_restaurant_id"
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
   create_table "restaurants", force: :cascade do |t|
@@ -68,7 +89,9 @@ ActiveRecord::Schema.define(version: 2023_05_13_190433) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "slug"
     t.index ["reset_password_token"], name: "index_restaurants_on_reset_password_token", unique: true
+    t.index ["slug"], name: "index_restaurants_on_slug", unique: true
   end
 
   create_table "tables", force: :cascade do |t|
@@ -80,6 +103,8 @@ ActiveRecord::Schema.define(version: 2023_05_13_190433) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "categories", "restaurants"
+  add_foreign_key "food_items", "categories"
   add_foreign_key "food_items", "restaurants"
   add_foreign_key "tables", "restaurants"
 end

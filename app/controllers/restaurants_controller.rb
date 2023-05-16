@@ -8,6 +8,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1 or /restaurants/1.json
   def show
+    @categories = @restaurant.categories
   end
 
   # GET /restaurants/new
@@ -60,7 +61,7 @@ class RestaurantsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant
-      @restaurant = Restaurant.find(params[:id])
+      @restaurant = Restaurant.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

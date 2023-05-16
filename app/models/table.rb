@@ -15,7 +15,7 @@ class Table < ApplicationRecord
     # qrcode = RQRCode::QRCode.new("http://#{host}/posts/#{id}")
     host = Rails.application.config.action_controller.default_url_options[:host]
     
-    qrcode = RQRCode::QRCode.new('http:localhost:3000' + restaurant_path(self.restaurant))
+    qrcode = RQRCode::QRCode.new('http:localhost:3000' + restaurant_path(self.restaurant, table_number: self.table_number))
 
     # Create a new PNG object
     png = qrcode.as_png(

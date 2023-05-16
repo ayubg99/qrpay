@@ -66,5 +66,4 @@ gem 'bootstrap'
 gem 'jquery-rails'
 gem 'devise-i18n'
 gem "font-awesome-rails"
-
-
+gem 'friendly_id'
