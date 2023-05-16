@@ -5,6 +5,12 @@
     <div class="row">
       <div class="col-md-7 tables-margin-top">
       <h2 class="menu-name">Menú</h2>
+      <% @restaurant.special_menus.each do |special_menu| %>
+        <h4><%= special_menu.name %></h4>
+        <% special_menu.food_items.each do |food_item| %>
+          <p><%= food_item.name %></p>
+        <% end %>
+      <% end %>
       <% @restaurant.categories.each do |category| %>
         <h4><%= category.name %></h4>
         <% category.food_items.each do |food_item| %>
@@ -27,6 +33,7 @@
       <%= link_to 'Tablas', restaurant_tables_path(@restaurant), class: "btn btn-primary" %>
       <%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary" %>
       <%= link_to 'nueva categoría', new_restaurant_category_path(@restaurant), class: "btn btn-primary" %>
+      <%= link_to 'nueva menu', new_restaurant_special_menu_path(@restaurant), class: "btn btn-primary" %>
       </div>
     </div>
     

@@ -1,0 +1,30 @@
+<%= form_for([@restaurant, @special_menu]) do |form| %>  
+<% if @special_menu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@special_menu.errors.count, "error") %> prohibited this special_menu from being saved:</h2>
+
+      <ul>
+      <% @special_menu.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+  <% @restaurant.food_items.each do |food_item| %>
+    <%= check_box_tag 'special_menu[food_item_ids][]', food_item.id %>
+    <%= label_tag food_item.name %>
+    <br>
+  <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
