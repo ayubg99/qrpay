@@ -7,6 +7,7 @@ class Restaurant < ApplicationRecord
     
     has_many :food_items, dependent: :destroy
     has_many :tables, dependent: :destroy
+    has_many :categories
     
     friendly_id :name, use: :slugged
 end

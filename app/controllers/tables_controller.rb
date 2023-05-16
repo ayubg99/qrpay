@@ -1,5 +1,5 @@
 class TablesController < ApplicationController
-  before_action :set_table, only: %i[ show edit update destroy download_qr_code ]
+  before_action :set_table, only: %i[ edit update destroy download_qr_code ]
   before_action :set_restaurant
 
   def index
@@ -22,7 +22,7 @@ class TablesController < ApplicationController
 
     respond_to do |format|
       if @table.save
-        format.html { redirect_to @restaurant, notice: "Table was successfully created." }
+        format.html { redirect_to restaurant_tables_path(@restaurant), notice: "Table was successfully created." }
         format.json { render :show, status: :created, location: @table }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -34,7 +34,7 @@ class TablesController < ApplicationController
   def update
     respond_to do |format|
       if @table.update(table_params)
-        format.html { redirect_to @restaurant, notice: "Table was successfully updated." }
+        format.html { redirect_to restaurant_tables_path(@restaurant), notice: "Table was successfully updated." }
         format.json { render :show, status: :ok, location: @table }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -47,7 +47,7 @@ class TablesController < ApplicationController
     @table.destroy
 
     respond_to do |format|
-      format.html { redirect_to @restaurant, notice: "Table was successfully destroyed." }
+      format.html { redirect_to restaurant_tables_path(@restaurant), notice: "Table was successfully destroyed." }
       format.json { head :no_content }
     end
   end

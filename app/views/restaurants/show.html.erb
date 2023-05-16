@@ -2,37 +2,33 @@
   <h2>
     <%= @restaurant.name %>
   </h2>
-  <%= link_to 'Editar restaurante', edit_restaurant_path(@restaurant), class: "btn btn-primary" %>
-  <%= link_to 'nueva tabla', new_restaurant_table_path(@restaurant), class: "btn btn-primary" %>
-  <%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary" %>
-
-  <div class="container">
     <div class="row">
       <div class="col-md-7 tables-margin-top">
-      <% @restaurant.food_items.each do |food_item| %>
-        <div class="row">
-          <div class="col-2 col-sm-2 col-md-2">
-            <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
+      <h2 class="menu-name">Menú</h2>
+      <% @restaurant.categories.each do |category| %>
+        <h4><%= category.name %></h4>
+        <% category.food_items.each do |food_item| %>
+          <div class="row">
+            <div class="col-2 col-sm-2 col-md-2">
+              <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
+            </div>
+            <div class="col-7 col-sm-7 col-md-7">
+              <h5><%= food_item.name %></h5>
+              <p><%= simple_format(food_item.description) %></p>
+            </div>
+            <div class="col-3 col-sm-3 col-md-3">
+              <h5><%= food_item.price %>€</h5>
+            </div>
           </div>
-          <div class="col-7 col-sm-7 col-md-7">
-            <h5><%= food_item.name %></h5>
-            <p><%= simple_format(food_item.description) %></p>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3">
-            <h5><%= food_item.price %>€</h5>
-          </div>
-        </div>
+        <% end %>
       <% end %>
       </div>
-      <div class="col-md-2 tables-margin-top">
-        <% @restaurant.tables.each do |table| %>
-          <h5>Tabla <%= table.table_number %></h5>
-          <%= image_tag(url_for(table.qrcode), class: "qr-code") %>
-          <%= link_to 'Descargar', download_qr_code_restaurant_table_path(@restaurant, table, format: :png), target: '_blank', class: "btn btn-primary download-qr-code" %>
-        <% end %>
+      <div class="col-md-5 tables-margin-top">
+      <%= link_to 'Tablas', restaurant_tables_path(@restaurant), class: "btn btn-primary" %>
+      <%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary" %>
+      <%= link_to 'nueva categoría', new_restaurant_category_path(@restaurant), class: "btn btn-primary" %>
       </div>
     </div>
     
-  </div>
 
 </div>
