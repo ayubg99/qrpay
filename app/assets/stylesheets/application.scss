@@ -303,3 +303,11 @@
 .menu-name {
   margin-bottom: 20px;
 }
+
+.special-menu-container {
+  border-radius: 5%;
+  border: 1px solid #e7e7e7;
+  .special-menu-name {
+    margin-top: 20px;
+  }
+}
