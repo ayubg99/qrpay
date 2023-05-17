@@ -1,41 +1,15 @@
 <div class="container margin-top-container">
-  <h2>
+  <h1>
     <%= @restaurant.name %>
-  </h2>
+  </h1>
     <div class="row">
       <div class="col-md-7 tables-margin-top">
-      <h2 class="menu-name">Menús del día</h2>
-      <% @restaurant.special_menus.each do |special_menu| %>
-        <div class="special-menu-container container">
-          <%= form_tag '', method: :post do %>
-          <h4 class="special-menu-name"><%= special_menu.name %></h4>
-          
-          <div class="row">
-          <div class="col-3 col-sm-3 col-md-3">
-          <%= image_tag special_menu.image, class: "menu-image menu-item" if special_menu.image.attached? %>
-          </div>
-          <div class="col-7 col-sm-7 col-md-7">
-          <% special_menu.food_types.each do |food_type| %>
-            <div class="form-group">
-              <label for="food_item_name"><h5><%= food_type.name %></h5></label>
-              <%= select_tag 'food_item_name', options_for_select(food_type.food_items.map { |food_item| [food_item.name, food_item.name] }), class: 'form-control' %>
-            </div>
-          <% end %>
-          </div>
-          <div class="col-2 col-sm-2 col-md-2">
-            <h6>9’50€</h6> <%= submit_tag '+', class: "btn btn-primary", style: "font-wight:bold;" %>
-          </div>
-          <p style="margin-top:5px">*Escoge un principal, una bebida y un postre</p>
-          </div>
-        </div>
-      <% end %>
-
-      <% end %>
+      <%= link_to 'Ver nuestros menús', restaurant_special_menus_path(@restaurant), class: "btn btn-primary" %>
       <h2 class="menu-name" style="margin-top:10px">Carta</h2>
       <% @restaurant.categories.each do |category| %>
         <h4><%= category.name %></h4>
         <% category.food_items.each do |food_item| %>
-          <div class="row">
+          <div class="row food-item-container">
             <div class="col-2 col-sm-2 col-md-2">
               <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
             </div>
@@ -44,7 +18,7 @@
               <p><%= simple_format(food_item.description) %></p>
             </div>
             <div class="col-3 col-sm-3 col-md-3">
-              <h6><%= food_item.price %>€</h6>
+              <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
               <%= link_to '+', restaurant_path(@restaurant), class: "btn btn-primary" %>
             </div>
           </div>

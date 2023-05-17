@@ -307,7 +307,17 @@
 .special-menu-container {
   border-radius: 5%;
   border: 1px solid #e7e7e7;
+  margin-bottom: 15px;
   .special-menu-name {
     margin-top: 20px;
   }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.food-item-container{
+  &:hover {
+    cursor: pointer;
+  }   
 }
