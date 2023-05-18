@@ -16,7 +16,22 @@
     <%= form.text_field :name %>
   </div>
 
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.text_field :price, step: '0.01' %>
+  </div>
+
   <%= form.file_field :image, direct_upload: true %>
+
+  <div class="field">
+    <%= form.label :instructions %>
+    <%= form.text_area :instructions %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

@@ -1,28 +1,35 @@
 <div class="container margin-top-container">
   <div class="col-md-7">
   <%= link_to 'Volver a ver la carta', @restaurant, class: "btn btn-primary" %>
+    <h2 class="menu-name" style="margin-top:10px">Nuestros Menús</h2>
     <% @restaurant.special_menus.each do |special_menu| %>
       <!-- <%= link_to 'nuevo tipo', new_restaurant_special_menu_food_type_path(@restaurant, special_menu), class: "btn btn-primary" %> -->
       <div class="special-menu-container container">
         <%= form_tag '', method: :post do %>
         <h4 class="special-menu-name"><%= special_menu.name %></h4>
-        
         <div class="row">
         <div class="col-3 col-sm-3 col-md-3">
         <%= image_tag special_menu.image, class: "menu-image menu-item" if special_menu.image.attached? %>
         </div>
         <div class="col-7 col-sm-7 col-md-7">
+        <p><%= simple_format(special_menu.description) %></p>
         <% special_menu.food_types.each do |food_type| %>
           <div class="form-group">
             <label for="food_item_name"><h5><%= food_type.name %></h5></label>
-            <%= select_tag 'food_item_name', options_for_select(food_type.food_items.map { |food_item| [food_item.name, food_item.name] }), class: 'form-control' %>
+            <% if food_type.have_to_select_one == true %>
+              <%= select_tag 'food_item_name', options_for_select(food_type.food_items.map { |food_item| [food_item.name, food_item.name] }), class: 'form-control' %>
+            <% else %>
+              <% food_type.food_items.each do |food_item| %>
+                <p><%= food_item.name %></p>
+              <% end %> 
+            <% end %>
           </div>
         <% end %>
         </div>
         <div class="col-2 col-sm-2 col-md-2">
-          <h6>9’50€</h6> <%= submit_tag '+', class: "btn btn-primary", style: "font-wight:bold;" %>
+          <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> <%= submit_tag '+', class: "btn btn-primary", style: "font-wight:bold;" %>
         </div>
-        <p style="margin-top:10px">*Escoge un principal, una bebida y un postre</p>
+        <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
         </div>
       </div>
     <% end %>

@@ -70,6 +70,6 @@ class FoodTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def food_type_params
-      params.require(:food_type).permit(:name, :special_menu_id, food_item_ids: [])
+      params.require(:food_type).permit(:name, :special_menu_id, :have_to_select_one, food_item_ids: [])
     end
 end

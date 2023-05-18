@@ -63,6 +63,6 @@ class SpecialMenusController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def special_menu_params
-      params.require(:special_menu).permit(:name, :restaurant_id, :image)
+      params.require(:special_menu).permit(:name, :restaurant_id, :image, :description, :price, :instructions)
     end
 end
