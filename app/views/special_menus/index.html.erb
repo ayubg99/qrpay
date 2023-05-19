@@ -8,10 +8,10 @@
         <%= form_tag '', method: :post do %>
         <h4 class="special-menu-name"><%= special_menu.name %></h4>
         <div class="row">
-        <div class="col-3 col-sm-3 col-md-3">
+        <div class="col-4 col-sm-4 col-md-4">
         <%= image_tag special_menu.image, class: "menu-image menu-item" if special_menu.image.attached? %>
         </div>
-        <div class="col-7 col-sm-7 col-md-7">
+        <div class="col-6 col-sm-6 col-md-6">
         <p><%= simple_format(special_menu.description) %></p>
         <% special_menu.food_types.each do |food_type| %>
           <div class="form-group">
