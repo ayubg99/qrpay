@@ -156,6 +156,7 @@
   .scan-image {
     height: 140px;
     width: 140px;
+    margin-top: 60px;
   }
 
   .description-qr {
@@ -284,6 +285,7 @@
   .demo-form {
     .form-control {
       line-height: 2.5;
+      border-radius: 0%;
     }
   }
 
@@ -302,4 +304,22 @@
 
 .menu-name {
   margin-bottom: 20px;
+}
+
+.special-menu-container {
+  border-radius: 5%;
+  border: 1px solid #e7e7e7;
+  margin-bottom: 15px;
+  .special-menu-name {
+    margin-top: 20px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.food-item-container{
+  &:hover {
+    cursor: pointer;
+  }   
 }

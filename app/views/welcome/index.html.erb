@@ -4,7 +4,7 @@
     <%= link_to 'solicita una demo', new_restaurant_registration_path, class: 'btn btn-primary btn-lg' %>
   </section>
 
-  <div class="container" style="margin-top: 90px">
+  <div class="container" style="margin-top: 20px; margin-bottom: 90px;">
     <div class="row">
       <div class="col-md-4">
         <%= image_tag ("qr-code.png"), class: "scan-image" %>
@@ -93,10 +93,33 @@
       </div>
   </div>
 </div>
-  
+
+<div class="container text-center" style="margin-top: 90px;">
+    <h2>¿Porque los pagos con código QR?</h2>
+    <div class="row">
+      <div class="col-md-3">
+        <%= image_tag ("stopwatch.png"), class: "scan-image" %>
+        <h5 style="margin-top: 10px">Reducen el tiempo de espera</h5>
+      </div>
+      <div class="col-md-3">
+        <%= image_tag ("audience.png"), class: "scan-image" %>
+        <h5 style="margin-top: 10px">Apoyan a los camareros</h5>
+      </div>
+      <div class="col-md-3">
+        <%= image_tag ("interactive-content.png"), class: "scan-image" %>
+        <h5 style="margin-top: 10px">Aumentan la digitalización del negocio</h5>
+      </div>
+      <div class="col-md-3">
+        <%= image_tag ("revenue.png"), class: "scan-image" %>
+        <h5 style="margin-top: 10px">Aumentan los ingresos</h5>
+      </div>
+    </div>
+  </div>
+
+
 
 <div class="container demo-form" style="margin-top: 100px;">
-      <h2 class="heading-section text-center">Contacto</h2>
+      <h2 class="text-center">Contacto</h2>
 
   <div class="row justify-content-center">
           <div class="col-md-7 d-flex align-items-stretch">
@@ -157,8 +180,6 @@
                 <% end %>
             </div>
           </div>
-
-
   </div>
-    </div>
+</div>
 

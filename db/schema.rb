@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_14_192141) do
+ActiveRecord::Schema.define(version: 2023_05_18_191045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,13 +58,32 @@ ActiveRecord::Schema.define(version: 2023_05_14_192141) do
   create_table "food_items", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.integer "price"
+    t.decimal "price", precision: 8, scale: 2
     t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.integer "special_menu_id"
     t.index ["category_id"], name: "index_food_items_on_category_id"
     t.index ["restaurant_id"], name: "index_food_items_on_restaurant_id"
+  end
+
+  create_table "food_type_food_items", force: :cascade do |t|
+    t.bigint "food_item_id"
+    t.bigint "food_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_item_id"], name: "index_food_type_food_items_on_food_item_id"
+    t.index ["food_type_id"], name: "index_food_type_food_items_on_food_type_id"
+  end
+
+  create_table "food_types", force: :cascade do |t|
+    t.string "name"
+    t.bigint "special_menu_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "have_to_select_one"
+    t.index ["special_menu_id"], name: "index_food_types_on_special_menu_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -94,6 +113,26 @@ ActiveRecord::Schema.define(version: 2023_05_14_192141) do
     t.index ["slug"], name: "index_restaurants_on_slug", unique: true
   end
 
+  create_table "special_menu_items", force: :cascade do |t|
+    t.bigint "special_menu_id"
+    t.bigint "food_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_item_id"], name: "index_special_menu_items_on_food_item_id"
+    t.index ["special_menu_id"], name: "index_special_menu_items_on_special_menu_id"
+  end
+
+  create_table "special_menus", force: :cascade do |t|
+    t.string "name"
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "price", precision: 8, scale: 2
+    t.text "instructions"
+    t.text "description"
+    t.index ["restaurant_id"], name: "index_special_menus_on_restaurant_id"
+  end
+
   create_table "tables", force: :cascade do |t|
     t.integer "table_number"
     t.bigint "restaurant_id"
@@ -106,5 +145,11 @@ ActiveRecord::Schema.define(version: 2023_05_14_192141) do
   add_foreign_key "categories", "restaurants"
   add_foreign_key "food_items", "categories"
   add_foreign_key "food_items", "restaurants"
+  add_foreign_key "food_type_food_items", "food_items"
+  add_foreign_key "food_type_food_items", "food_types", on_delete: :cascade
+  add_foreign_key "food_types", "special_menus"
+  add_foreign_key "special_menu_items", "food_items"
+  add_foreign_key "special_menu_items", "special_menus", on_delete: :cascade
+  add_foreign_key "special_menus", "restaurants"
   add_foreign_key "tables", "restaurants"
 end

@@ -1,10 +1,10 @@
-<%= form_for([@restaurant, @food_item]) do |form| %>
-  <% if food_item.errors.any? %>
+<%= form_for([@restaurant, @special_menu]) do |form| %>  
+<% if @special_menu.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(food_item.errors.count, "error") %> prohibited this food_item from being saved:</h2>
+      <h2><%= pluralize(@special_menu.errors.count, "error") %> prohibited this special_menu from being saved:</h2>
 
       <ul>
-      <% food_item.errors.full_messages.each do |message| %>
+      <% @special_menu.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -25,14 +25,14 @@
     <%= form.label :price %>
     <%= form.text_field :price, step: '0.01' %>
   </div>
-  
-  <div class="field">
-    <%= form.label :category %>
-    <%= form.collection_select :category_id, @restaurant.categories, :id, :name %>
-  </div>
 
   <%= form.file_field :image, direct_upload: true %>
-  
+
+  <div class="field">
+    <%= form.label :instructions %>
+    <%= form.text_area :instructions %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

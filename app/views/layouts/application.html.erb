@@ -20,9 +20,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <%= link_to 'Restaurantes', restaurants_path, class: 'nav-link' %>
-          </li>
           <% if restaurant_signed_in? %>
             <li class="nav-item">
               <%= link_to "Sign Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
@@ -30,9 +27,6 @@
           <% else %>
             <li class="nav-item">
               <%= link_to "Iniciar sesión", new_restaurant_session_path, class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'solicita una demo', new_contact_path, class: 'btn btn-primary btn-lg' %>
             </li>
           <% end %>
         </ul>
