@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_19_203306) do
+ActiveRecord::Schema.define(version: 2023_05_20_201211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2023_05_19_203306) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "session_id"
+    t.datetime "last_active_at"
     t.index ["restaurant_id"], name: "index_carts_on_restaurant_id"
   end
 

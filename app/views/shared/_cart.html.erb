@@ -45,7 +45,7 @@
             </div>
             <h2>Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h2>
 
-
+             <%= current_cart.last_active_at %>     
           <%= link_to "Pagar", @restaurant, class:"btn btn-primary", style:"margin-top: 20px" %>
 
           <% else %>

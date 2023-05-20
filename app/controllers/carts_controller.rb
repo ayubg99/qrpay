@@ -12,6 +12,8 @@ class CartsController < ApplicationController
     
       def add_to_cart
         @cart = current_cart
+
+        update_cart_activity(@cart)
     
         food_item_id = params[:food_item_id]
         special_menu_id = params[:special_menu_id]
@@ -47,5 +49,9 @@ class CartsController < ApplicationController
     private
         def set_restaurant 
             @restaurant = Restaurant.friendly.find(params[:restaurant_id])
+        end
+
+        def update_cart_activity(cart)
+          cart.update(last_active_at: Time.current) if cart.persisted?
         end
 end
