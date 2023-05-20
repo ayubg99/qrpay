@@ -1,0 +1,3 @@
+<h1>Cart</h1>
+<%= render 'cart_items/cart_items', cart_items: @cart_items %>
+<%= link_to 'Checkout', new_restaurant_cart_order_path(@restaurant, @cart) %>

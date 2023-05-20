@@ -27,12 +27,16 @@
         <% end %>
         </div>
         <div class="col-2 col-sm-2 col-md-2">
-          <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> <%= submit_tag '+', class: "btn btn-primary", style: "font-wight:bold;" %>
+          <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
+          <%= link_to 'Add to Cart', add_to_cart_restaurant_cart_path(@restaurant, special_menu_id: special_menu.id), method: :post %>
         </div>
         <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
         </div>
       </div>
     <% end %>
     <% end %>
+  </div>
+  <div class "col-me-3">
+    <%= render 'shared/cart' %>
   </div>
 </div>

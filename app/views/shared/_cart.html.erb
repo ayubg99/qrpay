@@ -1,0 +1,61 @@
+
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cartModalLabel"><%= image_tag ("trolley.png"), class: "cart-image" %> Carro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container" style="margin-top: 0px" id="cart-container">
+
+          <% if current_cart.present? %>
+            <div id="cart-items">
+              <% current_cart.cart_items.each do |cart_item| %>
+                  <% if cart_item.food_item.present? %>
+                  <div class="row">
+                    <div class="col-8 col-sm-8 col-md-8">
+                      <h6>
+                      <%= cart_item.food_item.name %>
+                      </h6>
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4">
+                      <h6>
+                      <%= number_to_currency(cart_item.food_item.price, precision: 2, unit: '€') %>
+                      </h6>
+                    </div>
+                  </div>                  
+                  <% elsif cart_item.special_menu.present? %>
+                  <div class="row">
+                    <div class="col-8 col-sm-8 col-md-8">
+                      <h6>
+                      <%= cart_item.special_menu.name %>
+                      </h6>
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4">
+                      <h6>
+                      <%= number_to_currency(cart_item.special_menu.price, precision: 2, unit: '€') %>
+                      </h6>
+                    </div>
+                  </div>
+                  <% end %>
+                <% end %>
+            </div>
+            <h2>Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h2>
+
+
+          <%= link_to "Pagar", @restaurant, class:"btn btn-primary", style:"margin-top: 20px" %>
+
+          <% else %>
+            <p>Your cart is empty.</p>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn btn-primary" data-dismiss="modal">Volver</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,13 @@ Rails.application.routes.draw do
         get 'download_qr_code'
       end
     end
+    resources :carts, only: [:show, :create] do
+      post 'add_to_cart', on: :member
+      delete 'remove_from_cart/:id', to: 'carts#remove_from_cart', as: :remove_from_cart
+    end
+    resources :orders do 
+      post '/process_order', to: 'orders#create'
+    end
   end
   resources :contacts, only: [:new, :create]
 end

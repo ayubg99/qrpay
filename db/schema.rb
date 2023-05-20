@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_18_191045) do
+ActiveRecord::Schema.define(version: 2023_05_19_203306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,26 @@ ActiveRecord::Schema.define(version: 2023_05_18_191045) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "cart_items", force: :cascade do |t|
+    t.bigint "cart_id"
+    t.bigint "food_item_id"
+    t.bigint "special_menu_id"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["food_item_id"], name: "index_cart_items_on_food_item_id"
+    t.index ["special_menu_id"], name: "index_cart_items_on_special_menu_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "session_id"
+    t.index ["restaurant_id"], name: "index_carts_on_restaurant_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -97,6 +117,17 @@ ActiveRecord::Schema.define(version: 2023_05_18_191045) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.bigint "cart_id"
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_orders_on_cart_id"
+    t.index ["restaurant_id"], name: "index_orders_on_restaurant_id"
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -111,6 +142,14 @@ ActiveRecord::Schema.define(version: 2023_05_18_191045) do
     t.string "slug"
     t.index ["reset_password_token"], name: "index_restaurants_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_restaurants_on_slug", unique: true
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "cart_id"
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_sessions_on_cart_id"
   end
 
   create_table "special_menu_items", force: :cascade do |t|
@@ -142,12 +181,19 @@ ActiveRecord::Schema.define(version: 2023_05_18_191045) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "food_items"
+  add_foreign_key "cart_items", "special_menus"
+  add_foreign_key "carts", "restaurants"
   add_foreign_key "categories", "restaurants"
   add_foreign_key "food_items", "categories"
   add_foreign_key "food_items", "restaurants"
   add_foreign_key "food_type_food_items", "food_items"
   add_foreign_key "food_type_food_items", "food_types", on_delete: :cascade
   add_foreign_key "food_types", "special_menus"
+  add_foreign_key "orders", "carts"
+  add_foreign_key "orders", "restaurants"
+  add_foreign_key "sessions", "carts"
   add_foreign_key "special_menu_items", "food_items"
   add_foreign_key "special_menu_items", "special_menus", on_delete: :cascade
   add_foreign_key "special_menus", "restaurants"
