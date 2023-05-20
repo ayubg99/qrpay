@@ -1,6 +1,7 @@
 class CartItemsController < ApplicationController
     def create
-        @cart = Cart.find(params[:cart_id])
+        @cart = current_cart
+        
         if params[:food_item_id].present?
           @cart_item = @cart.cart_items.find_or_initialize_by(food_item_id: params[:food_item_id])
         elsif params[:special_menu_id].present?
@@ -20,7 +21,8 @@ class CartItemsController < ApplicationController
     end
     
     def destroy
-        @cart_item = CartItem.find(params[:id])
+        @cart = current_cart
+        @cart_item = @cart.cart_items.find(params[:id])
         @cart_item.destroy
         respond_to do |format|
           format.html { redirect_to restaurant_cart_path(@cart_item.cart.restaurant, @cart_item.cart), notice: 'Item was successfully removed from cart.' }

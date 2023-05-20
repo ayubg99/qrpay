@@ -11,7 +11,7 @@ class CartsController < ApplicationController
     end
     
       def add_to_cart
-        @cart = @restaurant.carts.find_or_create_by(session_id: session[:cart_id])
+        @cart = current_cart
     
         food_item_id = params[:food_item_id]
         special_menu_id = params[:special_menu_id]

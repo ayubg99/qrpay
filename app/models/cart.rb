@@ -1,6 +1,6 @@
 class Cart < ApplicationRecord
   belongs_to :restaurant
-  has_many :cart_items
+  has_many :cart_items, dependent: :destroy
 
   def total_price
     total_price = 0
