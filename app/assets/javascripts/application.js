@@ -120,23 +120,83 @@
 
 
   $(document).ready(function() {
-    $('.add-to-cart').on('click', function(e) {
-      e.preventDefault();
+  $('.add-to-cart').on('click', function(e) {
+    e.preventDefault();
+
+    var url = $(this).attr('href');
   
-      var url = $(this).attr('href');
-  
+    $.ajax({
+      url: url,
+      method: 'POST',
+      dataType: 'json',
+      success: function(response) {
+        // Update cart item count dynamically
+        var cartItemCount = parseInt($('#cart-item-count').text());
+        $('#cart-item-count').text(cartItemCount + 1);
+
+        // Handle the success response
+        // You can display a success message if needed
+      },
+      error: function(xhr, status, error) {
+        // Handle the error response
+        // You can display an error message or handle the error as needed
+      }
+    });
+  });
+});
+
+
+  $(document).ready(function() {
+    $('.special-menu-form').on('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+      
+      var form = $(this);
+      var url = form.attr('action');
+      var method = form.attr('method');
+      var data = form.serialize();
+      
+      // Send the Ajax request
       $.ajax({
         url: url,
-        method: 'POST',
-        dataType: 'json',
+        method: method,
+        data: data,
         success: function(response) {
-          // Handle the success response
-          // You can update the cart count or display a success message
+          if (response.success) {
+            // Cart item added successfully, update the special menus container
+            $('#special-menus-container').html(response.special_menus_html);
+          } else {
+            // Failed to add the cart item, show an error message
+            alert(response.message);
+          }
         },
-        error: function(xhr, status, error) {
-          // Handle the error response
-          // You can display an error message or handle the error as needed
+        error: function() {
+          // Ajax request failed, show an error message
+          alert('Failed to add special menu item to cart.');
         }
       });
+    });
+  });
+
+  $(document).on('click', '.remove-from-cart', function(event) {
+    event.preventDefault(); // Prevent the default link behavior
+  
+    var removeLink = $(this); // Get the clicked remove link
+    var cartItem = removeLink.closest('.cart-item'); // Find the parent container of the cart item
+  
+    // Send the AJAX request
+    $.ajax({
+      url: removeLink.attr('href'),
+      type: 'DELETE',
+      dataType: 'json',
+      success: function(response) {
+        if (response.success) {
+          cartItem.remove(); // Remove the cart item container from the page
+        } else {
+          console.log('Failed to remove item from cart.'); // Handle the error case
+        }
+      },
+      error: function() {
+        console.log('Failed to remove item from cart.'); // Handle the error case
+      }
     });
   });

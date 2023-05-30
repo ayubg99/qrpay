@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_20_201211) do
+ActiveRecord::Schema.define(version: 2023_05_30_184541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 2023_05_20_201211) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "cart_item_food_items", force: :cascade do |t|
+    t.bigint "cart_item_id"
+    t.bigint "food_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_item_id"], name: "index_cart_item_food_items_on_cart_item_id"
+    t.index ["food_item_id"], name: "index_cart_item_food_items_on_food_item_id"
   end
 
   create_table "cart_items", force: :cascade do |t|
@@ -182,6 +191,8 @@ ActiveRecord::Schema.define(version: 2023_05_20_201211) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "cart_item_food_items", "cart_items", on_delete: :cascade
+  add_foreign_key "cart_item_food_items", "food_items"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "food_items"
   add_foreign_key "cart_items", "special_menus"
