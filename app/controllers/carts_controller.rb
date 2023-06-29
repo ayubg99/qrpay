@@ -22,8 +22,8 @@ class CartsController < ApplicationController
         @cart_item.cart_item_food_items.build(food_item: food_item)
       end
     end
-    if @cart_item && @cart.save
-      render json: { message: 'Item added to cart successfully' }
+    if @cart_item.save
+      render json: { cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item) }
     else
       render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity
     end
@@ -48,10 +48,10 @@ class CartsController < ApplicationController
       end
     end
   
-    if @cart_item && @cart.save
-      render json: { message: 'Item added to cart successfully' }
+    if @cart_item.save
+      render json: { cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item) }
     else
-      render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity
+      render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity   
     end
   end
 
@@ -59,13 +59,18 @@ class CartsController < ApplicationController
     @cart = current_cart
     @cart_item = @cart.cart_items.find(params[:id])
     @cart_item.destroy
-    redirect_to @restaurant
+  
+    render json: { success: true }
   end
 
   def clear_cart
     @cart = current_cart
     @cart.cart_items.destroy_all
-    redirect_to @restaurant
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: @restaurant) }
+      format.json { render json: { success: true } }
+    end
   end
 
   private

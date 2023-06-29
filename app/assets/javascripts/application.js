@@ -19,112 +19,12 @@
 //= require_tree .
 
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const ordersContainer = document.getElementById('orders');
-    const cartContainer = document.getElementById('cart-container');
-    const cartButton = document.getElementById('cart-button');
-  
-    // Function to fetch updated order data from the server
-    const fetchOrders = () => {
-      fetch('/restaurants/<%= @restaurant.id %>/orders')
-        .then(response => response.text())
-        .then(html => {
-          ordersContainer.innerHTML = html;
-        })
-        .catch(error => {
-          console.error('Error fetching orders:', error);
-        });
-    };
-  
-    // Function to fetch and show the cart
-    const showCart = () => {
-      fetch('/restaurants/<%= @restaurant.id %>/cart')
-        .then(response => response.text())
-        .then(html => {
-          cartContainer.innerHTML = html;
-          cartContainer.style.display = 'block';
-        })
-        .catch(error => {
-          console.error('Error fetching cart:', error);
-        });
-    };
-  
-    // Fetch orders on page load
-    fetchOrders();
-  
-    // Set an interval to fetch orders periodically (e.g., every 10 seconds)
-    setInterval(fetchOrders, 10000);
-  
-    // Show cart on cart button click
-    cartButton.addEventListener('click', showCart);
-  });
-
-
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY');
-    var elements = stripe.elements();
-    var cardElement = elements.create('card');
-
-    cardElement.mount('#card-element');
-
-    var cardErrors = document.getElementById('card-errors');
-    var submitButton = document.getElementById('submit-button');
-
-    cardElement.addEventListener('change', function(event) {
-      if (event.error) {
-        cardErrors.textContent = event.error.message;
-      } else {
-        cardErrors.textContent = '';
-      }
-    });
-
-    var form = document.getElementById('payment-form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      stripe.createToken(cardElement).then(function(result) {
-        if (result.error) {
-          cardErrors.textContent = result.error.message;
-        } else {
-          stripeTokenHandler(result.token);
-        }
-      });
-    });
-
-    function stripeTokenHandler(token) {
-      var form = document.getElementById('payment-form');
-      var hiddenInput = document.createElement('input');
-      hiddenInput.setAttribute('type', 'hidden');
-      hiddenInput.setAttribute('name', 'stripeToken');
-      hiddenInput.setAttribute('value', token.id);
-      form.appendChild(hiddenInput);
-
-      form.submit();
-    }
-  });
-
-
-  $(document).on('click', '#cart-icon', function() {
-    $.ajax({
-      url: '/restaurants/' + restaurantId + '/carts/show',
-      method: 'GET',
-      dataType: 'html',
-      success: function(response) {
-        $('#cartModal .modal-body').html(response);
-      },
-      error: function(xhr, status, error) {
-        console.log(error);
-      }
-    });
-  });
-
-
-  $(document).ready(function() {
-  $('.add-to-cart').on('click', function(e) {
+$(document).ready(function() {
+  $('.add-to-cartt').on('click', function(e) {
     e.preventDefault();
 
     var url = $(this).attr('href');
-  
+
     $.ajax({
       url: url,
       method: 'POST',
@@ -134,69 +34,107 @@
         var cartItemCount = parseInt($('#cart-item-count').text());
         $('#cart-item-count').text(cartItemCount + 1);
 
-        // Handle the success response
-        // You can display a success message if needed
+        // Format the price with two decimal places
+        var formattedPrice = parseFloat(response.food_item.price).toFixed(2);
+
+        // Append the new cart item to the cart items list
+        var cartItemHtml = `
+          <div class="row cart_item">
+            <div class="col-8 col-sm-8 col-md-8">
+              <h6>${response.food_item.name}</h6>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4">
+              <h6>€${formattedPrice} <a href="${response.remove_url}" data-method="delete" class="btn remove-from-cart-link">x</a></h6>
+            </div>
+          </div>
+        `;
+        $('#cart-items').append(cartItemHtml);
       },
       error: function(xhr, status, error) {
-        // Handle the error response
-        // You can display an error message or handle the error as needed
+        console.log(error);
       }
     });
+  });
+
+  // Rest of your code...
+
+  // Special menu form submission
+  $('.special-menu-form').on('submit', function(e) {
+    e.preventDefault();
+
+    var form = $(this);
+    var url = form.attr('action');
+
+    $.ajax({
+      url: url,
+      method: 'POST',
+      dataType: 'json',
+      data: form.serialize(),
+      success: function(response) {
+        // Update cart item count dynamically
+        var cartItemCount = parseInt($('#cart-item-count').text());
+        $('#cart-item-count').text(cartItemCount + 1);
+
+        // Format the price with two decimal places
+        var formattedPrice = parseFloat(response.special_menu.price).toFixed(2);
+        console.log(response);
+
+        // Build the cart item food items HTML
+        var foodItemsHtml = '';
+        response.food_items.forEach(function(food_item, index) {
+          foodItemsHtml += food_item.name;
+          if (index < response.food_items.length - 1) {
+            foodItemsHtml += ', ';
+          }
+        });
+
+        // Append the new cart item to the cart items list
+        var cartItemHtml = `
+          <div class="row cart_item">
+            <div class="col-8 col-sm-8 col-md-8">
+              <h6>${response.special_menu.name}</h6>
+              <p style="font-size: 10px; color:rgb(128, 0, 255); font-weight:bold">${foodItemsHtml}</p>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4">
+            <h6>€${formattedPrice} <a href="${response.remove_url}" data-method="delete" class="btn remove-from-cart-link">x</a></h6>
+            </div>
+          </div>
+        `;
+        $('#cart-items').append(cartItemHtml);
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  });
+
+$('.remove-from-cart-link').on('click', function(e) {
+  e.preventDefault();
+
+  var url = $(this).attr('href');
+  var cartItemElement = $(this).closest('.cart-item');
+
+  $.ajax({
+    url: url,
+    method: 'DELETE',
+    dataType: 'json',
+    success: function(response) {
+      // Remove the cart item from the DOM
+      cartItemElement.remove();
+
+      // Update cart item count dynamically
+      var cartItemCount = parseInt($('#cart-item-count').text());
+      $('#cart-item-count').text(cartItemCount - 1);
+    },
+    error: function(xhr, status, error) {
+      console.log(error);
+    }
   });
 });
 
 
-  $(document).ready(function() {
-    $('.special-menu-form').on('submit', function(event) {
-      event.preventDefault(); // Prevent the default form submission
-      
-      var form = $(this);
-      var url = form.attr('action');
-      var method = form.attr('method');
-      var data = form.serialize();
-      
-      // Send the Ajax request
-      $.ajax({
-        url: url,
-        method: method,
-        data: data,
-        success: function(response) {
-          if (response.success) {
-            // Cart item added successfully, update the special menus container
-            $('#special-menus-container').html(response.special_menus_html);
-          } else {
-            // Failed to add the cart item, show an error message
-            alert(response.message);
-          }
-        },
-        error: function() {
-          // Ajax request failed, show an error message
-          alert('Failed to add special menu item to cart.');
-        }
-      });
-    });
-  });
 
-  $(document).on('click', '.remove-from-cart', function(event) {
-    event.preventDefault(); // Prevent the default link behavior
-  
-    var removeLink = $(this); // Get the clicked remove link
-    var cartItem = removeLink.closest('.cart-item'); // Find the parent container of the cart item
-  
-    // Send the AJAX request
-    $.ajax({
-      url: removeLink.attr('href'),
-      type: 'DELETE',
-      dataType: 'json',
-      success: function(response) {
-        if (response.success) {
-          cartItem.remove(); // Remove the cart item container from the page
-        } else {
-          console.log('Failed to remove item from cart.'); // Handle the error case
-        }
-      },
-      error: function() {
-        console.log('Failed to remove item from cart.'); // Handle the error case
-      }
-    });
-  });
+});
+
+
+

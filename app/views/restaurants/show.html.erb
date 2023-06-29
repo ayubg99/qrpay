@@ -24,7 +24,7 @@
                     <% else %>
                       <p>
                         <% food_type.food_items.each do |food_item| %>
-                          <%= food_item.name %> - 
+                          <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %> 
                         <% end %>
                       </p>
                     <% end %>
@@ -54,7 +54,7 @@
             </div>
             <div class="col-2 col-sm-2 col-md-2">
               <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :post, class: "btn btn-primary add-to-cart", remote: true %>
+              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :get, class: "btn btn-primary add-to-cartt", remote: true %>
             </div>
           </div>
         <% end %>
