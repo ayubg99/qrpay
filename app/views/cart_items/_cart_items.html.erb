@@ -1,0 +1,5 @@
+<ul>
+  <% cart_items.each do |item| %>
+    <li><%= item.food_item.name %> (<%= item.quantity %>)</li>
+  <% end %>
+</ul>

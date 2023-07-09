@@ -1,0 +1,101 @@
+
+<div class="container" style="margin-top: 50px">
+<h2>La cuenta</h2>
+<div>
+  <% current_cart.cart_items.each do |cart_item| %>
+      <% if cart_item.special_menu.present? %>
+        <div class="row cart-item">
+          <div class="col-8 col-sm-8 col-md-8">
+            <h6><%= cart_item.special_menu.name %></h6>
+            <p style="font-size: 10px; color:rgb(128, 0, 255); font-weight:bold">
+            <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+              <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
+            <% end %>
+            </p>
+          </div>
+          <div class="col-4 col-sm-4 col-md-4">
+            <h6><%= number_to_currency(cart_item.special_menu.price, precision: 2, unit: '€') %></h6>            
+          </div>
+          </div>  
+      <% elsif cart_item.cart_item_food_items.present? %>
+      <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+      <div class="row cart-item">
+      <div class="col-8 col-sm-8 col-md-8">
+          <h6><%= cart_item_food_item.food_item.name %></h6>
+      </div>
+      <div class="col-4 col-sm-4 col-md-4">
+        <h6><%= number_to_currency(cart_item_food_item.food_item.price, precision: 2, unit: '€') %></h6>
+      </div>
+      </div>
+      <% end %>
+      <% end %>
+  <% end %>
+  <h5>Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h5>
+</div>
+
+<div id="payment-form">
+<form id="stripe-payment-form">
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- Stripe card element will be inserted here -->
+    </div>
+    <div id="card-errors" role="alert"></div>
+  </div>
+  <%= link_to 'Volver', @restaurant, class: 'btn btn-primary' %>
+  <button id="submit-payment" class="btn btn-primary" type="submit">Pagar</button>
+</form>
+</div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+const stripe = Stripe("YOUR_STRIPE_PUBLISHABLE_KEY");
+const elements = stripe.elements();
+const cardElement = elements.create("card");
+
+cardElement.mount("#card-element");
+
+const cardErrors = document.getElementById("card-errors");
+cardElement.addEventListener("change", function (event) {
+  if (event.error) {
+    cardErrors.textContent = event.error.message;
+  } else {
+    cardErrors.textContent = "";
+  }
+});
+
+const paymentForm = document.getElementById("stripe-payment-form");
+paymentForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  stripe.createPaymentMethod({
+    type: "card",
+    card: cardElement,
+  })
+  .then(function (result) {
+    if (result.error) {
+      cardErrors.textContent = result.error.message;
+    } else {
+      // Process the payment on the server using the payment method ID
+      const paymentMethodId = result.paymentMethod.id;
+      // Make an AJAX request to your server to process the payment
+      // Example:
+      // fetch("/process_payment", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ paymentMethodId: paymentMethodId }),
+      // })
+      // .then(function (response) {
+      //   // Handle the response from your server
+      // })
+      // .catch(function (error) {
+      //   console.error(error);
+      // });
+    }
+  });
+});
+});
+</script>

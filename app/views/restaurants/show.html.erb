@@ -3,12 +3,50 @@
     <%= @restaurant.name %>
   </h1>
     <div class="row">
-      <div class="col-md-7 tables-margin-top">
-      <%= link_to 'Ver nuestros menús', restaurant_special_menus_path(@restaurant), class: "btn btn-primary" %>
+      <div class="col-md-12 tables-margin-top">
+      <h2 class="menu-name" style="margin-top:10px">Nuestros Menús</h2>
+      <% @restaurant.special_menus.each do |special_menu| %>
+        <div class="special-menu-container container">
+            <%= form_with(url: add_special_menu_restaurant_cart_path(@restaurant), method: :post, local: true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
+            <%= form.hidden_field :special_menu_id, value: special_menu.id %>
+            <h4 class="special-menu-name"><%= special_menu.name %></h4>
+            <div class="row">
+              <div class="col-4 col-sm-4 col-md-4">
+                <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
+              </div>
+              <div class="col-6 col-sm-6 col-md-6">
+                <p><%= simple_format(special_menu.description) %></p>
+                <% special_menu.food_types.each do |food_type| %>
+                  <div class="form-group">
+                  <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
+                    <% if food_type.have_to_select_one == true %>
+                    <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control'  %>
+                    <% else %>
+                      <p>
+                        <% food_type.food_items.each do |food_item| %>
+                          <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %> 
+                        <% end %>
+                      </p>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
+                <%= form.submit '+', class: "btn btn-primary" %>
+              </div>
+              <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
       <h2 class="menu-name" style="margin-top:10px">Carta</h2>
       <% @restaurant.categories.each do |category| %>
         <h4><%= category.name %></h4>
         <% category.food_items.each do |food_item| %>
+          <%= link_to 'x', restaurant_food_item_path(@restaurant, food_item), 
+              method: :delete, 
+              class: 'btn remove-from-cart-link' %>
           <div class="row food-item-container">
             <div class="col-4 col-sm-4 col-md-4">
               <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
@@ -19,19 +57,19 @@
             </div>
             <div class="col-2 col-sm-2 col-md-2">
               <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-              <%= link_to '+', restaurant_path(@restaurant), class: "btn btn-primary" %>
+              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :get, class: "btn btn-primary add-to-cartt", remote: true %>
             </div>
           </div>
         <% end %>
       <% end %>
       </div>
       <div class="col-md-5 tables-margin-top">
-      <%= link_to 'Tablas', restaurant_tables_path(@restaurant), class: "btn btn-primary" %>
-      <%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary" %>
-      <%= link_to 'nueva categoría', new_restaurant_category_path(@restaurant), class: "btn btn-primary" %>
-      <%= link_to 'nueva menu', new_restaurant_special_menu_path(@restaurant), class: "btn btn-primary" %>
+        <!-- Cart -->
+        <%= render 'shared/cart' %>
       </div>
     </div>
-    
-
 </div>
+
+<script>
+  var restaurantId = <%= @restaurant.id %>;
+</script>

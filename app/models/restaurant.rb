@@ -5,10 +5,12 @@ class Restaurant < ApplicationRecord
     devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
     
-    has_many :food_items, dependent: :destroy
     has_many :tables, dependent: :destroy
+    has_many :food_items, dependent: :destroy
     has_many :special_menus, dependent: :destroy
     has_many :categories
+    has_many :carts
+    has_many :orders
     
     friendly_id :name, use: :slugged
 end
