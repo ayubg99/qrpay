@@ -20,9 +20,7 @@
 
 
 $(document).ready(function() {
-  $('.add-to-cartt').on('click', function(e) {
-    e.preventDefault();
-
+  $('.add-to-cartt').on('click', function() {
     var url = $(this).attr('href');
 
     $.ajax({
@@ -49,6 +47,10 @@ $(document).ready(function() {
           </div>
         `;
         $('#cart-items').append(cartItemHtml);
+
+        // Update cart total price
+        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
+        $('#cart-total-price').text('Total: €' + newTotalPrice);
       },
       error: function(xhr, status, error) {
         console.log(error);
@@ -56,12 +58,9 @@ $(document).ready(function() {
     });
   });
 
-  // Rest of your code...
-
   // Special menu form submission
-  $('.special-menu-form').on('submit', function(e) {
+  $(document).on('submit', '.special-menu-form', function(e) {
     e.preventDefault();
-
     var form = $(this);
     var url = form.attr('action');
 
@@ -93,14 +92,18 @@ $(document).ready(function() {
           <div class="row cart_item">
             <div class="col-8 col-sm-8 col-md-8">
               <h6>${response.special_menu.name}</h6>
-              <p style="font-size: 10px; color:rgb(128, 0, 255); font-weight:bold">${foodItemsHtml}</p>
+              <p style="font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
             </div>
             <div class="col-4 col-sm-4 col-md-4">
-            <h6>€${formattedPrice} <a href="${response.remove_url}" data-method="delete" class="btn remove-from-cart-link">x</a></h6>
+              <h6>€${formattedPrice} <a href="${response.remove_url}" data-method="delete" class="btn remove-from-cart-link" remote="true">x</a></h6>
             </div>
           </div>
         `;
         $('#cart-items').append(cartItemHtml);
+
+        // Update cart total price
+        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
+        $('#cart-total-price').text('Total: €' + newTotalPrice);
       },
       error: function(xhr, status, error) {
         console.log(error);
@@ -108,33 +111,31 @@ $(document).ready(function() {
     });
   });
 
-$('.remove-from-cart-link').on('click', function(e) {
-  e.preventDefault();
+  $('.remove-from-cart-link').on('click', function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    var cartItemElement = $(this).closest('.cart-item');
 
-  var url = $(this).attr('href');
-  var cartItemElement = $(this).closest('.cart-item');
+    $.ajax({
+      url: url,
+      method: 'DELETE',
+      dataType: 'json',
+      success: function(response) {
+        // Remove the cart item from the DOM
+        cartItemElement.remove();
 
-  $.ajax({
-    url: url,
-    method: 'DELETE',
-    dataType: 'json',
-    success: function(response) {
-      // Remove the cart item from the DOM
-      cartItemElement.remove();
+        // Update cart item count dynamically
+        var cartItemCount = parseInt($('#cart-item-count').text());
+        $('#cart-item-count').text(cartItemCount - 1);
 
-      // Update cart item count dynamically
-      var cartItemCount = parseInt($('#cart-item-count').text());
-      $('#cart-item-count').text(cartItemCount - 1);
-    },
-    error: function(xhr, status, error) {
-      console.log(error);
-    }
+        // Update cart total price
+        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
+        $('#cart-total-price').text('Total: €' + newTotalPrice);
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
   });
 });
-
-
-
-});
-
-
 

@@ -44,6 +44,9 @@
       <% @restaurant.categories.each do |category| %>
         <h4><%= category.name %></h4>
         <% category.food_items.each do |food_item| %>
+          <%= link_to 'x', restaurant_food_item_path(@restaurant, food_item), 
+              method: :delete, 
+              class: 'btn remove-from-cart-link' %>
           <div class="row food-item-container">
             <div class="col-4 col-sm-4 col-md-4">
               <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
@@ -61,17 +64,10 @@
       <% end %>
       </div>
       <div class="col-md-5 tables-margin-top">
-      <%= link_to 'Tablas', restaurant_tables_path(@restaurant), class: "btn btn-primary" %> 
-       <%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary" %> 
-       <%= link_to 'nueva categoría', new_restaurant_category_path(@restaurant), class: "btn btn-primary" %> 
-       <%= link_to 'nueva menu', new_restaurant_special_menu_path(@restaurant), class: "btn btn-primary" %> 
-        
         <!-- Cart -->
         <%= render 'shared/cart' %>
       </div>
     </div>
-    
-
 </div>
 
 <script>

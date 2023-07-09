@@ -23,7 +23,7 @@ class CartsController < ApplicationController
       end
     end
     if @cart_item.save
-      render json: { cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item) }
+      render json: { cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
     else
       render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity
     end
@@ -49,7 +49,7 @@ class CartsController < ApplicationController
     end
   
     if @cart_item.save
-      render json: { cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item) }
+      render json: { cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
     else
       render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity   
     end
@@ -59,8 +59,8 @@ class CartsController < ApplicationController
     @cart = current_cart
     @cart_item = @cart.cart_items.find(params[:id])
     @cart_item.destroy
-  
-    render json: { success: true }
+
+    render json: { total_price: @cart.total_price }
   end
 
   def clear_cart

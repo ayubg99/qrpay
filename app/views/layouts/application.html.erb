@@ -5,8 +5,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,14 +27,14 @@
         <%= image_tag ("bamboo.png") %>
       <% end %> 
     <% end %>
-    <% if controller_name != 'restaurants' && action_name != 'show' %>
+    <% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <% end %>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-        <% if controller_name != 'restaurants' && action_name != 'show' %>
+        <% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
           <% if restaurant_signed_in? %>
             <li class="nav-item">
               <%= link_to "Sign Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
@@ -55,7 +55,6 @@
         <% end %>
         </div>
       <% end %>
-
     </nav>
     <%= yield %>
     <footer class="text-center py-3">

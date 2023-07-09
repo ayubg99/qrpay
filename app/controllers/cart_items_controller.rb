@@ -15,10 +15,7 @@ class CartItemsController < ApplicationController
     @cart_item = @cart.cart_items.find(params[:id])
     @cart_item.destroy
 
-    respond_to do |format|
-      format.html { redirect_to restaurant_cart_path(@cart_item.cart.restaurant, @cart_item.cart), notice: 'Item was successfully removed from cart.' }
-      format.js
-    end
+    render json: { message: 'Item removed successfully' }
   end
 
   private
