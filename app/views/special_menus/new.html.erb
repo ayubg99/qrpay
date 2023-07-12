@@ -1,4 +1,12 @@
-<h1>New Special Menu</h1>
+<%= render 'layouts/header' %>
+
+<section class="home" style="height: 100%; padding-top: 80px">
+<div class="container">
+<%= link_to dashboard_special_menus_path, class: 'btn btn-primary btn-margin-bottom' do %>
+  <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
+<% end %>
+<h1>Nuevo menu</h1>
 
 <%= render 'form', special_menu: @special_menu %>
-
+</div>
+</section>

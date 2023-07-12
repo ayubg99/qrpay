@@ -1,13 +1,8 @@
 class SpecialMenusController < ApplicationController
+  before_action :authenticate_restaurant!
   before_action :set_special_menu, only: %i[ show edit update destroy ]
   before_action :set_restaurant
-
-  def index
-    @special_menus = SpecialMenu.all
-  end
-
-  def show
-  end
+  before_action :check_restaurant_authorization
 
   def new
     @special_menu = @restaurant.special_menus.build
@@ -21,7 +16,7 @@ class SpecialMenusController < ApplicationController
 
     respond_to do |format|
       if @special_menu.save
-        format.html { redirect_to @restaurant, notice: "Special menu was successfully created." }
+        format.html { redirect_to dashboard_special_menus_path, notice: "Special menu was successfully created." }
         format.json { render :show, status: :created, location: @special_menu }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -33,7 +28,7 @@ class SpecialMenusController < ApplicationController
   def update
     respond_to do |format|
       if @special_menu.update(special_menu_params)
-        format.html { redirect_to @restaurant, notice: "Special menu was successfully updated." }
+        format.html { redirect_to dashboard_special_menus_path, notice: "Special menu was successfully updated." }
         format.json { render :show, status: :ok, location: @special_menu }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -46,7 +41,7 @@ class SpecialMenusController < ApplicationController
     @special_menu.destroy
 
     respond_to do |format|
-      format.html { redirect_to @restaurant, notice: "Special menu was successfully destroyed." }
+      format.html { redirect_to dashboard_special_menus_path, notice: "Special menu was successfully destroyed." }
       format.json { head :no_content }
     end
   end

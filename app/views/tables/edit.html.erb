@@ -1,6 +1,14 @@
-<h1>Editing Table</h1>
+<%= render 'layouts/header' %>
 
-<%= render 'form', table: @table %>
+<section class="home" style="height: 100%; padding-top: 80px">
+  <div class="container" style="margin-top: 70px;">
+      <div class="col-md-6">
+        <%= link_to dashboard_tables_path, class: 'btn btn-primary btn-margin-bottom' do %>
+          <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
+        <% end %>  
+        <h1>Modificar Tabla</h1>
+        <%= render 'form', table: @table %>
+      </div>
+  </div>
+</section>
 
-<%= link_to 'Show', @table %> |
-<%= link_to 'Back', tables_path %>

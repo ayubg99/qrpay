@@ -1,26 +1,17 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[ show edit update destroy ]
 
-  # GET /restaurants or /restaurants.json
-  def index
-    @restaurants = Restaurant.all
-  end
-
-  # GET /restaurants/1 or /restaurants/1.json
   def show
     @categories = @restaurant.categories
   end
 
-  # GET /restaurants/new
   def new
     @restaurant = Restaurant.new
   end
 
-  # GET /restaurants/1/edit
   def edit
   end
 
-  # POST /restaurants or /restaurants.json
   def create
     @restaurant = Restaurant.new(restaurant_params)
 

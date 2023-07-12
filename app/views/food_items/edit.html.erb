@@ -1,5 +1,11 @@
-<h1>Editing Food Item</h1>
+<%= render 'layouts/header' %>
 
-<%= render 'form', food_item: @food_item %>
-
-<%= link_to 'Back', restaurant_path(@restaurant) %>
+<section class="home" style="height: 100%; padding-top: 80px">
+    <div class="container">
+        <%= link_to dashboard_menu_path, class: 'btn btn-primary btn-margin-bottom' do %>
+            <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
+        <% end %>
+        <h1>Modificar comida</h1>
+        <%= render 'form', food_item: @food_item %>
+    </div>
+</section>

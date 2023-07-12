@@ -19,7 +19,7 @@
 //= require_tree .
 
 
-$(document).ready(function() {
+document.addEventListener('turbolinks:load', function() {
   $('.add-to-cartt').on('click', function() {
     var url = $(this).attr('href');
 
@@ -57,7 +57,10 @@ $(document).ready(function() {
       }
     });
   });
+});
 
+
+document.addEventListener('turbolinks:load', function() {
   // Special menu form submission
   $(document).on('submit', '.special-menu-form', function(e) {
     e.preventDefault();
@@ -110,7 +113,9 @@ $(document).ready(function() {
       }
     });
   });
+});
 
+document.addEventListener('turbolinks:load', function() {
   $('.remove-from-cart-link').on('click', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
@@ -131,11 +136,100 @@ $(document).ready(function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+
+        console.log(response);
       },
       error: function(xhr, status, error) {
         console.log(error);
       }
     });
   });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const stripe = Stripe('pk_test_51NS2OyIULic551znN5qUeq7168Gyt9bka1OWGD4jmbI8MkfJSy9axar3uiwSMoOTipm9lclj9eWqI7iRl7mEeufe000lH5hnuT'); // Replace with your own test publishable key
+  const elements = stripe.elements();
+  const cardElement = elements.create('card');
+
+  cardElement.mount('#card-element');
+
+  const form = document.getElementById('stripe-payment-form');
+  const errorElement = document.getElementById('card-errors');
+  const submitButton = document.querySelector('#stripe-payment-form [type="submit"]');
+  const paymentForm = document.getElementById('payment-form');
+  const totalAmount = paymentForm.dataset.totalAmount;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Disable the submit button to prevent multiple clicks
+    submitButton.disabled = true;
+
+    try {
+      const { paymentMethod, error } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+      });
+
+      if (error) {
+        // Display error message
+        errorElement.textContent = error.message;
+      } else {
+        // Set the value of the hidden field to the payment method ID
+        const paymentMethodInput = document.createElement('input');
+        paymentMethodInput.setAttribute('type', 'hidden');
+        paymentMethodInput.setAttribute('name', 'payment_method');
+        paymentMethodInput.value = paymentMethod.id;
+        form.appendChild(paymentMethodInput);
+
+        // Submit the form
+        form.submit();
+      }
+    } catch (error) {
+      // Display error message
+      errorElement.textContent = error.message;
+    } finally {
+      // Re-enable the submit button
+      submitButton.disabled = false;
+    }
+  });
+});
+
+
+document.addEventListener('turbolinks:load', function() {
+  const body = document.querySelector('body');
+  const sidebar = body.querySelector('nav');
+  const toggle = body.querySelector('.toggle');
+  const modeSwitch = body.querySelector('.toggle-switch');
+  const modeText = body.querySelector('.mode-text');
+
+  // Function to toggle dark mode
+  function toggleDarkMode() {
+    body.classList.toggle('dark');
+    if (body.classList.contains('dark')) {
+      modeText.innerText = 'Light mode';
+      // Store dark mode preference in local storage
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      modeText.innerText = 'Dark mode';
+      // Remove dark mode preference from local storage
+      localStorage.removeItem('darkMode');
+    }
+  }
+
+  toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+  })
+
+  modeSwitch.addEventListener('click', toggleDarkMode);
+
+  // Check for dark mode preference on page load
+  const darkModePreference = localStorage.getItem('darkMode');
+  if (darkModePreference === 'true') {
+    body.classList.add('dark');
+    modeText.innerText = 'Light mode';
+  }
 });
 

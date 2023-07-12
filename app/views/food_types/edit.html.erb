@@ -1,5 +1,16 @@
-<h1>Editing Food Type</h1>
+<%= render 'layouts/header' %>
 
-<%= render 'form', food_type: @food_type %>
+<section class="home" style="height: 100%; padding-top: 80px">
+  <div class="container">
+    <%= link_to dashboard_special_menus_path, class: 'btn btn-primary btn-margin-bottom' do %>
+      <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
+    <% end %>
+    <h1>Modificar categoría</h1>
+    <%= render 'form', food_type: @food_type %>
+  </div>
+</section>
 
-<%= link_to 'Back', @restaurant %>
+
+
+
+

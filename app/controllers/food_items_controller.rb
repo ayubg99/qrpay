@@ -1,10 +1,8 @@
 class FoodItemsController < ApplicationController
+  before_action :authenticate_restaurant!
   before_action :set_food_item, only: %i[ show edit update destroy ]
   before_action :set_restaurant
-
-  def index
-    @food_items = FoodItem.all
-  end
+  before_action :check_restaurant_authorization
 
   def show
   end
@@ -22,7 +20,7 @@ class FoodItemsController < ApplicationController
 
     respond_to do |format|
       if @food_item.save
-        format.html { redirect_to @restaurant, notice: "Food item was successfully created." }
+        format.html { redirect_to dashboard_menu_path, notice: "Food item was successfully created." }
         format.json { render :show, status: :created, location: @food_item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -34,7 +32,7 @@ class FoodItemsController < ApplicationController
   def update
     respond_to do |format|
       if @food_item.update(food_item_params)
-        format.html { redirect_to @restaurant, notice: "Food item was successfully updated." }
+        format.html { redirect_to dashboard_menu_path, notice: "Food item was successfully updated." }
         format.json { render :show, status: :ok, location: @food_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -47,7 +45,7 @@ class FoodItemsController < ApplicationController
     @food_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to @restaurant, notice: "Food item was successfully destroyed." }
+      format.html { redirect_to dashboard_menu_path, notice: "Food item was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -1,6 +1,6 @@
-<%= form_for([@restaurant, @food_item]) do |form| %>
+<%= form_for([@restaurant, @food_item], html: {class: "form-horizontal"}) do |form| %>
   <% if food_item.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(food_item.errors.count, "error") %> prohibited this food_item from being saved:</h2>
 
       <ul>
@@ -11,29 +11,44 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label "Nombre", class: "control-label col-sm-2" %>
+    <div class="col-sm-3">
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label "Descripción", class: "control-label col-sm-2" %>
+    <div class="col-sm-4">
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :price %>
-    <%= form.text_field :price, step: '0.01' %>
+  <div class="form-group">
+    <%= form.label "Precio", class: "control-label col-sm-2" %>
+    <div class="col-sm-1">
+      <%= form.text_field :price, step: '0.01', class: "form-control" %>
+    </div>
   </div>
   
-  <div class="field">
-    <%= form.label :category %>
-    <%= form.collection_select :category_id, @restaurant.categories, :id, :name %>
+  <div class="form-group">
+    <%= form.label "Categoría", class: "control-label col-sm-2" %>
+    <div class="col-sm-3">
+      <%= form.collection_select :category_id, @restaurant.categories, :id, :name, { prompt: true }, { class: "form-control" } %>
+    </div>
   </div>
 
-  <%= form.file_field :image, direct_upload: true %>
+  <div class="form-group">
+    <%= form.label "Imagen", class: 'control-label col-sm-2' %>
+    <div class="col-sm-3">
+      <%= form.file_field :image, class: 'form-control', direct_upload: true %>
+    </div>
+  </div>
   
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <%= form.submit "Guardar", class: "btn btn-primary btn-margin-top" %>
+    </div>
   </div>
 <% end %>
