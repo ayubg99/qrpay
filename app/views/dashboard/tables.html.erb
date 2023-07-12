@@ -10,8 +10,10 @@
     <% @restaurant.tables.each do |table| %>
         <div class="col-3 col-sm-6 col-md-3" style="margin-top: 20px">
             <h5>Tabla <%= table.table_number %></h5>
-            <%= image_tag(url_for(table.qrcode), class: "qr-code") %>
-            <%= link_to 'Descargar', download_qr_code_restaurant_table_path(@restaurant, table, format: :png), target: '_blank', class: "btn btn-primary download-qr-code" %>
+            <%= image_tag(url_for(table.qrcode), class: "qr-code") %><br>
+            <%= link_to 'Descargar', download_qr_code_restaurant_table_path(@restaurant, table, format: :png), target: '_blank', class: "btn btn-primary btn-dashboard" %>
+            <%= link_to "Modificar", edit_restaurant_table_path(current_restaurant, table), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
+            <%= link_to 'Eliminar', restaurant_table_path(current_restaurant, table), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
         </div>
     <% end %>
 </div>
