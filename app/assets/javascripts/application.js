@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         form.appendChild(paymentMethodInput);
 
         // Submit the form
-        form.submit();
+        Rails.fire(paymentForm, "submit");
       }
     } catch (error) {
       // Display error message

@@ -5,6 +5,8 @@ class FoodItem < ApplicationRecord
   has_many :food_types, through: :food_type_food_items
   has_many :cart_item_food_items, dependent: :destroy
   has_many :cart_items, through: :cart_item_food_items
+  has_many :order_food_items, dependent: :destroy
+  has_many :orders, through: :order_food_items
   
   has_one_attached :image
 

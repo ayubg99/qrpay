@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_30_184541) do
+ActiveRecord::Schema.define(version: 2023_07_12_203332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,24 @@ ActiveRecord::Schema.define(version: 2023_05_30_184541) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "order_food_items", force: :cascade do |t|
+    t.bigint "order_id"
+    t.bigint "food_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_item_id"], name: "index_order_food_items_on_food_item_id"
+    t.index ["order_id"], name: "index_order_food_items_on_order_id"
+  end
+
+  create_table "order_special_menus", force: :cascade do |t|
+    t.bigint "order_id"
+    t.bigint "special_menu_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_special_menus_on_order_id"
+    t.index ["special_menu_id"], name: "index_order_special_menus_on_special_menu_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -203,6 +221,10 @@ ActiveRecord::Schema.define(version: 2023_05_30_184541) do
   add_foreign_key "food_type_food_items", "food_items"
   add_foreign_key "food_type_food_items", "food_types", on_delete: :cascade
   add_foreign_key "food_types", "special_menus"
+  add_foreign_key "order_food_items", "food_items"
+  add_foreign_key "order_food_items", "orders"
+  add_foreign_key "order_special_menus", "orders"
+  add_foreign_key "order_special_menus", "special_menus"
   add_foreign_key "orders", "carts"
   add_foreign_key "orders", "restaurants"
   add_foreign_key "sessions", "carts"
