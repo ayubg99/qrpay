@@ -1,6 +1,6 @@
-<%= form_for([@restaurant, @table]) do |form| %>
+<%= form_for([@restaurant, @table], html: { class: "form" }) do |form| %>
   <% if table.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(table.errors.count, "error") %> prohibited this table from being saved:</h2>
 
       <ul>
@@ -11,12 +11,14 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :table_number %>
-    <%= form.number_field :table_number %>
+  <div class="form-group">
+    <%= form.label "Numéro", class: "control-label" %>
+    <div class="col-sm-3">
+      <%= form.number_field :table_number, class: "form-control" %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-actions">
+    <%= form.submit "Crear", class: "btn btn-primary", style: "margin-top: 10px;"  %>     
   </div>
 <% end %>

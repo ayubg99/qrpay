@@ -1,3 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<% if controller_name == 'restaurants' && action_name == 'show' %>
+<%= link_to @restaurant, class: 'navbar-brand' do %>
+  <%= image_tag ("bamboo.png") %>
+<% end %>
+<% else %>
+  <%= link_to root_path, class: 'navbar-brand' do %>
+    <%= image_tag ("bamboo.png") %>
+  <% end %> 
+<% end %>
+<% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<% end %>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+    <% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
+      <% if restaurant_signed_in? %>
+        <li class="nav-item">
+          <%= link_to "Sign Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Log In", new_restaurant_session_path, class: 'nav-link' %>
+        </li>
+      <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <% if controller_name == 'restaurants' && action_name == 'show' %>
+    <div class="navbar-nav ml-auto">
+    <%= link_to '#', class: 'navbar-brand cart-img', id: 'cart-icon', 'data-toggle' => 'modal', 'data-target' => '#cartModal' do %>
+      <%= image_tag ("trolley.png") %>
+      <span id="cart-item-count"><%= current_cart.cart_items.count %></span>
+    <% end %>
+    </div>
+  <% end %>
+</nav>
+
 <div class="container margin-top-container">
   <h1>
     <%= @restaurant.name %>
@@ -5,7 +45,7 @@
     <div class="row">
       <div class="col-md-12 tables-margin-top">
       <h2 class="menu-name" style="margin-top:10px">Nuestros Menús</h2>
-      <% @restaurant.special_menus.each do |special_menu| %>
+      <% @restaurant.special_menus.order(created_at: :desc).each do |special_menu| %>
         <div class="special-menu-container container">
             <%= form_with(url: add_special_menu_restaurant_cart_path(@restaurant), method: :post, local: true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
             <%= form.hidden_field :special_menu_id, value: special_menu.id %>
@@ -44,9 +84,6 @@
       <% @restaurant.categories.each do |category| %>
         <h4><%= category.name %></h4>
         <% category.food_items.each do |food_item| %>
-          <%= link_to 'x', restaurant_food_item_path(@restaurant, food_item), 
-              method: :delete, 
-              class: 'btn remove-from-cart-link' %>
           <div class="row food-item-container">
             <div class="col-4 col-sm-4 col-md-4">
               <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
@@ -57,7 +94,7 @@
             </div>
             <div class="col-2 col-sm-2 col-md-2">
               <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :get, class: "btn btn-primary add-to-cartt", remote: true %>
+              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "btn btn-primary add-to-cartt", remote: true %>
             </div>
           </div>
         <% end %>

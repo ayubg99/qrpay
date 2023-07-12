@@ -5,4 +5,10 @@ class FoodType < ApplicationRecord
   accepts_nested_attributes_for :food_type_food_items, allow_destroy: true
 
   validates :name, presence: true
+
+  before_save :name_uppercase
+
+  def name_uppercase 
+    self.name = self.name.upcase
+  end
 end

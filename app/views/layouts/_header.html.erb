@@ -1,4 +1,4 @@
-<nav class="sidebar">
+<nav class="sidebar close">
 <header>
     <div class="image-text">
         <span class="image">
@@ -59,10 +59,10 @@
 
     <div class="bottom-content">
         <li class="">
-            <a href="#">
-                <i class='bx bx-log-out icon' ></i>
-                <span class="text nav-text">Logout</span>
-            </a>
+              <%= link_to destroy_restaurant_session_path, method: :delete, class: 'nav-link' do %>
+                <%= content_tag :i, '', class: 'bx bx-log-out icon' %>
+                <%= content_tag :span, 'Logout', class: 'text nav-text' %>
+              <% end %>                
         </li>
 
         <li class="mode">
@@ -81,20 +81,3 @@
 </div>
 
 </nav>
-
-<section class="home" style="height: 100%; padding-top: 80px">
-  <div class="container" style="margin-top: 70px;">
-      <div class="col-md-6">
-        <%= link_to dashboard_tables_path, class: 'btn btn-primary btn-margin-bottom' do %>
-          <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
-        <% end %>  
-        <h1>Nueva tabla</h1>
-        <%= render 'form', table: @table %>
-      </div>
-  </div>
-</section>
-
-
-
-
-    

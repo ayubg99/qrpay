@@ -1,39 +1,53 @@
-<%= form_for([@restaurant, @special_menu]) do |form| %>  
-<% if @special_menu.errors.any? %>
-    <div id="error_explanation">
+<%= form_for([@restaurant, @special_menu], html: { class: 'form-horizontal' }) do |form| %>
+  <% if @special_menu.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(@special_menu.errors.count, "error") %> prohibited this special_menu from being saved:</h2>
-
       <ul>
-      <% @special_menu.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @special_menu.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label "Nombre", class: 'control-label col-sm-2' %>
+    <div class="col-sm-3">
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="form-group">
+    <%= form.label "Descripción", class: 'control-label col-sm-2' %>
+    <div class="col-sm-4">
+      <%= form.text_area :description, class: 'form-control' %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :price %>
-    <%= form.text_field :price, step: '0.01' %>
+  <div class="form-group">
+    <%= form.label "Precio", class: 'control-label col-sm-2' %>
+    <div class="col-sm-1">
+      <%= form.text_field :price, step: '0.01', class: 'form-control' %>
+    </div>
   </div>
 
-  <%= form.file_field :image, direct_upload: true %>
-
-  <div class="field">
-    <%= form.label :instructions %>
-    <%= form.text_area :instructions %>
+  <div class="form-group">
+    <%= form.label "Imagen", class: 'control-label col-sm-2' %>
+    <div class="col-sm-3">
+      <%= form.file_field :image, class: 'form-control', direct_upload: true %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.label "Información adicional", class: 'control-label col-sm-2' %>
+    <div class="col-sm-4">
+      <%= form.text_area :instructions, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <%= form.submit "Guardar", class: "btn btn-primary btn-margin-top" %>  
+    </div>
   </div>
 <% end %>

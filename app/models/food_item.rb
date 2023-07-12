@@ -3,8 +3,14 @@ class FoodItem < ApplicationRecord
   belongs_to :category
   has_many :food_type_food_items, dependent: :destroy
   has_many :food_types, through: :food_type_food_items
-  has_many :cart_item_food_items
+  has_many :cart_item_food_items, dependent: :destroy
   has_many :cart_items, through: :cart_item_food_items
   
   has_one_attached :image
+
+  before_save :name_uppercase
+
+  def name_uppercase 
+    self.name = self.name.upcase
+  end
 end

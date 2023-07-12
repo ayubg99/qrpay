@@ -1,0 +1,21 @@
+<%= render 'layouts/header' %>
+
+<section class="home" style="height: 100%">
+<div class="container" style="margin-top: 10px">
+<h2>Tablas</h2>
+<div style="margin-top: 10px">
+    <%= link_to 'Nueva tabla', new_restaurant_table_path(@restaurant), class: "btn btn-primary" %>
+</div>
+<div class="row" style="margin-top: 20px"> 
+    <% @restaurant.tables.each do |table| %>
+        <div class="col-3 col-sm-6 col-md-3" style="margin-top: 20px">
+            <h5>Tabla <%= table.table_number %></h5>
+            <%= image_tag(url_for(table.qrcode), class: "qr-code") %>
+            <%= link_to 'Descargar', download_qr_code_restaurant_table_path(@restaurant, table, format: :png), target: '_blank', class: "btn btn-primary download-qr-code" %>
+        </div>
+    <% end %>
+</div>
+</div>
+</section>
+
+

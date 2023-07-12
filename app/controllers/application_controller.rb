@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
   helper_method :current_cart
   before_action :set_restaurant
   before_action :ensure_session_id
@@ -18,5 +19,11 @@ class ApplicationController < ActionController::Base
 
   def generate_session_id
     SecureRandom.hex(16)
+  end
+
+  def check_restaurant_authorization
+    unless current_restaurant == @restaurant
+      redirect_to root_path, alert: "Access denied."
+    end
   end
 end

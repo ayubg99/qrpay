@@ -1,5 +1,100 @@
-<h1>Editing Special Menu</h1>
+<nav class="sidebar">
+<header>
+    <div class="image-text">
+        <span class="image">
+          <%= link_to "#", class: 'navbar-brand' do %>
+            <%= image_tag ("bamboo.png") %>
+          <% end %> 
+        </span>
 
-<%= render 'form', special_menu: @special_menu %>
+        <div class="text logo-text">
+            <span class="name">Bamboo</span>
+            <span class="profession"><%= current_restaurant.name %></span>
+        </div>
+    </div>
 
-<%= link_to 'Back', @restaurant %>
+    <i class='bx bx-chevron-right toggle'></i>
+</header>
+
+<div class="menu-bar">
+    <div class="menu">
+        <ul class="menu-links">
+            <li class="nav-link">
+              <%= link_to dashboard_path do %>
+                <%= content_tag :i, '', class: 'bx bx-home-alt icon' %>
+                <%= content_tag :span, 'Dashboard', class: 'text nav-text' %>
+              <% end %>
+            </li>
+
+            <li class="nav-link">
+            <%= link_to '#' do %>
+              <%= content_tag :i, '', class: 'bx bx-user-voice icon' %>
+              <%= content_tag :span, 'Pedidos', class: 'text nav-text' %>
+            <% end %>                
+            </li>
+
+            <li class="nav-link">
+              <%= link_to dashboard_special_menus_path do %>
+                <%= content_tag :i, '', class: 'bx bx-food-menu icon' %>
+                <%= content_tag :span, 'Menus especiales', class: 'text nav-text' %>
+              <% end %>                
+            </li>
+
+            <li class="nav-link">
+              <%= link_to dashboard_menu_path do %>
+                <%= content_tag :i, '', class: 'bx bx-bowl-hot icon' %>
+                <%= content_tag :span, 'Carta', class: 'text nav-text' %>
+              <% end %>                
+            </li>
+
+            <li class="nav-link">
+              <%= link_to dashboard_tables_path do %>
+                <%= content_tag :i, '', class: 'bx bx-qr-scan icon' %>
+                <%= content_tag :span, 'Tablas', class: 'text nav-text' %>
+              <% end %>                
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="bottom-content">
+        <li class="">
+            <a href="#">
+                <i class='bx bx-log-out icon' ></i>
+                <span class="text nav-text">Logout</span>
+            </a>
+        </li>
+
+        <li class="mode">
+            <div class="sun-moon">
+                <i class='bx bx-moon icon moon'></i>
+                <i class='bx bx-sun icon sun'></i>
+            </div>
+            <span class="mode-text text">Dark mode</span>
+
+            <div class="toggle-switch">
+                <span class="switch"></span>
+            </div>
+        </li>
+        
+    </div>
+</div>
+
+</nav>
+
+<section class="home" style="height: 100%; padding-top: 80px">
+  <div class="container">
+  <%= link_to dashboard_special_menus_path, class: 'btn btn-primary btn-margin-bottom' do %>
+    <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
+  <% end %>
+    <h1>Modificar Menu</h1>
+    <%= render 'form', special_menu: @special_menu %>
+  </div>
+</section>
+
+
+
+
+    
+
+
