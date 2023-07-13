@@ -14,16 +14,11 @@
     <div id="payment-form">
     <div class="form-group">
       <label class="control-label col-sm-2" for="card-element">Credit or Debit Card</label>
-      <div class="col-sm-6">
         <div id="card-element">
-          <!-- Stripe card element will be inserted here -->
         </div>
         <div id="card-errors" class="text-danger" role="alert"></div>
-      </div>
     </div>
-    
-    <%= hidden_field_tag :payment_info, nil, id: 'payment-info' %>
-    
+        
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-6">
         <%= form.submit "Pagar", class: "btn btn-primary btn-margin-top", id: "submit-order" %>

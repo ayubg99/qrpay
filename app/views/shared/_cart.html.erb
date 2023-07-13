@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-4 col-sm-4 col-md-4">
                   <h6><%= number_to_currency(cart_item.special_menu.price, precision: 2, unit: '€') %> 
-                  <%= link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
+                  <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
                    method: :delete, 
                    remote: true, 
                    class: 'btn remove-from-cart-link' %></h6>            
@@ -40,7 +40,7 @@
             </div>
             <div class="col-4 col-sm-4 col-md-4">
               <h6><%= number_to_currency(cart_item_food_item.food_item.price, precision: 2, unit: '€') %>
-              <%= link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item), 
+              <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item), 
               method: :delete, 
               remote: true, 
               class: 'btn remove-from-cart-link' %></h6>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="modal-footer">
-      <%= link_to 'clear', clear_cart_restaurant_cart_path(@restaurant), method: :delete, class: 'btn' %>
+      <%= link_to 'Vaciar', clear_cart_restaurant_cart_path(@restaurant), method: :delete, class: 'btn' %>
         <button type="button" class="btn btn btn-primary" data-dismiss="modal">Volver</button>
       </div>
     </div>

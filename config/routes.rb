@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   devise_for :restaurants, controllers: { registrations: 'restaurants/registrations' }
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
+  get '/dashboard/orders', to: 'dashboard#orders', as: 'dashboard_orders'
   get '/dashboard/tables', to: 'dashboard#tables', as: 'dashboard_tables'
   get '/dashboard/menu', to: 'dashboard#menu', as: 'dashboard_menu'
   get '/dashboard/special_menus', to: 'dashboard#special_menus', as: 'dashboard_special_menus'
@@ -30,7 +31,7 @@ Rails.application.routes.draw do
         patch :decrease_quantity, on: :member
       end
     end
-    resources :orders, only: [:index, :show, :new, :create] do 
+    resources :orders, only: [:new, :create, :destroy] do 
       member do
         get 'success', to: 'orders#success', as: 'success'
         get 'cancel', to: 'orders#cancel', as: 'cancel'

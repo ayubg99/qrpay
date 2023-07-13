@@ -5,6 +5,11 @@ class DashboardController < ApplicationController
         @restaurant = current_restaurant
     end
 
+    def orders
+        @restaurant = current_restaurant
+        @orders = @restaurant.orders
+    end
+
     def tables
         @restaurant = current_restaurant
     end

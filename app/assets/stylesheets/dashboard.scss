@@ -34,6 +34,9 @@ body.dark{
   --toggle-color: #fff;
   --text-color: #fff;
   color: white;
+  .table {
+    color: #fff !important;
+  }
 }
 
 /* ===== Sidebar ===== */
@@ -287,6 +290,7 @@ body.dark .switch::before{
   background-color: var(--body-color);
   transition: var(--tran-05);
   padding-top: 50px;
+  min-height: 1100px;
 }
 .home .text{
   font-size: 30px;
