@@ -48,16 +48,34 @@
             </li>
 
             <li class="nav-link">
+            <%= link_to dashboard_history_path do %>
+              <%= content_tag :i, '', class: 'bx bx-history icon' %>
+              <%= content_tag :span, 'Historial', class: 'text nav-text' %>
+            <% end %>                
+            </li>
+
+            <li class="nav-link">
               <%= link_to dashboard_tables_path do %>
                 <%= content_tag :i, '', class: 'bx bx-qr-scan icon' %>
                 <%= content_tag :span, 'Tablas', class: 'text nav-text' %>
               <% end %>                
             </li>
-
         </ul>
     </div>
 
     <div class="bottom-content">
+        <li class="">
+          <%= link_to edit_restaurant_registration_path(current_restaurant), class: 'nav-link' do %>
+            <%= content_tag :i, '', class: 'bx bx-user icon' %>
+            <%= content_tag :span, 'Perfil', class: 'text nav-text' %>
+          <% end %>                
+        </li>
+        <li class="">
+          <%= link_to dashboard_payment_information_path, class: 'nav-link' do %>
+            <%= content_tag :i, '', class: 'bx bx-credit-card icon' %>
+            <%= content_tag :span, 'Facturación', class: 'text nav-text' %>
+          <% end %>                
+        </li>
         <li class="">
               <%= link_to destroy_restaurant_session_path, method: :delete, class: 'nav-link' do %>
                 <%= content_tag :i, '', class: 'bx bx-log-out icon' %>

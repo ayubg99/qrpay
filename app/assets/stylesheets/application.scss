@@ -409,9 +409,21 @@ body {
 }
 
 .pink {
-  color: rgb(128, 0, 255)
+  color: rgb(128, 0, 255);
 }
 
 .bold {
   font-weight: bold;
+}
+
+.order-food-item {
+  font-size: 16px;
+}
+
+.pedido-special-menu {
+  background-color: rgb(128, 0, 255);
+  color: white;
+  padding: 3px;
+  border-radius: 5px;
+  line-height: 2.5;
 }

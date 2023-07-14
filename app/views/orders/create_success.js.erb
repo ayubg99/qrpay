@@ -1,0 +1,28 @@
+<% @orders.each do |order| %>
+    <tr>
+      <td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
+      <td>
+        <% order.special_menus.each do |special_menu| %>
+          <% special_menu.food_types.where(have_to_select_one: false).each do |food_type| %>
+            <% food_type.food_items.each do |food_item| %>
+              <p class="order-food-item" style="display: inline;"><%= food_item.name %><% if order.food_items.last != food_item %>, <% end %></p>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% order.food_items.each do |food_item| %>
+          <p class="order-food-item" style="display: inline;"><%= food_item.name %><% if order.food_items.last != food_item %>, <% end %></p>
+        <% end %>
+        <% order.special_menus.each do |special_menu| %>
+          <p class="pink order-food-item" style="display: inline;"><%= special_menu.name %></p>
+        <% end %>
+      </td>
+      <td><h6>1</h6></td>
+      <td><h6 class="pink"><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
+      <td>
+        <h6>Pagado</h6>
+      </td>
+      <td>
+        <%= link_to 'Done', restaurant_order_path(current_restaurant, order), method: :delete, class: 'btn btn-primary btn-dashboard' %>
+      </td>
+    </tr>
+  <% end %>

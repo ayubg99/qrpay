@@ -234,4 +234,3 @@ document.addEventListener('turbolinks:load', function() {
     modeText.innerText = 'Light mode';
   }
 });
-

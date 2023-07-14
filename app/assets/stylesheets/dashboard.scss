@@ -322,3 +322,10 @@ body.dark .home .text{
     color:#fff;
   }
 }
+
+
+.done {
+  &:hover {
+    background-color: transparent !important;
+  }
+}

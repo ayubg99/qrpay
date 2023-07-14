@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_cart
-  before_action :set_restaurant
   before_action :ensure_session_id
 
   def current_cart
@@ -9,10 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  def set_restaurant
-    @restaurant = Restaurant.friendly.find(params[:id]) if @restaurant
-  end
-
   def ensure_session_id
     session[:cart_id] ||= generate_session_id
   end

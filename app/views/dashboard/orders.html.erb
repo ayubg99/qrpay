@@ -1,45 +1,21 @@
 <%= render 'layouts/header' %>
 
 <section class="home">
-  <div class="container" style="margin-top: 10px">
+  <div class="container">
+  <h2 class="menu-name" style="margin-top:10px">Pedidos</h2>
     <table class="table">
       <thead>
         <tr>
-          <th>Hora</th>
-          <th>Details</th>
+          <th>Fecha y hora</th>
+          <th>Pedido</th>
+          <th>Tabla</th>
           <th>Total</th>
           <th>Estado</th>
           <th></th>
         </tr>
       </thead>
-      <tbody>
-        <% @orders.each do |order| %>
-          <tr>
-            <td><h6><%= order.created_at.strftime('%H:%M') %></h6></td>
-            <td>
-              <% order.special_menus.each do |special_menu| %>
-                <% special_menu.food_types.where(have_to_select_one: false).each do |food_type| %>
-                  <% food_type.food_items.each do |food_item| %>
-                    <p><%= food_item.name %></p>
-                  <% end %>
-                <% end %>
-              <% end %>
-              <% order.food_items.each do |food_item| %>
-                <p><%= food_item.name %></p>
-              <% end %>
-              <% order.special_menus.each do |special_menu| %>
-                <p class="pink">* <%= special_menu.name %></p>
-              <% end %>
-            </td>
-            <td><h5 class="pink"><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h5></td>
-            <td>
-              <p>Pagado</p>
-            </td>
-            <td>
-              <%= link_to 'Done', restaurant_order_path(current_restaurant, order), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
-            </td>
-          </tr>
-        <% end %>
+      <tbody id="orders-table-body">
+        <%= render partial: 'orders/order', collection: @orders %>
       </tbody>
     </table>
   </div>
