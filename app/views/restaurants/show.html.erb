@@ -46,39 +46,41 @@
       <div class="col-md-12 tables-margin-top">
       <h2 class="menu-name" style="margin-top:10px">Nuestros Menús</h2>
       <% @restaurant.special_menus.each do |special_menu| %>
-        <div class="special-menu-container container">
-            <%= form_with(url: add_special_menu_restaurant_cart_path(@restaurant), method: :post, local: true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
-            <%= form.hidden_field :special_menu_id, value: special_menu.id %>
-            <h4 class="special-menu-name"><%= special_menu.name %></h4>
-            <div class="row">
-              <div class="col-4 col-sm-4 col-md-4">
-                <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
+        <% if special_menu.in_time_range? %>
+          <div class="special-menu-container container">
+              <%= form_with(url: add_special_menu_restaurant_cart_path(@restaurant), method: :post, local: true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
+              <%= form.hidden_field :special_menu_id, value: special_menu.id %>
+              <h4 class="special-menu-name"><%= special_menu.name %></h4>
+              <div class="row">
+                <div class="col-4 col-sm-4 col-md-4">
+                  <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6">
+                  <p><%= simple_format(special_menu.description) %></p>
+                  <% special_menu.food_types.each do |food_type| %>
+                    <div class="form-group">
+                    <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
+                      <% if food_type.have_to_select_one == true %>
+                      <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control'  %>
+                      <% else %>
+                        <p>
+                          <% food_type.food_items.each do |food_item| %>
+                            <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %> 
+                          <% end %>
+                        </p>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="col-2 col-sm-2 col-md-2">
+                  <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
+                  <%= form.submit '+', class: "btn btn-primary" %>
+                </div>
+                <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
               </div>
-              <div class="col-6 col-sm-6 col-md-6">
-                <p><%= simple_format(special_menu.description) %></p>
-                <% special_menu.food_types.each do |food_type| %>
-                  <div class="form-group">
-                  <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
-                    <% if food_type.have_to_select_one == true %>
-                    <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control'  %>
-                    <% else %>
-                      <p>
-                        <% food_type.food_items.each do |food_item| %>
-                          <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %> 
-                        <% end %>
-                      </p>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-              <div class="col-2 col-sm-2 col-md-2">
-                <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
-                <%= form.submit '+', class: "btn btn-primary" %>
-              </div>
-              <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
-            </div>
-          <% end %>
-        </div>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
       <h2 class="menu-name" style="margin-top:10px">Carta</h2>
       <% @restaurant.categories.each do |category| %>

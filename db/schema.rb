@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_14_155621) do
+ActiveRecord::Schema.define(version: 2023_07_14_180840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,6 +240,8 @@ ActiveRecord::Schema.define(version: 2023_07_14_155621) do
     t.decimal "price", precision: 8, scale: 2
     t.text "instructions"
     t.text "description"
+    t.time "start_hour"
+    t.time "end_hour"
     t.index ["restaurant_id"], name: "index_special_menus_on_restaurant_id"
   end
 
