@@ -70,7 +70,7 @@
   // Increase the padding between navbar links
   .navbar-nav {
     .nav-item {
-      margin-right: 10px;
+      margin-right: 30px;
       .btn-primary {
         font-size: 14px;
         background-color: rgb(128, 0, 255);
@@ -406,4 +406,24 @@ body {
     background-color: white !important;
     color: #dc3545 !important;
   }
+}
+
+.pink {
+  color: rgb(128, 0, 255);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.order-food-item {
+  font-size: 16px;
+}
+
+.pedido-special-menu {
+  background-color: rgb(128, 0, 255);
+  color: white;
+  padding: 3px;
+  border-radius: 5px;
+  line-height: 2.5;
 }

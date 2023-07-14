@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-md-12 tables-margin-top">
       <h2 class="menu-name" style="margin-top:10px">Nuestros Menús</h2>
-      <% @restaurant.special_menus.order(created_at: :desc).each do |special_menu| %>
+      <% @restaurant.special_menus.each do |special_menu| %>
         <div class="special-menu-container container">
             <%= form_with(url: add_special_menu_restaurant_cart_path(@restaurant), method: :post, local: true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
             <%= form.hidden_field :special_menu_id, value: special_menu.id %>

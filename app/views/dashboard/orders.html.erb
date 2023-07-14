@@ -1,0 +1,22 @@
+<%= render 'layouts/header' %>
+
+<section class="home">
+  <div class="container">
+  <h2 class="menu-name" style="margin-top:10px">Pedidos</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Fecha y hora</th>
+          <th>Pedido</th>
+          <th>Tabla</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="orders-table-body">
+        <%= render partial: 'orders/order', collection: @orders %>
+      </tbody>
+    </table>
+  </div>
+</section>

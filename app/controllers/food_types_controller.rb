@@ -3,6 +3,7 @@ class FoodTypesController < ApplicationController
   before_action :set_food_type, only: %i[ show edit update destroy ]
   before_action :set_special_menu
   before_action :set_restaurant
+  before_action :check_restaurant_authorization
 
   def show
   end

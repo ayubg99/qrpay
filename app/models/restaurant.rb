@@ -11,6 +11,7 @@ class Restaurant < ApplicationRecord
     has_many :categories, dependent: :destroy
     has_many :carts, dependent: :destroy
     has_many :orders, dependent: :destroy
+    has_many :deleted_orders, dependent: :destroy
     
     friendly_id :name, use: :slugged
 end

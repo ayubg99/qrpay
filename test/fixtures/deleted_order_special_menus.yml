@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deleted_order: one
+  special_menu: one
+
+two:
+  deleted_order: two
+  special_menu: two

@@ -42,7 +42,7 @@ document.addEventListener('turbolinks:load', function() {
               <h6>${response.food_item.name}</h6>
             </div>
             <div class="col-4 col-sm-4 col-md-4">
-              <h6>€${formattedPrice} <a href="${response.remove_url}" data-method="delete" class="btn remove-from-cart-link">x</a></h6>
+              <h6>€${formattedPrice}</h6>
             </div>
           </div>
         `;
@@ -98,7 +98,7 @@ document.addEventListener('turbolinks:load', function() {
               <p style="font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
             </div>
             <div class="col-4 col-sm-4 col-md-4">
-              <h6>€${formattedPrice} <a href="${response.remove_url}" data-method="delete" class="btn remove-from-cart-link" remote="true">x</a></h6>
+              <h6>€${formattedPrice}</h6>
             </div>
           </div>
         `;
@@ -148,7 +148,7 @@ document.addEventListener('turbolinks:load', function() {
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('turbolinks:load', function() {
   const stripe = Stripe('pk_test_51NS2OyIULic551znN5qUeq7168Gyt9bka1OWGD4jmbI8MkfJSy9axar3uiwSMoOTipm9lclj9eWqI7iRl7mEeufe000lH5hnuT'); // Replace with your own test publishable key
   const elements = stripe.elements();
   const cardElement = elements.create('card');
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById('stripe-payment-form');
   const errorElement = document.getElementById('card-errors');
-  const submitButton = document.querySelector('#stripe-payment-form [type="submit"]');
+  const submitButton = document.getElementById('submit-order');
   const paymentForm = document.getElementById('payment-form');
   const totalAmount = paymentForm.dataset.totalAmount;
 
@@ -173,6 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
         card: cardElement,
       });
 
+      console.log(paymentMethod)
+
       if (error) {
         // Display error message
         errorElement.textContent = error.message;
@@ -185,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         form.appendChild(paymentMethodInput);
 
         // Submit the form
-        form.submit();
+        Rails.fire(paymentForm, "submit");
       }
     } catch (error) {
       // Display error message
@@ -232,4 +234,3 @@ document.addEventListener('turbolinks:load', function() {
     modeText.innerText = 'Light mode';
   }
 });
-

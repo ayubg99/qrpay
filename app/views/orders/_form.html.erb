@@ -1,0 +1,28 @@
+<%= form_for([@restaurant, @order], html: {class: "form-horizontal"}) do |form| %>
+    <% if @order.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+  
+        <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div id="payment-form">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="card-element">Credit or Debit Card</label>
+        <div id="card-element">
+        </div>
+        <div id="card-errors" class="text-danger" role="alert"></div>
+    </div>
+        
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-6">
+        <%= form.submit "Pagar", class: "btn btn-primary btn-margin-top", id: "submit-order" %>
+      </div>
+    </div>
+  <% end %>
+  

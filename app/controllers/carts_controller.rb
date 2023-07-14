@@ -43,7 +43,10 @@ class CartsController < ApplicationController
         food_item_ids.each do |food_type_id, food_item_id|
           food_type = FoodType.find_by(id: food_type_id)
           food_item = food_type.food_items.find_by(id: food_item_id)
-          @cart_item.cart_item_food_items.build(food_item: food_item, cart_item: @cart_item) if food_item.present?
+          if food_item.present?
+            @cart_item.cart_item_food_items.build(food_item: food_item, cart_item: @cart_item)
+            SpecialMenuFoodItem.create(special_menu: special_menu, food_item: food_item)  # Create a SpecialMenuFoodItem record to establish the association
+          end
         end
       end
     end
