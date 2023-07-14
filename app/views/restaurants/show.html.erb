@@ -94,6 +94,9 @@
             <div class="col-6 col-sm-6 col-md-6">
               <h5><%= food_item.name %></h5>
               <p><%= simple_format(food_item.description) %></p>
+              <% if food_item.minimum_persons.present? %>
+                <h6><i class='bx bx-user btn-margin-top' style="font-size: 20px;"></i> <%= food_item.minimum_persons %> <% if food_item.minimum_persons == 1 %>persona<% else %> personas <% end %></h6>
+              <% end %>
             </div>
             <div class="col-2 col-sm-2 col-md-2">
               <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
