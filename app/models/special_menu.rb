@@ -8,4 +8,18 @@ class SpecialMenu < ApplicationRecord
   has_many :deleted_orders, through: :deleted_order_special_menus
   
   has_one_attached :image
+
+  validates :name, presence: true
+  validates :price, presence: true
+  validates :start_hour, presence: true
+  validates :end_hour, presence: true
+  validates :image, presence: true
+  validates :minimum_persons, presence: true, numericality: { only_integer: true, greater_than: 0 }
+
+  def in_time_range?
+    current_hour = Time.now.hour
+    start_hour_hour = start_hour.hour
+    end_hour_hour = end_hour.hour
+    current_hour >= start_hour_hour && current_hour <= end_hour_hour
+  end
 end

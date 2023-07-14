@@ -14,7 +14,7 @@ class FoodItem < ApplicationRecord
   has_one_attached :image
 
   before_save :name_uppercase
-
+  
   def name_uppercase 
     self.name = self.name.upcase
   end

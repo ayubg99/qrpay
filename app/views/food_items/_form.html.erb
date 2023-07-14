@@ -45,6 +45,14 @@
       <%= form.file_field :image, class: 'form-control', direct_upload: true %>
     </div>
   </div>
+
+  <div class="form-group">
+    <%= form.label :minimum_persons , "Mínimo de personas", class: 'control-label col-sm-4' %>
+    <div class="col-sm-1">
+      <%= form.number_field :minimum_persons, class: "form-control" %>
+    </div>
+  </div>
+  <p class="pink">*Mínimo de personas es opcional</p>
   
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-6">
