@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         resources :food_items
       end
     end 
-    resources :tables, only: [:new, :create, :edit, :update, :index] do
+    resources :tables do
       member do
         get 'download_qr_code'
       end

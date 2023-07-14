@@ -78,6 +78,7 @@
                 </div>
                 <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
               </div>
+              <h6><i class='bx bx-user btn-margin-top' style="font-size: 25px;"></i> <%= special_menu.minimum_persons %> <% if special_menu.minimum_persons == 1 %>persona<% else %> personas <% end %></h6>
             <% end %>
           </div>
         <% end %>
