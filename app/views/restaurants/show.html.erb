@@ -76,9 +76,11 @@
                   <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
                   <%= form.submit '+', class: "btn btn-primary" %>
                 </div>
-                <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
+                <% if special_menu.instructions.present? %>
+                  <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
+                <% end %>
               </div>
-              <h6><i class='bx bx-user btn-margin-top' style="font-size: 25px;"></i> <%= special_menu.minimum_persons %> <% if special_menu.minimum_persons == 1 %>persona<% else %> personas <% end %></h6>
+              <h6><i class='bx bx-user' style="font-size: 25px;"></i> <%= special_menu.minimum_persons %> <% if special_menu.minimum_persons == 1 %>persona<% else %> personas <% end %></h6>
             <% end %>
           </div>
         <% end %>

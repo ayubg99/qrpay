@@ -1,4 +1,9 @@
-<%= form_for([@restaurant, @order], html: {class: "form-horizontal"}) do |form| %>
+<%= form_for([@restaurant, @order], html: {class: "form-horizontal", id: "stripe-payment-form", data: { clientSecret: @client_secret }}) do |form| %>
+  <% if flash[:error].present? %>
+    <div class="alert alert-danger">
+      <%= flash[:error] %>
+    </div>
+  <% end %>
     <% if @order.errors.any? %>
       <div id="error_explanation" class="alert alert-danger">
         <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -18,11 +23,10 @@
         </div>
         <div id="card-errors" class="text-danger" role="alert"></div>
     </div>
-        
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-6">
         <%= form.submit "Pagar", class: "btn btn-primary btn-margin-top", id: "submit-order" %>
       </div>
     </div>
+
   <% end %>
-  

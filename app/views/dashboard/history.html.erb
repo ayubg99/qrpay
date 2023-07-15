@@ -16,7 +16,7 @@
       <tbody>
         <% @deleted_orders.each do |order| %>
           <tr>
-          <td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
+          <td><h6><%= order.order_date.strftime("%Y-%m-%d %H:%M") %></h6></td>
           <td>
             <% comma_needed = false %>
 

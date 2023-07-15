@@ -69,3 +69,5 @@ gem "font-awesome-rails"
 gem 'friendly_id'
 gem 'whenever', require: false
 gem 'stripe'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

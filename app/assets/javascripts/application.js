@@ -160,6 +160,8 @@ document.addEventListener('turbolinks:load', function() {
   const submitButton = document.getElementById('submit-order');
   const paymentForm = document.getElementById('payment-form');
   const totalAmount = paymentForm.dataset.totalAmount;
+  const clientSecret = form.dataset.clientSecret.toString();
+  console.log(clientSecret);
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -168,26 +170,38 @@ document.addEventListener('turbolinks:load', function() {
     submitButton.disabled = true;
 
     try {
-      const { paymentMethod, error } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-      });
-
-      console.log(paymentMethod)
+      const { paymentIntent, error } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: cardElement,
+          },
+        }
+      );
 
       if (error) {
         // Display error message
         errorElement.textContent = error.message;
       } else {
         // Set the value of the hidden field to the payment method ID
-        const paymentMethodInput = document.createElement('input');
-        paymentMethodInput.setAttribute('type', 'hidden');
-        paymentMethodInput.setAttribute('name', 'payment_method');
-        paymentMethodInput.value = paymentMethod.id;
-        form.appendChild(paymentMethodInput);
+        const paymentIntentInput = document.createElement('input');
+        paymentIntentInput.setAttribute('type', 'hidden');
+        paymentIntentInput.setAttribute('name', 'payment_intent_id');
+        paymentIntentInput.value = paymentIntent.id;
+        form.appendChild(paymentIntentInput);
 
-        // Submit the form
-        Rails.fire(paymentForm, "submit");
+        // Submit the form using AJAX
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData
+        });
+
+        if (response.ok) {
+          // Success, handle the response or redirect as needed
+        } else {
+          // Handle errors or display error message
+        }
       }
     } catch (error) {
       // Display error message

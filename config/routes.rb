@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get '/dashboard/special_menus', to: 'dashboard#special_menus', as: 'dashboard_special_menus'
   get '/dashboard/payment_information', to: 'dashboard#payment_information', as: 'dashboard_payment_information'
   patch '/dashboard/update_payment_information', to: 'dashboard#update_payment_information', as: 'update_payment_information'
+  post '/dashboard/authenticate', to: 'dashboard#authenticate', as: 'authenticate_dashboard'
+  post '/dashboard/unauthenticate', to: 'dashboard#unauthenticate', as: 'unauthenticate_dashboard'
+
   resources :restaurants do 
     resources :categories
     resources :food_items
@@ -35,11 +38,11 @@ Rails.application.routes.draw do
       end
     end
     resources :orders, only: [:new, :create, :destroy] do 
-      member do
-        get 'success', to: 'orders#success', as: 'success'
-        get 'cancel', to: 'orders#cancel', as: 'cancel'
+      collection do
+        get 'thank_you/:pdf_path', action: :thank_you, as: 'thank_you'
       end
     end
   end
   resources :contacts, only: [:new, :create]
+  get '/receipts/:pdf_path/:restaurant_id', to: 'receipts#download', as: 'download_receipt'
 end

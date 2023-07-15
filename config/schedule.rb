@@ -22,3 +22,7 @@
 every 10.minutes do
     rake 'carts:cleanup'
 end
+
+every 30.minutes do
+    command "find #{Rails.root.join('public', 'receipts')}/*.pdf -mmin +15 -delete"
+end

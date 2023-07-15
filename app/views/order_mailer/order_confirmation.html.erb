@@ -1,0 +1,41 @@
+<h1>Order Confirmation</h1>
+
+<p>Thank you for your order! Here are the details:</p>
+
+<p>Total Price: <%= @order.total_price %></p>
+
+<% @cart.cart_items.each do |cart_item| %>
+      <% if cart_item.special_menu.present? %>
+        <div class="row cart-item">
+          <div class="col-8 col-sm-8 col-md-8">
+            <h6><%= cart_item.special_menu.name %></h6>
+            <p style="font-size: 10px; color:rgb(128, 0, 255); font-weight:bold">
+              <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+                <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
+              <% end %>
+            </p>
+          </div>
+          <div class="col-4 col-sm-4 col-md-4">
+            <h6><%= number_to_currency(cart_item.special_menu.price, precision: 2, unit: '€') %></h6>            
+          </div>
+        </div>  
+      <% elsif cart_item.cart_item_food_items.present? %>
+        <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+          <div class="row cart-item">
+            <div class="col-8 col-sm-8 col-md-8">
+              <h6><%= cart_item_food_item.food_item.name %></h6>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4">
+              <h6><%= number_to_currency(cart_item_food_item.food_item.price, precision: 2, unit: '€') %></h6>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+    <h5>Total: <%= number_to_currency(@cart.total_price, precision: 2, unit: '€') %></h5>
+<p>If you have any questions or concerns, please contact us.</p>
+
+<p>Thank you!</p>
+
+<p><%= @restaurant.name %></p>
+
