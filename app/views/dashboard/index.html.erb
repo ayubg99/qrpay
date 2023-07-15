@@ -1,22 +1,72 @@
-<%= render 'layouts/header' %>
+    <%= render 'layouts/header' %>
 
-<section class="home" style="height: 100%">
-    <div class="container">
-        <h1>Bienvenido a <%= @restaurant.name %></h1>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profit-box">
-                    <h2>Ingresos del día</h2>
-                    <h3><%= number_to_currency(@revenue_today) %></h3>
+    <section class="home" style="height: 100%">
+        <div class="container">
+            <h1>Bienvenido a <%= @restaurant.name %></h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profit-box">
+                        <% if session[:authenticated] %>
+                            <h2>Ingresos del día</h2>
+                            <h3><%= number_to_currency(@revenue_today) %></h3>
+                        <% else %>
+                            <h2>Ingresos del día</h2>
+                            <h3>******</h3>
+                        <% end %>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="profit-box">
-                    <h2>Ingresos del mes</h2>
-                    <h3><%= number_to_currency(@revenue_month) %></h3>
+                <div class="col-md-4">
+                    <div class="profit-box">
+                    <% if session[:authenticated] %>
+                        <h2>Ingresos del año</h2>
+                        <h3><%= number_to_currency(@revenue_month) %></h3>
+                    <% else %>
+                        <h2>Ingresos del mes</h2>
+                        <h3>******</h3>
+                    <% end %>
+                    </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="profit-box">
+                    <% if session[:authenticated] %>
+                        <h2>Ingresos del año</h2>
+                        <h3><%= number_to_currency(@revenue_year) %></h3>
+                    <% else %>
+                        <h2>Ingresos del año</h2>
+                        <h3>******</h3>
+                    <% end %>
+                    </div>
+                </div>
+            </div>    
+            <% unless session[:authenticated] %>
+            <div class="password-section">
+                <h2>Ingrese la contraseña para ver los ingresos</h2>
+                <%= form_with url: { action: 'authenticate', method: :post } do |form| %>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <%= form.password_field :password, placeholder: 'Contraseña', class: "form-control" %>
+                        </div>
+                        <div class="col-md-1">
+                            <%= form.submit 'Ingresar', class: 'btn btn-primary' %>
+                        </div>
+                    </div>
+                <% end %>
             </div>
-        </div>      
-    </div>
-</section>
-
+            <% end %>
+            <% if session[:authenticated] %>
+            <div class="password-section">
+                <h2>Ingrese la contraseña para ocultar los ingresos</h2>
+                <%= form_with url: { action: 'unauthenticate', method: :post } do |form| %>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <%= form.password_field :password, placeholder: 'Contraseña', class: "form-control" %>
+                        </div>
+                        <div class="col-md-1">
+                            <%= form.submit 'Ingresar', class: 'btn btn-primary' %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            <% end %>
+        </div>
+    </section>

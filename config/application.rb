@@ -17,5 +17,6 @@ module Qrpay
     # the framework and any gems in your application.
     I18n.available_locales = [:en, :es]
     config.i18n.default_locale = :en
+    config.time_zone = 'Madrid'
   end
 end

@@ -14,4 +14,6 @@ class Restaurant < ApplicationRecord
     has_many :deleted_orders, dependent: :destroy
     
     friendly_id :name, use: :slugged
+
+    attr_accessor :current_password
 end
