@@ -18,7 +18,10 @@
     <% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
       <% if restaurant_signed_in? %>
         <li class="nav-item">
-          <%= link_to "Sign Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
+          <%= link_to "Dashboard", dashboard_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Log Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
         </li>
       <% else %>
         <li class="nav-item">
@@ -75,7 +78,6 @@
           </div>
       </div>
       <div class="row justify-content-center">
-          <!-- FAQ Area-->
           <div class="col-12 col-sm-10 col-lg-8">
               <div class="accordion faq-accordian" id="faqAccordion">
                   <div class="card border-0 wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
