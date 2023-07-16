@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     end
     resource :cart, only: [:show] do
       post 'add_to_cart', to: 'carts#add_to_cart'
-      post 'add_special_menu', to: 'carts#add_special_menu_to_cart', as: 'add_special_menu'
       delete 'cart_items/:id', to: 'carts#remove_from_cart', as: 'remove_from_cart'
       delete 'clear_cart', to: 'carts#clear_cart', as: 'clear_cart'
       resources :cart_items, only: [:create] do 
