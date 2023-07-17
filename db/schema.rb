@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_17_151205) do
+ActiveRecord::Schema.define(version: 2023_07_17_192830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,9 @@ ActiveRecord::Schema.define(version: 2023_07_17_151205) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "order_id"
+    t.bigint "deleted_order_id"
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["deleted_order_id"], name: "index_cart_items_on_deleted_order_id"
     t.index ["food_item_id"], name: "index_cart_items_on_food_item_id"
     t.index ["order_id"], name: "index_cart_items_on_order_id"
     t.index ["special_menu_id"], name: "index_cart_items_on_special_menu_id"
@@ -85,6 +87,15 @@ ActiveRecord::Schema.define(version: 2023_07_17_151205) do
     t.string "restaurant_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "deleted_order_cart_items", force: :cascade do |t|
+    t.bigint "deleted_order_id"
+    t.bigint "cart_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_item_id"], name: "index_deleted_order_cart_items_on_cart_item_id"
+    t.index ["deleted_order_id"], name: "index_deleted_order_cart_items_on_deleted_order_id"
   end
 
   create_table "deleted_order_food_items", force: :cascade do |t|
@@ -261,11 +272,14 @@ ActiveRecord::Schema.define(version: 2023_07_17_151205) do
   add_foreign_key "cart_item_food_items", "cart_items", on_delete: :cascade
   add_foreign_key "cart_item_food_items", "food_items"
   add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "deleted_orders"
   add_foreign_key "cart_items", "food_items"
   add_foreign_key "cart_items", "orders"
   add_foreign_key "cart_items", "special_menus"
   add_foreign_key "carts", "restaurants"
   add_foreign_key "categories", "restaurants"
+  add_foreign_key "deleted_order_cart_items", "cart_items"
+  add_foreign_key "deleted_order_cart_items", "deleted_orders"
   add_foreign_key "deleted_order_food_items", "deleted_orders"
   add_foreign_key "deleted_order_food_items", "food_items"
   add_foreign_key "deleted_order_special_menus", "deleted_orders"

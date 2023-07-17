@@ -16,52 +16,47 @@
       <tbody>
         <% @deleted_orders.each do |order| %>
           <tr>
-            <td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
-            <td>
-              <% comma_needed = false %>
-              
-              <% food_items_count = Hash.new(0) %>
-              
-              <% order.special_menus.each do |special_menu| %>
-                <p class="order-food-item pedido-special-menu" style="display: inline;"><%= special_menu.name %></p>
+          <td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
+          <td>
+          <% order.cart_items.each do |cart_item| %>              
+            <% if cart_item.special_menu.present? %>
+            <p class="order-food-item" style="display: inline;">
+            <%= cart_item.quantity %>x
+            <%= cart_item.special_menu.name %></p>
+            <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+              <p class="order-food-item pedido-special-menu" style="display: inline;"> 
+              <%= cart_item_food_item.food_item.name %>
+            </p><% end %><% if order.cart_items.where(special_menu_id: nil).count > 0 %>, <% end %>
+            <% end %>
+          <% end %>
+          <% order.cart_items.each do |cart_item| %>              
+            <% if cart_item.special_menu.present? %>
+            <p class="order-food-item" style="display: inline;">
+            <% cart_item.special_menu.food_types.where(have_to_select_one: nil).each do |food_type| %>
+              <% food_type.food_items.each do |food_item| %>
+                <p class="order-food-item" style="display: inline;"><%= cart_item.quantity %>x
+                <%= food_item.name %><% if food_type.food_items.last != food_item %>, <% end %>
+              </p>  
               <% end %>
-              
-              <% order.special_menus.each do |special_menu| %>
-                <% special_menu.food_types.where(have_to_select_one: nil).each do |food_type| %>
-                  <% food_type.food_items.each do |food_item| %>
-                    <% food_items_count[food_item.id] += 1 %>
-                  <% end %>
-                <% end %>
-              <% end %>
-
-              <% order.food_items.each do |food_item| %>
-                <% if SpecialMenuFoodItem.exists?(food_item: food_item) %>
-                  <% food_items_count[food_item.id] += 1 %>
-                <% end %>
-              <% end %>
-              
-              <% order.food_items.each do |food_item| %>
-                <% unless SpecialMenuFoodItem.exists?(food_item: food_item) %>
-                  <% food_items_count[food_item.id] += 1 %>
-                <% end %>
-              <% end %>
-              
-              <% food_items_count.each do |item_id, count| %>
-                <% item = FoodItem.find_by(id: item_id) %>
-                <% if item %>
-                  <% if comma_needed %>, <% end %>
-                  <% comma_needed = true %>
-                  <p class="order-food-item" style="display: inline;"><%= "#{count}x #{item.name}" %></p>
-                <% end %>
-              <% end %>
-              
-            </td>
-            <td><h6>1</h6></td>
-            <td><h6 class="pink"><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
-            <td>
-              <h6>Pagado</h6>
-            </td>
-          </tr>
+            <% end %>
+            
+            <% elsif cart_item.cart_item_food_items.present? %>
+            <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+              <p class="order-food-item" style="display: inline;">
+              <%= cart_item.quantity %>x
+                <%= cart_item_food_item.food_item.name %><% if order.cart_items.where(special_menu_id: nil).last.cart_item_food_items.first != cart_item_food_item %>, <% end %></p>
+            <% end %>
+            <% end %>
+          <% end %>
+            
+          </td>
+          <td><h6>1</h6></td>
+          <td><h6 class=""><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
+          <td>
+            <h6>Pagado</h6>
+          </td>
+        </tr>
+        
         <% end %>
       </tbody>
     </table>
