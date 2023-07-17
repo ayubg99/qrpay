@@ -1,44 +1,50 @@
 <tr>
-<td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
-<td>
-            <% comma_needed = false %>
+  <td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
+  <td>
+    <% comma_needed = false %>
+    
+    <% food_items_count = Hash.new(0) %>
+    
+    <% order.special_menus.each do |special_menu| %>
+      <p class="order-food-item pedido-special-menu" style="display: inline;"><%= special_menu.name %></p>
+    <% end %>
+    
+    <% order.special_menus.each do |special_menu| %>
+      <% special_menu.food_types.where(have_to_select_one: nil).each do |food_type| %>
+        <% food_type.food_items.each do |food_item| %>
+          <% food_items_count[food_item.id] += 1 %>
+        <% end %>
+      <% end %>
+    <% end %>
 
-            <% order.special_menus.each do |special_menu| %>
-              <p class="order-food-item pedido-special-menu" style="display: inline;"><%= special_menu.name %></p>
-            <% end %>
-            
-            <% order.special_menus.each do |special_menu| %>
-              <% special_menu.food_types.where(have_to_select_one: nil).each do |food_type| %>
-                <% food_type.food_items.each do |food_item| %>
-                  <% if comma_needed %>, <% end %>
-                  <% comma_needed = true %>
-                  <p class="order-food-item" style="display: inline;"><%= food_item.name %></p>
-                <% end %>
-              <% end %>
-            <% end %>
-            
-            <% order.food_items.each do |food_item| %>
-              <% if SpecialMenuFoodItem.exists?(food_item: food_item) %>
-                <% if comma_needed %>, <% end %>
-                <% comma_needed = true %>
-                <p class="order-food-item" style="display: inline;"><%= food_item.name %></p>
-              <% end %>
-            <% end %>
-
-            <% order.food_items.each do |food_item| %>
-              <% unless SpecialMenuFoodItem.exists?(food_item: food_item) %>
-                <% if comma_needed %>, <% end %>
-                <% comma_needed = true %>
-                <p class="order-food-item" style="display: inline;"><%= food_item.name %></p>
-              <% end %>
-            <% end %>
-          </td>
-<td><h6>1</h6></td>
-<td><h6 class="pink"><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
-<td>
-  <h6>Pagado</h6>
-</td>
-<td>
+    <% order.food_items.each do |food_item| %>
+      <% if SpecialMenuFoodItem.exists?(food_item: food_item) %>
+        <% food_items_count[food_item.id] += 1 %>
+      <% end %>
+    <% end %>
+    
+    <% order.food_items.each do |food_item| %>
+      <% unless SpecialMenuFoodItem.exists?(food_item: food_item) %>
+        <% food_items_count[food_item.id] += 1 %>
+      <% end %>
+    <% end %>
+    
+    <% food_items_count.each do |item_id, count| %>
+      <% item = FoodItem.find_by(id: item_id) %>
+      <% if item %>
+        <% if comma_needed %>, <% end %>
+        <% comma_needed = true %>
+        <p class="order-food-item" style="display: inline;"><%= "#{count}x #{item.name}" %></p>
+      <% end %>
+    <% end %>
+    
+  </td>
+  <td><h6>1</h6></td>
+  <td><h6 class="pink"><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
+  <td>
+    <h6>Pagado</h6>
+  </td>
+  <td>
     <%= link_to 'Hecho', restaurant_order_path(current_restaurant, order), method: :delete, class: 'btn btn-primary btn-dashboard' %>
-</td>
+  </td>
 </tr>

@@ -1,8 +1,8 @@
 class CartsController < ApplicationController
   before_action :set_restaurant
+  before_action :set_cart
 
   def show
-    @cart = current_cart
     @cart_items = @cart.cart_items.includes(:food_item, :special_menu)
 
     respond_to do |format|
@@ -12,39 +12,48 @@ class CartsController < ApplicationController
   end
   
   def add_to_cart
-    @cart = current_cart
     update_cart_activity(@cart)
 
     if params[:food_item_id].present?
       @cart_item = @cart.add_food_item(params[:food_item_id])
       if @cart_item.save
-        render json: { cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
+        render json: { quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity
       end
     elsif params[:special_menu_id].present?
       @cart_item = @cart.add_special_menu(params[:special_menu_id], params[:food_item_ids])
       if @cart_item.save
-        render json: { cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
+        render json: { quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity   
       end
     end
   end
 
-
- 
-
   def remove_from_cart
-    @cart = current_cart
-    @cart_item = @cart.cart_items.find(params[:id])
-    @cart_item.destroy
+    food_item_id = params[:food_item_id]
+    @cart_item = @cart.remove_food(food_item_id)
+    
+    if @cart_item.present? && @cart_item.save  # Check if the cart item was successfully destroyed
+      redirect_to @restaurant
+    else
+      redirect_back(fallback_location: @restaurant)
+    end
+  end
 
-    render json: { total_price: @cart.total_price }
+  def remove_special_menu
+    special_menu_id = params[:special_menu_id]
+    @cart_item = @cart.remove_special_menu(special_menu_id)
+    
+    if @cart_item.present? && @cart_item.save  # Check if the cart item was successfully destroyed
+      redirect_to @restaurant
+    else
+      redirect_back(fallback_location: @restaurant)
+    end
   end
 
   def clear_cart
-    @cart = current_cart
     @cart.cart_items.destroy_all
 
     respond_to do |format|
@@ -53,7 +62,20 @@ class CartsController < ApplicationController
     end
   end
 
+  def destroy
+    @cart.destroy if @cart.id == session[:cart_id]
+    session[:cart_id] = nil
+    respond_to do |format|
+      format.html { redirect_to @restaurant }
+      format.json { head :no_content }
+    end
+  end
+
   private
+
+  def set_cart
+    @cart = current_cart
+  end
 
   def set_restaurant 
     @restaurant = Restaurant.friendly.find(params[:restaurant_id])

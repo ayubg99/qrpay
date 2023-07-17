@@ -24,8 +24,11 @@
                   <% end %>
                   </p>
                 </div>
-                <div class="col-4 col-sm-4 col-md-4">
-                  <h6><%= number_to_currency(cart_item.special_menu.price, precision: 2, unit: '€') %> 
+                <div class="col-2 col-sm-2 col-md-2">
+                <h6 class="cart-item-quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
+                </div>
+                <div class="col-2 col-sm-2 col-md-2">
+                  <h6><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
                   <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
                    method: :delete, 
                    remote: true, 
@@ -38,12 +41,11 @@
             <div class="col-8 col-sm-8 col-md-8">
                 <h6><%= cart_item_food_item.food_item.name %></h6>
             </div>
-            <div class="col-4 col-sm-4 col-md-4">
-              <h6><%= number_to_currency(cart_item_food_item.food_item.price, precision: 2, unit: '€') %>
-              <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item), 
-              method: :delete, 
-              remote: true, 
-              class: 'btn remove-from-cart-link' %></h6>
+            <div class="col-2 col-sm-2 col-md-2">
+            <h6 class="cart-item-quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
+              <h6><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
             </div>
             </div>
             <% end %>
@@ -58,7 +60,7 @@
         </div>
       </div>
       <div class="modal-footer">
-      <%= link_to 'Vaciar Carrito', clear_cart_restaurant_cart_path(@restaurant), method: :delete, class: 'btn' %>
+      <%= link_to 'Anular', clear_cart_restaurant_cart_path(@restaurant), method: :delete, class: 'btn btn-danger clear-cart' %>
         <button type="button" class="btn btn btn-primary" data-dismiss="modal">Volver</button>
       </div>
     </div>
