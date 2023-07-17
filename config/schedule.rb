@@ -1,3 +1,4 @@
+require 'whenever'
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -19,10 +20,10 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 10.minutes do
+every 2.minutes do
     rake 'carts:cleanup'
 end
 
 every 30.minutes do
-    command "find #{Rails.root.join('public', 'receipts')}/*.pdf -mmin +15 -delete"
+    command "find /home/ayubxx/qrpay_dev/qrpay/public/receipts/*.pdf -mmin +15 -delete"
 end
