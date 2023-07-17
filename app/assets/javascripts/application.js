@@ -41,7 +41,10 @@ document.addEventListener('turbolinks:load', function() {
             <div class="col-8 col-sm-8 col-md-8">
               <h6>${response.food_item.name}</h6>
             </div>
-            <div class="col-4 col-sm-4 col-md-4">
+            <div class="col-2 col-sm-2 col-md-2">
+                <h6>x ${response.quantity}</h6>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
               <h6>€${formattedPrice}</h6>
             </div>
           </div>
@@ -58,6 +61,10 @@ document.addEventListener('turbolinks:load', function() {
     });
   });
 });
+
+
+
+
 
 
 document.addEventListener('turbolinks:load', function() {
@@ -97,7 +104,10 @@ document.addEventListener('turbolinks:load', function() {
               <h6>${response.special_menu.name}</h6>
               <p style="font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
             </div>
-            <div class="col-4 col-sm-4 col-md-4">
+            <div class="col-2 col-sm-2 col-md-2">
+                <h6>x ${response.quantity}</h6>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
               <h6>€${formattedPrice}</h6>
             </div>
           </div>
@@ -114,39 +124,6 @@ document.addEventListener('turbolinks:load', function() {
     });
   });
 });
-
-document.addEventListener('turbolinks:load', function() {
-  $('.remove-from-cart-link').on('click', function(e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    var cartItemElement = $(this).closest('.cart-item');
-
-    $.ajax({
-      url: url,
-      method: 'DELETE',
-      dataType: 'json',
-      success: function(response) {
-        // Remove the cart item from the DOM
-        cartItemElement.remove();
-
-        // Update cart item count dynamically
-        var cartItemCount = parseInt($('#cart-item-count').text());
-        $('#cart-item-count').text(cartItemCount - 1);
-
-        // Update cart total price
-        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
-        $('#cart-total-price').text('Total: €' + newTotalPrice);
-
-        console.log(response);
-      },
-      error: function(xhr, status, error) {
-        console.log(error);
-      }
-    });
-  });
-});
-
-
 
 document.addEventListener('turbolinks:load', function() {
   const stripe = Stripe('pk_test_51NS2OyIULic551znN5qUeq7168Gyt9bka1OWGD4jmbI8MkfJSy9axar3uiwSMoOTipm9lclj9eWqI7iRl7mEeufe000lH5hnuT'); // Replace with your own test publishable key
@@ -168,6 +145,13 @@ document.addEventListener('turbolinks:load', function() {
 
     // Disable the submit button to prevent multiple clicks
     submitButton.disabled = true;
+
+    if (cardElement._empty) {
+      // Display an error message or handle the validation error
+      errorElement.textContent = 'Please enter payment information.';
+      submitButton.disabled = false; // Re-enable the submit button
+      return;
+    }
 
     try {
       const { paymentIntent, error } = await stripe.confirmCardPayment(

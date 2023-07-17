@@ -29,13 +29,9 @@ Rails.application.routes.draw do
     end
     resource :cart, only: [:show] do
       post 'add_to_cart', to: 'carts#add_to_cart'
-      post 'add_special_menu', to: 'carts#add_special_menu_to_cart', as: 'add_special_menu'
-      delete 'cart_items/:id', to: 'carts#remove_from_cart', as: 'remove_from_cart'
+      delete 'remove_from_cart/:food_item_id', to: 'carts#remove_from_cart', as: 'remove_from_cart'
+      delete 'remove_special_menu/:special_menu_id', to: 'carts#remove_special_menu', as: 'remove_special_menu'
       delete 'clear_cart', to: 'carts#clear_cart', as: 'clear_cart'
-      resources :cart_items, only: [:create] do 
-        patch :increase_quantity, on: :member
-        patch :decrease_quantity, on: :member
-      end
     end
     resources :orders, only: [:new, :create, :destroy] do 
       collection do

@@ -67,40 +67,34 @@
       <!-- Add form fields for payment information -->
       <div class="form-group">
         <%= form.label :stripe_account_id, "Stripe account ID", class: 'control-label col-sm-4' %>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <%= form.text_field :stripe_account_id, value: '*********************', class: 'form-control', readonly: true %>
         </div>
       </div>
 
       <div class="form-group">
         <%= form.label :bank_account_number, "Número de cuenta bancaria", class: 'control-label col-sm-4' %>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <%= form.text_field :bank_account_number, value: '*********************', class: 'form-control', readonly: true %>
         </div>
       </div>
 
       <div class="form-group">
         <%= form.label :bank_routing_number, "Número de ruta bancaria", class: 'control-label col-sm-4' %>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <%= form.text_field :bank_routing_number, value: '*********************', class: 'form-control', readonly: true %>
         </div>
       </div>
 
       <div class="form-group">
         <%= form.label :bank_account_holder_name, "Nombre del titular de la cuenta", class: 'control-label col-sm-4' %>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <%= form.text_field :bank_account_holder_name, value: '*********************', class: 'form-control', readonly: true %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-6">
-          <%= form.submit 'Actualizar', class: 'btn btn-primary btn-margin-top' %>
         </div>
       </div>
     <% end %>
     <div class="password-section">
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <h3>Ingrese la contraseña para ver la informacion del cuenta bancaria</h3>
     </div>            
         <%= form_with url: { action: 'authenticate', method: :post } do |form| %>

@@ -1,39 +1,59 @@
-<% cart.cart_items.each do |cart_item| %>
+<style>
+  .cart-item td {
+    border: none; /* Remove borders */
+    padding: 5px; /* Increase spacing */
+  }
+
+  .cart-item-quantity {
+    margin-right: 10px; /* Increase space between quantity and price */
+  }
+
+  table tr td {
+    border-color: transparent !important; /* Make borders transparent */
+    border: none !important;
+  }
+
+  body {
+    border-color: transparent !important; /* Make borders transparent */
+    border: none !important;
+  }
+</style>
+
+<table>
+  <% cart.cart_items.each do |cart_item| %>
     <% if cart_item.special_menu.present? %>
-      <div class="row cart-item">
-        <div class="col-8 col-sm-8 col-md-8">
-          <h6><%= cart_item.special_menu.name %></h6>
-          <p style="font-size: 10px; color:rgb(128, 0, 255); font-weight:bold">
+      <tr class="cart-item">
+        <td>
+          <p><%= cart_item.special_menu.name %></p>
+          <p style="font-size: 10px; color: rgb(128, 0, 255);">
             <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
               <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
             <% end %>
           </p>
-        </div>
-        <div class="col-4 col-sm-4 col-md-4">
-          <h6><%= number_to_currency(cart_item.special_menu.price, precision: 2, unit: '€') %></h6>            
-        </div>
-      </div>  
+        </td>
+        <td></td>
+        <td></td>
+        <td><p>x <%= cart_item.quantity %></p></td>
+        <td><p><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %></p></td>
+      </tr>
     <% elsif cart_item.cart_item_food_items.present? %>
       <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-        <div class="row cart-item">
-          <div class="col-8 col-sm-8 col-md-8">
-            <h6><%= cart_item_food_item.food_item.name %></h6>
-          </div>
-          <div class="col-4 col-sm-4 col-md-4">
-            <h6><%= number_to_currency(cart_item_food_item.food_item.price, precision: 2, unit: '€') %></h6>
-          </div>
-        </div>
+        <tr class="cart-item">
+          <td>
+            <p><%= cart_item_food_item.food_item.name %></p>
+          </td>
+          <td></td>
+          <td></td>
+          <td><p class="cart-item-quantity">x <%= cart_item.quantity %></p></td>
+          <td><p><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></p></td>
+        </tr>
       <% end %>
     <% end %>
   <% end %>
 
-<div class="row">
-  <div class="col-8 col-sm-8 col-md-8">
-    <p>Total:</p>
-  </div>
-  <div class="col-4 col-sm-4 col-md-4">
-    <p><%= number_to_currency(cart.total_price, precision: 2, unit: '€') %></p>
-  </div>
-</div>
-<p>Método de Pago: Tarjeta Bancaria</p>
-
+  <tr> 
+    <td colspan="5">
+      <p>Total: <%= number_to_currency(cart.total_price, precision: 2, unit: '€') %></p>
+    </td>
+  </tr>
+</table>
