@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_14_205929) do
+ActiveRecord::Schema.define(version: 2023_07_17_151205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,8 +52,10 @@ ActiveRecord::Schema.define(version: 2023_07_14_205929) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "order_id"
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
     t.index ["food_item_id"], name: "index_cart_items_on_food_item_id"
+    t.index ["order_id"], name: "index_cart_items_on_order_id"
     t.index ["special_menu_id"], name: "index_cart_items_on_special_menu_id"
   end
 
@@ -260,6 +262,7 @@ ActiveRecord::Schema.define(version: 2023_07_14_205929) do
   add_foreign_key "cart_item_food_items", "food_items"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "food_items"
+  add_foreign_key "cart_items", "orders"
   add_foreign_key "cart_items", "special_menus"
   add_foreign_key "carts", "restaurants"
   add_foreign_key "categories", "restaurants"

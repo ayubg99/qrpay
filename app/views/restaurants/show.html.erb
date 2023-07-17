@@ -75,7 +75,7 @@
                 <div class="col-2 col-sm-2 col-md-2">
                   <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
                   <%= form.submit '+', class: "btn btn-primary" %>
-                  <%= link_to '-', remove_special_menu_restaurant_cart_path(@restaurant, special_menu_id: special_menu.id), method: :delete, class: "btn btn-danger" %>
+                  <%= link_to '-', remove_special_menu_restaurant_cart_path(@restaurant, special_menu_id: special_menu.id), method: :delete, class: "btn btn-danger clear-cart" %>
                   </div>
                 <% if special_menu.instructions.present? %>
                   <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
@@ -104,7 +104,7 @@
             <div class="col-2 col-sm-2 col-md-2">
               <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
               <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "btn btn-primary add-to-cartt", remote: true %>
-              <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-danger" %>
+              <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-danger clear-cart" %>
             </div>
           </div>
         <% end %>
