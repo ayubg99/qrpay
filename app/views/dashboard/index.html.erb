@@ -68,5 +68,77 @@
                 <% end %>
             </div>
             <% end %>
+
+
+    <% if session[:authenticated] %>
+      <div class="row">
+        <div class="col-md-8">
+          <div id="revenue_chart"></div>
+
+          <%= javascript_tag do %>
+            var revenues = <%= raw @revenues.to_json.html_safe %>;
+
+            var categories = revenues.map(function(item) {
+              return item[0].toString();
+            });
+
+            var data = revenues.map(function(item) {
+              return parseFloat(item[1]);
+            });
+
+
+            Highcharts.chart('revenue_chart', {
+              chart: {
+                style: {
+                  borderRadius: '10px', // Adjust the border radius here
+                },
+                backgroundColor: 'transparent'
+              },
+              title: {
+                enabled: false 
+              },
+              xAxis: {
+                categories: categories,
+                labels: {
+                  enabled: false
+                }
+              },
+              yAxis: {
+                labels: {
+                  enabled: false
+                }
+              },
+              series: [{
+                name: 'Ingresos del día',
+                data: data,
+                color: 'rgb(128, 0, 255)',
+                lineColor: 'rgb(128, 0, 255)',
+                style: {
+                  fontSize: '16px', // Adjust the font size here
+                }
+              }],
+              credits: {
+                enabled: false
+              }
+            });
+          <% end %>
         </div>
-    </section>
+      </div>
+    <% end %>
+  </div>
+</section>
+    
+
+<style>
+    .highcharts-title {
+      display: none;
+    }
+  
+    .highcharts-legend-item text {
+      font-size: 16px !important;
+    }
+  
+    .highcharts-yaxis {
+      display: none;
+    }
+</style>
