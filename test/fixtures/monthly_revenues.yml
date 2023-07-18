@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  month: 2023-07-18
+  revenue: 9.99
+  restaurant: one
+
+two:
+  month: 2023-07-18
+  revenue: 9.99
+  restaurant: two
