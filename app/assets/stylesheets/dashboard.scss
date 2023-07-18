@@ -37,9 +37,6 @@ body.dark{
   .table {
     color: #fff !important;
   }
-  .highcharts-xaxis-labels .highcharts-yaxis-labels .highcharts-title .highcharts-subtitle {
-    color: #fff !important;
-  }
 }
 
 /* ===== Sidebar ===== */
@@ -340,4 +337,13 @@ body.dark .home .text{
     position: relative;
     right: 15px;
   }
+}
+
+body.dark .highcharts-legend-item text.highcharts-series-0 {
+  fill: #fff !important;
+}
+
+body.dark #ingresos-series {
+  fill: #fff !important;
+  color: #fff !important;
 }

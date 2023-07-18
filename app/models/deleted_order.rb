@@ -2,24 +2,22 @@ class DeletedOrder < ApplicationRecord
     belongs_to :restaurant
     has_many :cart_items, dependent: :destroy
 
-    after_create :store_daily_revenue
-    after_create :store_daily_revenue
+    after_create :store_revenue
 
     private 
 
-    def store_daily_revenue
+    def store_revenue
         date = created_at.to_date
-        daily_revenue = restaurant.daily_revenues.find_or_initialize_by(date: date)
+        current_day = Date.today.day
+        current_month = Date.today.month
+        current_year = Date.today.year
+
+        daily_revenue = restaurant.daily_revenues.find_or_initialize_by(date: date, day: current_day, month: current_month, year: current_year)
         daily_revenue.revenue = (daily_revenue.revenue || 0) + total_price
         daily_revenue.save
-    end
 
-    def store_monthly_revenue
-        if created_at.end_of_month == Time.current.end_of_month
-          month = created_at.beginning_of_month
-          monthly_revenue = restaurant.monthly_revenues.find_or_initialize_by(month: month)
-          monthly_revenue.revenue = restaurant.daily_revenues.where(date: month..Time.current.end_of_month).sum(:revenue)
-          monthly_revenue.save
-        end
+        monthly_revenue = restaurant.monthly_revenues.find_or_initialize_by(month: current_month, year: current_year)
+        monthly_revenue.revenue = restaurant.daily_revenues.where(month: current_month, year: current_year).sum(:revenue)
+        monthly_revenue.save
     end
 end
