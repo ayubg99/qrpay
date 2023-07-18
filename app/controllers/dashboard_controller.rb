@@ -4,17 +4,27 @@ class DashboardController < ApplicationController
 
     def index
         @restaurant = current_restaurant
-        @orders_today = current_restaurant.deleted_orders.where("DATE(created_at) = ?", Date.today)
-        @orders_month = current_restaurant.deleted_orders.where("EXTRACT(MONTH FROM created_at) = ?", Date.today.month)
-        @orders_year = current_restaurant.deleted_orders.where("EXTRACT(YEAR FROM created_at) = ?", Date.today.year)
+        
+        @current_day_revenue = @restaurant.daily_revenues.where(day: Date.today.day, month: Date.today.month, year: Date.today.year).sum(:revenue)
+        @current_month_revenue = @restaurant.monthly_revenues.where(month: Date.today.month, year: Date.today.year).sum(:revenue)
+        @current_year_revenue = @restaurant.monthly_revenues.where(year: Date.today.year).sum(:revenue)
 
-        @sum_today = @orders_today.sum(:total_price)
-        @sum_month = @orders_month.sum(:total_price)
-        @sum_year = @orders_year.sum(:total_price)
 
-        @revenue_today = @sum_today - (@sum_today * 0.02)
-        @revenue_month = @sum_month - (@sum_month * 0.02)
-        @revenue_year = @sum_year - (@sum_year * 0.02)
+        @popular_food_items = FoodItem.joins(:cart_items)
+        .where(food_items: { restaurant_id: current_restaurant.id })
+        .group('food_items.id')
+        .order('SUM(cart_items.quantity) DESC')
+        .limit(5)
+
+        @popular_special_menus = SpecialMenu.joins(:cart_items)
+                      .where(special_menus: { restaurant_id: current_restaurant.id })
+                      .group('special_menus.id')
+                      .order('SUM(cart_items.quantity) DESC')
+                      .limit(5)
+
+
+        @revenues = current_restaurant.daily_revenues.where(month: Date.today.month, year: Date.today.year)
+                            .pluck(:date, :revenue)
     end
 
     def authenticate

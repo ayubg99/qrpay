@@ -332,8 +332,18 @@ body.dark .home .text{
 
 .password-section {
   margin-top: 20px;
+  margin-bottom: 50px;
   .btn {
     position: relative;
     right: 15px;
   }
+}
+
+body.dark .highcharts-legend-item text.highcharts-series-0 {
+  fill: #fff !important;
+}
+
+body.dark #ingresos-series {
+  fill: #fff !important;
+  color: #fff !important;
 }

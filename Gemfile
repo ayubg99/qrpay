@@ -71,3 +71,4 @@ gem 'whenever', require: false
 gem 'stripe'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'lazy_high_charts'

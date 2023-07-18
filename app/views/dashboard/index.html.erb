@@ -1,6 +1,6 @@
     <%= render 'layouts/header' %>
 
-    <section class="home" style="height: 100%">
+    <section class="home dashboard-index">
         <div class="container">
             <h1>Bienvenido a <%= @restaurant.name %></h1>
             <div class="row">
@@ -8,7 +8,7 @@
                     <div class="profit-box">
                         <% if session[:authenticated] %>
                             <h2>Ingresos del día</h2>
-                            <h3><%= number_to_currency(@revenue_today) %></h3>
+                            <h3><%= number_to_currency(@current_day_revenue) %></h3>
                         <% else %>
                             <h2>Ingresos del día</h2>
                             <h3>******</h3>
@@ -19,7 +19,7 @@
                     <div class="profit-box">
                     <% if session[:authenticated] %>
                         <h2>Ingresos del mes</h2>
-                        <h3><%= number_to_currency(@revenue_month) %></h3>
+                        <h3><%= number_to_currency(@current_month_revenue) %></h3>
                     <% else %>
                         <h2>Ingresos del mes</h2>
                         <h3>******</h3>
@@ -30,7 +30,7 @@
                     <div class="profit-box">
                     <% if session[:authenticated] %>
                         <h2>Ingresos del año</h2>
-                        <h3><%= number_to_currency(@revenue_year) %></h3>
+                        <h3><%= number_to_currency(@current_year_revenue) %></h3>
                     <% else %>
                         <h2>Ingresos del año</h2>
                         <h3>******</h3>
@@ -68,5 +68,166 @@
                 <% end %>
             </div>
             <% end %>
+
+
+    <% if session[:authenticated] %>
+      <div class="row">
+        <div class="col-10 col-md-10">
+          <div id="revenue_chart"></div>
+
+          <%= javascript_tag do %>
+            var revenues = <%= raw @revenues.to_json.html_safe %>;
+
+            var categories = revenues.map(function(item) {
+              return item[0].toString();
+            });
+
+            var data = revenues.map(function(item) {
+              return parseFloat(item[1]);
+            });
+
+
+            Highcharts.chart('revenue_chart', {
+              chart: {
+                style: {
+                  borderRadius: '10px', // Adjust the border radius here
+                },
+                backgroundColor: 'transparent'
+              },
+              title: {
+                enabled: false 
+              },
+              xAxis: {
+                categories: categories,
+                labels: {
+                  enabled: false,
+                  style: {
+                    color: 'white', // Set the color of the x-axis labels to white
+                  },
+                  formatter: function() {
+                    return Highcharts.dateFormat('%e', new Date(this.value));
+                  }
+                }
+              },
+              yAxis: {
+                labels: {
+                  enabled: false
+                }
+              },
+              series: [{
+                name: 'Ingresos',
+                data: data,
+                color: 'rgb(128, 0, 255)',
+                lineColor: 'rgb(128, 0, 255)',
+                lineWidth: 2
+              }],
+              credits: {
+                enabled: false
+              },
+              legend: {
+                itemStyle: {
+                  fontSize: '14px', // Set the desired color for legend items
+                },
+              },
+              tooltip: {
+                style: {
+                  fontSize: '14px'
+                },
+                pointFormatter: function() {
+        return '<span style="color:' + this.color + '">\u25CF</span> ' + this.y.toFixed(2) + '€';
+      }
+              }
+            });
+          <% end %>
         </div>
-    </section>
+      </div>
+    <% end %>
+
+
+<div class="row dashboard-index-margin">
+
+  <h2 class="dashboard-title-margin">Menus especiales populares</h2>
+  <% @popular_special_menus.each_slice(2) do |special_menus| %>
+  <% special_menus.each do |special_menu| %>
+    <div class="col-6 col-sm-12 col-md-6">
+    <div class="special-menu-container container">
+        <%= form_with(url: '#', method: :post, local: true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
+        <%= form.hidden_field :special_menu_id, value: special_menu.id %>
+        <h4 class="special-menu-name"><%= special_menu.name %></h4>
+        <div class="row">
+          <div class="col-4 col-sm-4 col-md-4">
+            <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
+            <h4><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h4> 
+            <%= form.submit '', class: "btn btn-primary invisible" %>        
+          </div>
+          <div class="col-8 col-sm-8 col-md-8">
+            <p><%= simple_format(special_menu.description) %></p>
+            <% special_menu.food_types.each do |food_type| %>
+              <div class="form-group">
+                <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
+                <% if food_type.have_to_select_one == true %>
+                <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control'  %>
+                <% else %>
+                  <p>
+                    <% food_type.food_items.each do |food_item| %>
+                      <%= food_item.name.upcase %> <% if food_type.food_items.last != food_item %>- <% end %> 
+                    <% end %>
+                  </p>
+                <% end %>
+              </div>
+            <% end %><br>
+          </div>
+          <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
+        </div>
+      <% end %>
+    </div>
+    </div>
+    <% end %>
+    <% end %>
+    </div>
+    <div class="row dashboard-index-margin">
+  <h2 class="dashboard-title-margin">Comida popular</h2> 
+  <% @popular_food_items.each_slice(2) do |food_items| %>
+    <% food_items.each do |food_item| %>
+    <div class="col-6 col-sm-6 col-md-6">
+              <div class="row food-item-container">
+                <div class="col-4 col-sm-4 col-md-4">
+                  <%= image_tag food_item.image, class: "menu-image menu-item", style: "height: 120px" if food_item.image.attached? %>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6">
+                  <h5><%= food_item.name.upcase %></h5>
+                  <p><%= simple_format(food_item.description) %></p>
+                </div>
+                <div class="col-2 col-sm-2 col-md-2">
+                  <h5><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h5>
+                </div>
+              </div>
+              </div>
+              <% end %>
+  <% end %>
+</div>
+  </div>
+</section>
+    
+
+<style>
+    .highcharts-title {
+      display: none;
+    }
+  
+    body.dark .highcharts-legend-item text {
+      fill: white !important; 
+      color: white !important;
+    }
+  
+    .highcharts-yaxis {
+      display: none;
+    }
+
+    body.dark #ingresos-series {
+      fill: #fff !important;
+      color: #fff !important;
+    }
+
+</style>
+
