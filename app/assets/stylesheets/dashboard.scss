@@ -37,6 +37,9 @@ body.dark{
   .table {
     color: #fff !important;
   }
+  .highcharts-xaxis-labels .highcharts-yaxis-labels .highcharts-title .highcharts-subtitle {
+    color: #fff !important;
+  }
 }
 
 /* ===== Sidebar ===== */
@@ -332,6 +335,7 @@ body.dark .home .text{
 
 .password-section {
   margin-top: 20px;
+  margin-bottom: 50px;
   .btn {
     position: relative;
     right: 15px;

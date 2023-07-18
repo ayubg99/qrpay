@@ -15,6 +15,9 @@ class DashboardController < ApplicationController
         @revenue_today = @sum_today - (@sum_today * 0.02)
         @revenue_month = @sum_month - (@sum_month * 0.02)
         @revenue_year = @sum_year - (@sum_year * 0.02)
+
+        @revenues = current_restaurant.daily_revenues.where(date: Date.today.beginning_of_month..Date.today)
+                            .pluck(:date, :revenue)
     end
 
     def authenticate

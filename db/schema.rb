@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_17_192830) do
+ActiveRecord::Schema.define(version: 2023_07_18_112015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,15 @@ ActiveRecord::Schema.define(version: 2023_07_17_192830) do
     t.string "restaurant_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "daily_revenues", force: :cascade do |t|
+    t.date "date"
+    t.decimal "revenue"
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_daily_revenues_on_restaurant_id"
   end
 
   create_table "deleted_order_cart_items", force: :cascade do |t|
@@ -167,6 +176,15 @@ ActiveRecord::Schema.define(version: 2023_07_17_192830) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "monthly_revenues", force: :cascade do |t|
+    t.date "month"
+    t.decimal "revenue"
+    t.bigint "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_monthly_revenues_on_restaurant_id"
   end
 
   create_table "order_food_items", force: :cascade do |t|
@@ -278,6 +296,7 @@ ActiveRecord::Schema.define(version: 2023_07_17_192830) do
   add_foreign_key "cart_items", "special_menus"
   add_foreign_key "carts", "restaurants"
   add_foreign_key "categories", "restaurants"
+  add_foreign_key "daily_revenues", "restaurants"
   add_foreign_key "deleted_order_cart_items", "cart_items"
   add_foreign_key "deleted_order_cart_items", "deleted_orders"
   add_foreign_key "deleted_order_food_items", "deleted_orders"
@@ -289,6 +308,7 @@ ActiveRecord::Schema.define(version: 2023_07_17_192830) do
   add_foreign_key "food_type_food_items", "food_items"
   add_foreign_key "food_type_food_items", "food_types", on_delete: :cascade
   add_foreign_key "food_types", "special_menus"
+  add_foreign_key "monthly_revenues", "restaurants"
   add_foreign_key "order_food_items", "food_items"
   add_foreign_key "order_food_items", "orders"
   add_foreign_key "order_special_menus", "orders"
