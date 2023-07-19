@@ -14,8 +14,13 @@ class Restaurant < ApplicationRecord
     has_many :deleted_orders, dependent: :destroy
     has_many :daily_revenues
     has_many :monthly_revenues
+
+    validates :name, presence: true
+    validates :address, presence: true
+    validates :phone_number, presence: true
     
     friendly_id :name, use: :slugged
 
     attr_accessor :current_password
 end
+

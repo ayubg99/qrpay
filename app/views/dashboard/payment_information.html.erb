@@ -1,7 +1,7 @@
 <%= render 'layouts/header' %>
 
 <section class="home" style="height: 100%">
-  <div class="container" style="margin-top: 10px">
+  <div class="container dashboard-index" style="margin-top: 10px">
   <h2>Información de cuenta bancaria</h2>
   <% if session[:authenticated] %>
     <%= form_for(@restaurant, url: update_payment_information_path(@restaurant), html: { class: 'form-horizontal' }) do |form| %>

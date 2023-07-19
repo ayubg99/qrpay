@@ -8,8 +8,10 @@ class FoodItem < ApplicationRecord
   has_many :special_menu_food_items, dependent: :destroy
   
   has_one_attached :image
-
   before_save :name_uppercase
+
+  validates :name, presence: true
+  validates :price, presence: true
   
   def name_uppercase 
     self.name = self.name.upcase
