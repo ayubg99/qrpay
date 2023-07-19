@@ -4,6 +4,8 @@ class Category < ApplicationRecord
 
   before_save :name_uppercase
 
+  validates :name, presence: true
+
   def name_uppercase 
     self.name = self.name.upcase
   end
