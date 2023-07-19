@@ -4,7 +4,7 @@ class Table < ApplicationRecord
   has_one_attached :qrcode, dependent: :destroy
   before_commit :generate_qrcode, on: :create
 
-  validates :table_number, uniqueness: { scope: :restaurant_id }
+  validates :table_number, presence: true, uniqueness: { scope: :restaurant_id }
 
   private
 
