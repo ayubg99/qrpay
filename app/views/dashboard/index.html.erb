@@ -192,7 +192,7 @@
     <div class="col-6 col-sm-6 col-md-6">
               <div class="row food-item-container">
                 <div class="col-4 col-sm-4 col-md-4">
-                  <%= image_tag food_item.image, class: "menu-image menu-item", style: "height: 120px" if food_item.image.attached? %>
+                  <%= image_tag food_item.image, class: "menu-image menu-item", style: "max-height: 220px" if food_item.image.attached? %>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6">
                   <h5><%= food_item.name.upcase %></h5>
