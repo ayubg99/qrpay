@@ -7,7 +7,7 @@ class DeletedOrder < ApplicationRecord
     private 
 
     def store_revenue
-        date = created_at.to_date
+        date = Date.today
         current_day = Date.today.day
         current_month = Date.today.month
         current_year = Date.today.year
