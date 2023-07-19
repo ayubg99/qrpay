@@ -444,3 +444,28 @@ body {
 .dashboard-index {
   padding-bottom: 80px;
 }
+
+.custom-fixed-nav-tabs {
+  background: transparent; /* Add background color to match your design */
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.custom-fixed-nav-tabs .nav-link {
+  color: #000; /* Set the text color to black */
+  border: none;
+  font-size: 16px;
+}
+
+.custom-fixed-nav-tabs .nav-link.active {
+  background-color: rgb(128, 0, 255);
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+
+}
+
+.special-menus {
+  margin-bottom: 40px;
+}
