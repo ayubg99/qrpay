@@ -146,12 +146,9 @@
 
 <script>
   var restaurantId = <%= @restaurant.id %>;
-</script>
-
-<script>
-  // ... Existing JavaScript code ...
 
   $(document).ready(function() {
+    $('.category-content, .special-menus-content').show();
     $('.nav-link').click(function(e) {
       e.preventDefault();
       const targetCategory = $(this).data('category-target');
@@ -175,3 +172,4 @@
     });
   });
 </script>
+
