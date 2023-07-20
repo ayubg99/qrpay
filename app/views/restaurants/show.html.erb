@@ -42,9 +42,30 @@
   <h1>
     <%= @restaurant.name %>
   </h1>
+
+
+
     <div class="row">
+    <ul class="nav nav-tabs custom-fixed-nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#" data-category-target="all">TODOS</a>
+  </li>
+  <li class="nav-item">
+  <a class="nav-link" href="#" data-category-target="#special-menus">MENÚS ESPECIALES</a>
+</li>
+  <% @restaurant.categories.each_with_index do |category, index| %>
+    <% if category.food_items.present? %>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-category-target="#category<%= index %>"><%= category.name %></a>
+      </li>
+    <% end %>
+  <% end %>
+
+</ul>
       <div class="col-md-12 tables-margin-top">
-      <h2 class="menu-name" style="margin-top:10px">Nuestros Menús</h2>
+      <div id="special-menus" class="special-menus category-content special-menus-content">
+      <h4 class="menu-name">MENÚS ESPECIALES</h4>
+
       <% @restaurant.special_menus.each do |special_menu| %>
         <% if special_menu.in_time_range? %>
           <div class="special-menu-container container">
@@ -86,8 +107,12 @@
           </div>
         <% end %>
       <% end %>
-      <h2 class="menu-name" style="margin-top:10px">Carta</h2>
-      <% @restaurant.categories.each do |category| %>
+      </div>
+      <h4 class="menu-name">CARTA</h4>
+
+      <% @restaurant.categories.each_with_index do |category, index| %> 
+        <% if category.food_items.present? %>
+        <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
         <h4><%= category.name %></h4>
         <% category.food_items.each do |food_item| %>
           <div class="row food-item-container">
@@ -107,8 +132,10 @@
               <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-danger clear-cart" %>
             </div>
           </div>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
+        <% end %>
       </div>
       <div class="col-md-5 tables-margin-top">
         <!-- Cart -->
@@ -119,4 +146,32 @@
 
 <script>
   var restaurantId = <%= @restaurant.id %>;
+</script>
+
+<script>
+  // ... Existing JavaScript code ...
+
+  $(document).ready(function() {
+    $('.nav-link').click(function(e) {
+      e.preventDefault();
+      const targetCategory = $(this).data('category-target');
+
+      // Remove .active class from all links
+      $('.nav-link').removeClass('active');
+
+      // Add .active class to the clicked link
+      $(this).addClass('active');
+
+      // Handle showing/hiding category content and special menus
+      if (targetCategory === 'all') {
+        $('.category-content, .special-menus-content').show();
+      } else if (targetCategory === '#special-menus') {
+        $('.category-content').hide();
+        $('.special-menus-content').show();
+      } else {
+        $('.category-content, .special-menus-content').hide();
+        $(targetCategory).show();
+      }
+    });
+  });
 </script>
