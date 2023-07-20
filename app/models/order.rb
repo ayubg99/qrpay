@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   has_many :cart_items, dependent: :nullify
 
   after_create :create_order_history
+  before_destroy :clear_cart_items
 
   def add_cart_items_from_cart(cart)
 		cart.cart_items.each do |item|
@@ -12,16 +13,23 @@ class Order < ApplicationRecord
 	end
 
 	def create_order_history
-        deleted_order = DeletedOrder.new( 
-          restaurant_id: restaurant_id,
-          total_price: total_price,
-          order_date: created_at
-        )
+    deleted_order = DeletedOrder.new( 
+      restaurant_id: restaurant_id,
+      total_price: total_price,
+      order_date: created_at
+    )
 
-        cart_items.each do |cart_item|
-			    deleted_order.cart_items << cart_item
-        end
-
-        deleted_order.save
+    cart_items.each do |cart_item|
+			deleted_order.cart_items << cart_item
     end
+
+    deleted_order.save
+  end
+
+  def clear_cart_items
+    cart_items.each do |item|
+			item.order_id = nil
+      item.save
+		end    
+  end
 end
