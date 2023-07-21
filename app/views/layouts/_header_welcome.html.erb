@@ -28,16 +28,10 @@
           <%= link_to "Log In", new_restaurant_session_path, class: 'nav-link' %>
         </li>
       <% end %>
-      <% if admin_signed_in? %>
-        <li class="nav-item">
-          <%= link_to "Admin Log Out", destroy_admin_session_path, method: :delete, class: 'nav-link' %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Admin Log In", new_admin_session_path, class: 'nav-link' %>
-        </li>
-      <% end %>
-      <% end %>
+    <% end %>
+    <li class="nav-item">
+      <%= link_to "Solicita una demo", new_contact_path, class: 'nav-link btn btn-primary btn-dashboard' %>
+    </li>
     </ul>
   </div>
   <% if controller_name == 'restaurants' && action_name == 'show' %>
