@@ -33,16 +33,16 @@
                 </p>
               <% end %>
             </div>
-            <%= link_to "Modificar", edit_restaurant_special_menu_food_type_path(current_restaurant, special_menu, food_type), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
-            <%= link_to 'Eliminar', restaurant_special_menu_food_type_path(current_restaurant, special_menu, food_type), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
+            <%= link_to "Modificar", edit_restaurant_special_menu_food_type_path(@restaurant, special_menu, food_type), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
+            <%= link_to 'Eliminar', restaurant_special_menu_food_type_path(@restaurant, special_menu, food_type), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
           <% end %><br>
-          <%= link_to "Añadir categoría", new_restaurant_special_menu_food_type_path(current_restaurant, special_menu), class: "btn btn-primary btn-dashboard btn-margin-top" %>
+          <%= link_to "Añadir categoría", new_restaurant_special_menu_food_type_path(@restaurant, special_menu), class: "btn btn-primary btn-dashboard btn-margin-top" %>
         </div>
         <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
       </div>
     <% end %>
-    <%= link_to "Modificar", edit_restaurant_special_menu_path(current_restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-dashboard" %>
-  <%= link_to 'Eliminar', restaurant_special_menu_path(@current_restaurant, special_menu), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-dashboard' %>
+    <%= link_to "Modificar", edit_restaurant_special_menu_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-dashboard" %>
+  <%= link_to 'Eliminar', restaurant_special_menu_path(@restaurant, special_menu), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-dashboard' %>
   </div>
   </div>
   <% end %>

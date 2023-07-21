@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Restaurants::SessionsController < Devise::SessionsController
+class Admins::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -17,10 +17,6 @@ class Restaurants::SessionsController < Devise::SessionsController
   # def destroy
   #   super
   # end
-
-  def after_sign_in_path_for(resource)
-    restaurant_dashboard_path(current_restaurant)
-  end
 
   # protected
 

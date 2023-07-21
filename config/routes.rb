@@ -1,20 +1,28 @@
 Rails.application.routes.draw do
   
+  devise_for :admins, controllers: {
+    registrations: 'admins/registrations',
+    sessions: 'admins/sessions'
+  }
   resources :contacts
   root 'welcome#index'
-  devise_for :restaurants, controllers: { registrations: 'restaurants/registrations' }
-  get '/dashboard', to: 'dashboard#index', as: 'dashboard'
-  get '/dashboard/orders', to: 'dashboard#orders', as: 'dashboard_orders'
-  get '/dashboard/history', to: 'dashboard#history', as: 'dashboard_history'
-  get '/dashboard/tables', to: 'dashboard#tables', as: 'dashboard_tables'
-  get '/dashboard/menu', to: 'dashboard#menu', as: 'dashboard_menu'
-  get '/dashboard/special_menus', to: 'dashboard#special_menus', as: 'dashboard_special_menus'
-  get '/dashboard/payment_information', to: 'dashboard#payment_information', as: 'dashboard_payment_information'
-  patch '/dashboard/update_payment_information', to: 'dashboard#update_payment_information', as: 'update_payment_information'
-  post '/dashboard/authenticate', to: 'dashboard#authenticate', as: 'authenticate_dashboard'
-  post '/dashboard/unauthenticate', to: 'dashboard#unauthenticate', as: 'unauthenticate_dashboard'
+  devise_for :restaurants, controllers: { 
+    registrations: 'restaurants/registrations',
+    sessions: 'restaurants/sessions' 
+  }
 
+  get '/admin_dashboard', to: 'admin_dashboard#index', as: 'admin_dashboard'
   resources :restaurants do 
+    get '/dashboard', to: 'dashboard#index', as: 'dashboard'
+    get '/dashboard/orders', to: 'dashboard#orders', as: 'dashboard_orders'
+    get '/dashboard/history', to: 'dashboard#history', as: 'dashboard_history'
+    get '/dashboard/tables', to: 'dashboard#tables', as: 'dashboard_tables'
+    get '/dashboard/menu', to: 'dashboard#menu', as: 'dashboard_menu'
+    get '/dashboard/special_menus', to: 'dashboard#special_menus', as: 'dashboard_special_menus'
+    get '/dashboard/payment_information', to: 'dashboard#payment_information', as: 'dashboard_payment_information'
+    patch '/dashboard/update_payment_information', to: 'dashboard#update_payment_information', as: 'update_payment_information'
+    post '/dashboard/authenticate', to: 'dashboard#authenticate', as: 'authenticate_dashboard'
+    post '/dashboard/unauthenticate', to: 'dashboard#unauthenticate', as: 'unauthenticate_dashboard'  
     resources :categories
     resources :food_items
     resources :special_menus do 
