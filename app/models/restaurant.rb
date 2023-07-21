@@ -18,9 +18,18 @@ class Restaurant < ApplicationRecord
     validates :name, presence: true
     validates :address, presence: true
     validates :phone_number, presence: true
+    validates :city, presence: true
+    validates :country, presence: true
+    validates :postal_code, presence: true
+
+    validate :phone_number_with_prefix
     
     friendly_id :name, use: :slugged
 
     attr_accessor :current_password
+
+    def phone_number_with_prefix
+        errors.add(:phone_number, "must include an international prefix") unless phone_number =~ /\A\+\d+\d+\z/
+    end
 end
 

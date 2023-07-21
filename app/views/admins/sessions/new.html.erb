@@ -1,0 +1,23 @@
+<%= render 'layouts/header_welcome' %>
+
+<div class="container d-flex justify-content-center align-items-center demo-form" style="margin-top: 100px; margin-bottom: 270px;">
+  <div class="col-md-5">
+    <h2>Iniciar sesión</h2>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name),  class: "contact-form") do |f| %>
+      <div class="form-group">
+        <%= f.label "correo electrónico" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "contraseña" %><br />
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Log in", class: "btn btn-primary restaurant-demo-btn" %>
+      </div>
+    <% end %>
+  </div>
+</div>

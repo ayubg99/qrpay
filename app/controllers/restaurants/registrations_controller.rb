@@ -61,11 +61,11 @@ class Restaurants::RegistrationsController < Devise::RegistrationsController
 
   private
   def sign_up_params
-    params.require(:restaurant).permit(:name, :address, :email, :password, :password_confirmation, :phone_number)
+    params.require(:restaurant).permit(:name, :address, :email, :phone_number, :city, :country, :postal_code, :password, :password_confirmation)
   end
 
   def account_update_params
-    params.require(:restaurant).permit(:name, :address, :email, :password, :password_confirmation, :current_password, :phone_number)
+    params.require(:restaurant).permit(:name, :address, :email, :phone_number, :city, :country, :postal_code, :password, :password_confirmation, :current_password)
   end
 
   def after_update_path_for(resource)

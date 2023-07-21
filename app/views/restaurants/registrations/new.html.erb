@@ -1,9 +1,10 @@
-<%= render 'layouts/header_welcome' %>
+<%= render 'layouts/header_admin' %>
 
-
-<div class="container d-flex justify-content-center align-items-center" style="margin-top: 70px;">
+<section class="home" style="height: 100%; padding-top: 80px">
+  <div class="container">
+<div class="container d-flex align-items-center">
   <div class="col-md-6">
-    <h2>Solicitar una demo</h2>
+    <h2>Nuevo restaurante</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name),  class: "contact-form") do |f| %>
       <%= render "restaurants/shared/error_messages", resource: resource %>
@@ -29,6 +30,21 @@
       </div>
 
       <div class="form-group">
+        <%= f.label :city, "Ciudad" %>
+        <%= f.text_field :city, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :country, "País" %>
+        <%= f.text_field :country, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :postal_code, "Còdigo postal" %>
+        <%= f.text_field :postal_code, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
         <%= f.label "contraseña" %>
         <% if @minimum_password_length %>
         <% end %><br />
@@ -41,8 +57,10 @@
       </div>
 
       <div class="actions">
-        <%= f.submit "solicita una demo", class: "btn btn-primary restaurant-demo-btn" %>
+        <%= f.submit "Guardar", class: "btn btn-primary restaurant-demo-btn" %>
       </div>
     <% end %>
   </div>
 </div>
+</div>
+</section>

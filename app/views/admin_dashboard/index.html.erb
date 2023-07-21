@@ -2,7 +2,6 @@
 
 <section class="home dashboard-index">
 <div class="container">
-<p id="notice"><%= notice %></p>
 
 <h1>Restaurantes</h1>
 
@@ -12,6 +11,9 @@
       <th>Nombre</th>
       <th>Dirección</th>
       <th>Número de teléfono</th>
+      <th>Ciudad</th>
+      <th>País</th>
+      <th>Còdigo postal</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,10 +21,13 @@
   <tbody>
     <% @restaurants.each do |restaurant| %>
       <tr>
-        <td><%= restaurant.name %></td>
-        <td><%= restaurant.address %></td>
-        <td><%= restaurant.phone_number %></td>
-        <td><%= link_to 'Show', restaurant_dashboard_path(restaurant), class: 'btn btn-primary btn-dashboard' %></td>
+        <td class="admin-restaurants"><%= restaurant.name %></td>
+        <td class="admin-restaurants"><%= restaurant.address %></td>
+        <td class="admin-restaurants"><%= restaurant.phone_number %></td>
+        <td class="admin-restaurants"><%= restaurant.city %></td>
+        <td class="admin-restaurants"><%= restaurant.country %></td>
+        <td class="admin-restaurants"><%= restaurant.postal_code %></td>
+        <td class="admin-restaurants"><%= link_to 'Ver', restaurant_dashboard_path(restaurant), class: 'btn btn-primary btn-dashboard' %></td>
       </tr>
     <% end %>
   </tbody>

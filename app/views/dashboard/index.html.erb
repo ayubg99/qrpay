@@ -2,16 +2,11 @@
 
     <section class="home dashboard-index">
         <div class="container">
-          <% if current_admin %>
-            <%= link_to admin_dashboard_path, class: 'btn btn-primary btn-margin-bottom' do %>
-              <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
-            <% end %>
-          <% end %>
             <h1>Bienvenido a <%= @restaurant.name %></h1>
             <div class="row">
                 <div class="col-md-4">
                     <div class="profit-box">
-                        <% if session[:authenticated] || current_admin %>
+                        <% if session[:authenticated] %>
                             <h2>Ingresos del día</h2>
                             <h3><%= number_to_currency(@current_day_revenue) %></h3>
                         <% else %>
@@ -22,7 +17,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="profit-box">
-                    <% if session[:authenticated] || current_admin %>
+                    <% if session[:authenticated] %>
                         <h2>Ingresos del mes</h2>
                         <h3><%= number_to_currency(@current_month_revenue) %></h3>
                     <% else %>
@@ -33,7 +28,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="profit-box">
-                    <% if session[:authenticated] || current_admin %>
+                    <% if session[:authenticated] %>
                         <h2>Ingresos del año</h2>
                         <h3><%= number_to_currency(@current_year_revenue) %></h3>
                     <% else %>
@@ -43,7 +38,7 @@
                     </div>
                 </div>
             </div>    
-            <% unless session[:authenticated] || current_admin %>
+            <% unless session[:authenticated] %>
             <div class="password-section">
                 <h2>Ingrese la contraseña para ver los ingresos</h2>
                 <%= form_with url: { action: 'authenticate', method: :post } do |form| %>
@@ -58,7 +53,7 @@
                 <% end %>
             </div>
             <% end %>
-            <% if session[:authenticated] && !current_admin %>
+            <% if session[:authenticated] %>
             <div class="password-section">
                 <h2>Ingrese la contraseña para ocultar los ingresos</h2>
                 <%= form_with url: { action: 'unauthenticate', method: :post } do |form| %>
@@ -75,7 +70,7 @@
             <% end %>
 
 
-    <% if session[:authenticated] || current_admin %>
+    <% if session[:authenticated] %>
       <div class="row">
         <div class="col-10 col-md-10">
           <div id="revenue_chart"></div>
