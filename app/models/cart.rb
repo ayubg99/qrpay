@@ -21,11 +21,7 @@ class Cart < ApplicationRecord
     special_menu = SpecialMenu.find_by(id: special_menu_id)
     if special_menu.present?
       cart_item = cart_items.find_by(special_menu_id: special_menu_id)
-      if cart_item.present?
-        cart_item.quantity += 1
-      else 
-        cart_item = cart_items.build(quantity: 1, special_menu_id: special_menu_id)
-      end
+      cart_item = cart_items.build(quantity: 1, special_menu_id: special_menu_id)
       
       if food_item_ids.present?
         food_item_ids.each do |food_type_id, food_item_id|

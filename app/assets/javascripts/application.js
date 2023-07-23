@@ -35,24 +35,35 @@ document.addEventListener('turbolinks:load', function() {
         var cartItemCount = parseInt($('#cart-item-count').text());
         $('#cart-item-count').text(cartItemCount + 1);
 
-        // Format the price with two decimal places
-        var formattedPrice = parseFloat(response.food_item.price).toFixed(2);
+        // Check if the cart item already exists
+        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item.food_item_id}"]`);
 
-        // Append the new cart item to the cart items list
-        var cartItemHtml = `
-          <div class="row cart_item">
-            <div class="col-8 col-sm-8 col-md-8">
-              <h6>${response.food_item.name}</h6>
+        if (existingCartItem.length > 0) {
+          // Update the quantity of the existing cart item
+          var newQuantity = response.quantity;
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
+          var newPrice = parseFloat(response.food_item.price * newQuantity).toFixed(2);
+          existingCartItem.find('.price').text(newPrice);
+        } else {
+          // Format the price with two decimal places
+          var formattedPrice = parseFloat(response.food_item.price).toFixed(2);
+
+          // Append the new cart item to the cart items list
+          var cartItemHtml = `
+            <div class="row cart_item" data-food-id="${response.cart_item.food_item_id}">
+              <div class="col-8 col-sm-8 col-md-8">
+                <h6>${response.food_item.name}</h6>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h6 class="quantity">x ${response.quantity}</h6>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h6 class="price">€${formattedPrice}</h6>
+              </div>
             </div>
-            <div class="col-2 col-sm-2 col-md-2">
-                <h6>x ${response.quantity}</h6>
-            </div>
-            <div class="col-2 col-sm-2 col-md-2">
-              <h6>€${formattedPrice}</h6>
-            </div>
-          </div>
-        `;
-        $('#cart-items').append(cartItemHtml);
+          `;
+          $('#cart-items').append(cartItemHtml);
+        }
 
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
@@ -64,11 +75,6 @@ document.addEventListener('turbolinks:load', function() {
     });
   });
 });
-
-
-
-
-
 
 document.addEventListener('turbolinks:load', function() {
   // Special menu form submission

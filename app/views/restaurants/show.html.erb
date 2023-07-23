@@ -129,7 +129,7 @@
             <div class="col-2 col-sm-2 col-md-2">
               <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
               <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "btn btn-primary add-to-cartt", remote: true %>
-              <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-danger clear-cart" %>
+              <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-danger remove-cart-item" %>
             </div>
           </div>
           <% end %>

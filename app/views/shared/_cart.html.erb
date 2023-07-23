@@ -15,20 +15,20 @@
         <div id="cart-items">
           <% current_cart.cart_items.each do |cart_item| %>              
             <% if cart_item.special_menu.present? %>
-              <div class="row cart-item">
+              <div class="row cart-item" data-menu-id="<%= cart_item.special_menu_id %>">
                 <div class="col-8 col-sm-8 col-md-8">
                   <h6><%= cart_item.special_menu.name %></h6>
-                  <p style="font-size: 10px; color:rgb(128, 0, 255);">
+                  <p class="special-menu-cart-item-food-items" style="font-size: 10px; color:rgb(128, 0, 255);">
                   <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
                     <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
                   <% end %>
                   </p>
                 </div>
                 <div class="col-2 col-sm-2 col-md-2">
-                <h6 class="cart-item-quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
+                <h6 class="cart-item-quantity quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
                 </div>
                 <div class="col-2 col-sm-2 col-md-2">
-                  <h6><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
+                  <h6 class="price"><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
                   <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
                    method: :delete, 
                    remote: true, 
@@ -37,15 +37,15 @@
                 </div>  
             <% elsif cart_item.cart_item_food_items.present? %>
             <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-            <div class="row cart-item">
+            <div class="row cart-item" data-food-id="<%= cart_item_food_item.food_item_id %>">
             <div class="col-8 col-sm-8 col-md-8">
                 <h6><%= cart_item_food_item.food_item.name %></h6>
             </div>
             <div class="col-2 col-sm-2 col-md-2">
-            <h6 class="cart-item-quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
+            <h6 class="cart-item-quantity quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
             </div>
             <div class="col-2 col-sm-2 col-md-2">
-              <h6><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
+              <h6 class="price"><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
             </div>
             </div>
             <% end %>
