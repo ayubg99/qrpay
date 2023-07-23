@@ -4,7 +4,7 @@
   <div class="container dashboard-index" style="margin-top: 10px">
   <h2>Información de cuenta bancaria</h2>
   <% if session[:authenticated] %>
-    <%= form_for(@restaurant, url: update_payment_information_path(@restaurant), html: { class: 'form-horizontal' }) do |form| %>
+    <%= form_for(@restaurant, url: restaurant_update_payment_information_path(@restaurant), html: { class: 'form-horizontal' }) do |form| %>
       <!-- Add form fields for payment information -->
       <div class="form-group">
         <%= form.label :stripe_account_id, "Stripe account ID", class: 'control-label col-sm-4' %>
@@ -63,7 +63,7 @@
     <% end %>
     </div>
     <% else %>
-    <%= form_for(@restaurant, url: update_payment_information_path(@restaurant), html: { class: 'form-horizontal' }) do |form| %>
+    <%= form_for(@restaurant, url: restaurant_update_payment_information_path(@restaurant), html: { class: 'form-horizontal' }) do |form| %>
       <!-- Add form fields for payment information -->
       <div class="form-group">
         <%= form.label :stripe_account_id, "Stripe account ID", class: 'control-label col-sm-4' %>

@@ -7,8 +7,8 @@
 <%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary btn-margin-bottom" %> 
       <% @restaurant.categories.each do |category| %>
         <h4><%= category.name %>
-        <%= link_to "Modificar", edit_restaurant_category_path(current_restaurant, category), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
-                <%= link_to 'Eliminar', restaurant_category_path(current_restaurant, category), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
+        <%= link_to "Modificar", edit_restaurant_category_path(@restaurant, category), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
+                <%= link_to 'Eliminar', restaurant_category_path(@restaurant, category), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
                 </h4>
                 <div class="row">
         <% category.food_items.each_slice(2) do |food_items| %>
@@ -21,8 +21,8 @@
               <div class="col-6 col-sm-6 col-md-6">
                 <h5><%= food_item.name.upcase %></h5>
                 <p><%= simple_format(food_item.description) %></p>
-                <%= link_to "Modificar", edit_restaurant_food_item_path(current_restaurant, food_item), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
-                <%= link_to 'Eliminar', restaurant_food_item_path(current_restaurant, food_item), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
+                <%= link_to "Modificar", edit_restaurant_food_item_path(@restaurant, food_item), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
+                <%= link_to 'Eliminar', restaurant_food_item_path(@restaurant, food_item), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
                 <h5><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h5>

@@ -1,49 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-<% if controller_name == 'restaurants' && action_name == 'show' %>
-<%= link_to @restaurant, class: 'navbar-brand' do %>
-  <%= image_tag ("bamboo.png") %>
-<% end %>
-<% else %>
-  <%= link_to root_path, class: 'navbar-brand' do %>
-    <%= image_tag ("bamboo.png") %>
-  <% end %> 
-<% end %>
-<% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
-<% end %>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-auto">
-    <% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
-      <% if restaurant_signed_in? %>
-        <li class="nav-item">
-          <%= link_to "Dashboard", dashboard_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Log Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Log In", dashboard_path, class: 'nav-link' %>
-        </li>
-      <% end %>
-      <% end %>
-    </ul>
-  </div>
-  <% if controller_name == 'restaurants' && action_name == 'show' %>
-    <div class="navbar-nav ml-auto">
-    <%= link_to '#', class: 'navbar-brand cart-img', id: 'cart-icon', 'data-toggle' => 'modal', 'data-target' => '#cartModal' do %>
-      <%= image_tag ("trolley.png") %>
-      <span id="cart-item-count"><%= current_cart.cart_items.count %></span>
-    <% end %>
-    </div>
-  <% end %>
-</nav>
+<%= render 'layouts/header_admin' %>
 
-<div class="container d-flex justify-content-center align-items-center" style="margin-top: 70px;">
+<section class="home" style="height: 100%; padding-top: 80px">
+  <div class="container">
+<div class="container d-flex align-items-center">
   <div class="col-md-6">
-    <h2>Solicitar una demo</h2>
+    <h2>Nuevo restaurante</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name),  class: "contact-form") do |f| %>
       <%= render "restaurants/shared/error_messages", resource: resource %>
@@ -69,6 +30,21 @@
       </div>
 
       <div class="form-group">
+        <%= f.label :city, "Ciudad" %>
+        <%= f.text_field :city, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :country, "País" %>
+        <%= f.text_field :country, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :postal_code, "Còdigo postal" %>
+        <%= f.text_field :postal_code, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
         <%= f.label "contraseña" %>
         <% if @minimum_password_length %>
         <% end %><br />
@@ -81,8 +57,10 @@
       </div>
 
       <div class="actions">
-        <%= f.submit "solicita una demo", class: "btn btn-primary restaurant-demo-btn" %>
+        <%= f.submit "Guardar", class: "btn btn-primary restaurant-demo-btn" %>
       </div>
     <% end %>
   </div>
 </div>
+</div>
+</section>

@@ -323,6 +323,18 @@ body.dark .home .text{
   }
 }
 
+.profit-box-admin {
+  border-color:rgb(128, 0, 255);
+  border: 1px solid rgb(128, 0, 255);
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgb(128, 0, 255);
+  margin-top: 20px;
+  h2, h3 {
+    color:#fff;
+  }
+}
+
 
 .done {
   &:hover {

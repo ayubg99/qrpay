@@ -1,50 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-<% if controller_name == 'restaurants' && action_name == 'show' %>
-<%= link_to @restaurant, class: 'navbar-brand' do %>
-  <%= image_tag ("bamboo.png") %>
-<% end %>
-<% else %>
-  <%= link_to root_path, class: 'navbar-brand' do %>
-    <%= image_tag ("bamboo.png") %>
-  <% end %> 
-<% end %>
-<% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
-<% end %>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-auto">
-    <% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
-      <% if restaurant_signed_in? %>
-        <li class="nav-item">
-          <%= link_to "Dashboard", dashboard_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Log Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Log In", dashboard_path, class: 'nav-link' %>
-        </li>
-      <% end %>
-      <% end %>
-    </ul>
-  </div>
-  <% if controller_name == 'restaurants' && action_name == 'show' %>
-    <div class="navbar-nav ml-auto">
-    <%= link_to '#', class: 'navbar-brand cart-img', id: 'cart-icon', 'data-toggle' => 'modal', 'data-target' => '#cartModal' do %>
-      <%= image_tag ("trolley.png") %>
-      <span id="cart-item-count"><%= current_cart.cart_items.count %></span>
-    <% end %>
-    </div>
-  <% end %>
-</nav>
+<%= render 'layouts/header_welcome' %>
 
 <section class="jumbotron jumbotron-bg bg-overlay text-center">
     <h1 class="display-4">La forma de pago más rápida</h1>
     <p class="lead">tus clientes pueden ver el menú y pagar la cuenta en 10 segundos</p>
-    <%= link_to 'solicita una demo', new_restaurant_registration_path, class: 'btn btn-primary btn-lg' %>
+    <%= link_to 'solicita una demo', new_contact_path, class: 'btn btn-primary btn-lg' %>
   </section>
 
   <div class="container" style="margin-top: 20px; margin-bottom: 90px;">
@@ -190,38 +149,56 @@
                         <%= form.text_field :last_name, placeholder: "Apellido", class: "form-control" %>
                       </div>
                     </div>
-                    
-                    <div class="col-md-6">
-                      <div class="form-group" style="margin-top: 10px;">
-                        <%= form.text_field :email, placeholder: "Correo electronico", class: "form-control" %>
-                      </div>
-                    </div>
-                    
-                    <div class="col-md-12">
-                      <div class="form-group" style="margin-top: 10px;">
-                        <%= form.text_field :address, placeholder: "Direccion", class: "form-control" %>
-                      </div>
-                    </div>
-
-                    <div class="col-md-12">
-                      <div class="form-group" style="margin-top: 10px;">
-                        <%= form.text_field :phone_number, placeholder: "Numero de telefono", class: "form-control" %>
-                      </div>
-                    </div>
 
                     <div class="col-md-12">
                       <div class="form-group" style="margin-top: 10px;">
                         <%= form.text_field :restaurant_name, placeholder: "Nombre de restaurante", class: "form-control" %>
                       </div>
                     </div>
+                    
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :email, placeholder: "Correo electronico", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :phone_number, placeholder: "Número de teléfono", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :address, placeholder: "Dirección", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :city, placeholder: "Ciudad", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :country, placeholder: "País", class: "form-control" %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group" style="margin-top: 10px;">
+                        <%= form.text_field :postal_code, placeholder: "Còdigo postal", class: "form-control" %>
+                      </div>
+                    </div>
 
                     <div class="actions text-center">
-                      <%= form.submit "solicita una demo", class: "btn btn-primary restaurant-demo-btn btn-lg" %>
+                      <%= form.submit "Enviar", class: "btn btn-primary restaurant-demo-btn btn-lg" %>
                     </div>
                   </div>
                 <% end %>
             </div>
-          </div>
+    </div>
   </div>
 </div>
 
