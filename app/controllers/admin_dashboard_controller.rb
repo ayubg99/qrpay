@@ -12,5 +12,9 @@ class AdminDashboardController < ApplicationController
 
     def restaurants
         @restaurants = Restaurant.all
-    end 
+    end
+
+    def contacts
+        @contacts = Contact.all
+    end
 end

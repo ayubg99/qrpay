@@ -1,0 +1,47 @@
+<%= render 'layouts/header_admin' %>
+
+<section class="home dashboard-index">
+<div class="container">
+<div class="row">
+<div class="container">
+
+<h1 style="margin-bottom: 20px">Contacto</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Nombre de Restaurante</th>
+      <th>Email</th>
+      <th>Dirección</th>
+      <th>Ciudad</th>
+      <th>País</th>
+      <th>Código Postal</th>
+      <th>Numero de telefono</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td class="admin-restaurants"><%= contact.created_at.to_date %></td>
+        <td class="admin-restaurants"><%= contact.first_name %></td>
+        <td class="admin-restaurants"><%= contact.last_name %></td>
+        <td class="admin-restaurants"><%= contact.restaurant_name %></td>
+        <td class="admin-restaurants"><%= contact.email %></td>
+        <td class="admin-restaurants"><%= contact.address %></td>
+        <td class="admin-restaurants"><%= contact.city %></td>
+        <td class="admin-restaurants"><%= contact.country %></td>
+        <td class="admin-restaurants"><%= contact.postal_code %></td>
+        <td class="admin-restaurants"><%= contact.phone_number %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
