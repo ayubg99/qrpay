@@ -35,10 +35,10 @@ class CartsController < ApplicationController
     food_item_id = params[:food_item_id]
     @cart_item = @cart.remove_food(food_item_id)
     
-    if @cart_item.present? && @cart_item.save  # Check if the cart item was successfully destroyed
-      render json: { quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: @cart_item.cart_item_food_items.first.food_item.id), total_price: @cart.total_price }
-    else
-      render json: { error: 'Failed to remove item to cart' }, status: :unprocessable_entity
+    if @cart_item.save
+      render json: { food_item_id: food_item_id, quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, total_price: @cart.total_price }
+    else 
+      render json: { food_item_id: food_item_id, quantity: 0, total_price: @cart.total_price  }
     end
   end
 

@@ -76,6 +76,56 @@ document.addEventListener('turbolinks:load', function() {
   });
 });
 
+// app/assets/javascripts/cart.js
+
+document.addEventListener('turbolinks:load', function() {
+  // Function to handle the decrease quantity button click
+  function handleDecreaseQuantityClick(event) {
+    event.preventDefault();
+    var removeUrl = $(this).attr('href');
+  
+    $.ajax({
+      url: removeUrl,
+      method: 'DELETE',
+      dataType: 'json',
+      success: function(response) {
+        // Update cart item count dynamically
+        var cartItemCount = parseInt($('#cart-item-count').text());
+        $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
+  
+        // Find the cart item by its food item id
+        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.food_item_id}"]`);
+  
+        // Update the quantity and price of the existing cart item
+        if (existingCartItem.length > 0) {
+          var newQuantity = response.quantity;
+  
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
+          if (newQuantity === 0) {
+            existingCartItem.find('.price').text('€' + 0.00);
+            existingCartItem.remove();
+          } else {
+            var newPrice = parseFloat(response.food_item.price * newQuantity).toFixed(2);
+            existingCartItem.find('.price').text('€' + newPrice);
+          }           
+        }
+        
+        // Update cart total price
+        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
+        $('#cart-total-price').text('Total: €' + newTotalPrice);
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  }
+  
+  // Attach event listeners to all decrease quantity buttons
+  $('.remove-cart-item').on('click', handleDecreaseQuantityClick);
+});
+
+
+
 document.addEventListener('turbolinks:load', function() {
   // Special menu form submission
   $(document).on('submit', '.special-menu-form', function(e) {
