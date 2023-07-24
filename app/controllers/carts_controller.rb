@@ -46,10 +46,10 @@ class CartsController < ApplicationController
     special_menu_id = params[:special_menu_id]
     @cart_item = @cart.remove_special_menu(special_menu_id)
     
-    if @cart_item.present? && @cart_item.save  # Check if the cart item was successfully destroyed
-      redirect_to @restaurant
+    if @cart_item.save
+      render json: { special_menu_id: special_menu_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, total_price: @cart.total_price }
     else
-      redirect_back(fallback_location: @restaurant)
+      render json: { special_menu_id: special_menu_id, quantity: 0, total_price: @cart.total_price  }
     end
   end
 

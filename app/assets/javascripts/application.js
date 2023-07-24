@@ -21,7 +21,6 @@
 //= require highcharts/highstock
 //= require_tree .
 
-
 document.addEventListener('turbolinks:load', function() {
   $('.add-to-cartt').on('click', function() {
     var url = $(this).attr('href');
@@ -43,7 +42,7 @@ document.addEventListener('turbolinks:load', function() {
           var newQuantity = response.quantity;
           existingCartItem.find('.quantity').text('x ' + newQuantity);
           var newPrice = parseFloat(response.food_item.price * newQuantity).toFixed(2);
-          existingCartItem.find('.price').text(newPrice);
+          existingCartItem.find('.price').text('€' + newPrice);
         } else {
           // Format the price with two decimal places
           var formattedPrice = parseFloat(response.food_item.price).toFixed(2);
@@ -125,6 +124,48 @@ document.addEventListener('turbolinks:load', function() {
 });
 
 
+document.addEventListener('turbolinks:load', function() {
+  // Function to handle the decrease quantity button click
+  function handleDecreaseQuantityClick(event) {
+    event.preventDefault();
+    var removeUrl = $(this).attr('href');
+  
+    $.ajax({
+      url: removeUrl,
+      method: 'DELETE',
+      dataType: 'json',
+      success: function(response) {
+        // Update cart item count dynamically
+        var cartItemCount = parseInt($('#cart-item-count').text());
+        $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
+  
+        // Find the cart item by its food item id
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.special_menu_id}"]:last`);
+  
+        // Update the quantity and price of the existing cart item
+        if (existingCartItem.length > 0) {
+          var newQuantity = response.quantity;
+  
+          if (newQuantity === 0) {
+            existingCartItem.remove();
+          }          
+        }
+        
+        // Update cart total price
+        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
+        $('#cart-total-price').text('Total: €' + newTotalPrice);
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  }
+  
+  // Attach event listeners to all decrease quantity buttons
+  $('.remove_special_menu').on('click', handleDecreaseQuantityClick);
+});
+
+
 
 document.addEventListener('turbolinks:load', function() {
   // Special menu form submission
@@ -132,6 +173,7 @@ document.addEventListener('turbolinks:load', function() {
     e.preventDefault();
     var form = $(this);
     var url = form.attr('action');
+    var submitButton = form.find('input[type="submit"]');
 
     $.ajax({
       url: url,
@@ -145,7 +187,6 @@ document.addEventListener('turbolinks:load', function() {
 
         // Format the price with two decimal places
         var formattedPrice = parseFloat(response.special_menu.price).toFixed(2);
-        console.log(response);
 
         // Build the cart item food items HTML
         var foodItemsHtml = '';
@@ -158,7 +199,7 @@ document.addEventListener('turbolinks:load', function() {
 
         // Append the new cart item to the cart items list
         var cartItemHtml = `
-          <div class="row cart_item">
+          <div class="row cart_item" data-menu-id="${response.cart_item.special_menu_id}">
             <div class="col-8 col-sm-8 col-md-8">
               <h6>${response.special_menu.name}</h6>
               <p style="font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
@@ -176,6 +217,7 @@ document.addEventListener('turbolinks:load', function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+        submitButton.prop('disabled', false); // Enable the button after the request is completed
       },
       error: function(xhr, status, error) {
         console.log(error);
