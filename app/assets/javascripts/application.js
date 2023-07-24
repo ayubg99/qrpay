@@ -22,7 +22,8 @@
 //= require_tree .
 
 document.addEventListener('turbolinks:load', function() {
-  $('.add-to-cartt').on('click', function() {
+  $('body').on('click', '.add-to-cartt', function(e) {
+    e.preventDefault();
     var url = $(this).attr('href');
 
     $.ajax({
@@ -50,11 +51,13 @@ document.addEventListener('turbolinks:load', function() {
           // Append the new cart item to the cart items list
           var cartItemHtml = `
             <div class="row cart_item" data-food-id="${response.cart_item.food_item_id}">
-              <div class="col-8 col-sm-8 col-md-8">
+              <div class="col-7 col-sm-7 col-md-7">
                 <h6>${response.food_item.name}</h6>
               </div>
-              <div class="col-2 col-sm-2 col-md-2">
+              <div class="col-3 col-sm-3 col-md-3 cart-buttons-wrapper">
+                <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item.food_item_id}" class="cart-menos remove-cart-item" data-method="delete" data-remote="true">-</a>
                 <h6 class="quantity">x ${response.quantity}</h6>
+                <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="cart-plus add-to-cartt" data-remote="true">+</a>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
                 <h6 class="price">€${formattedPrice}</h6>
@@ -120,7 +123,7 @@ document.addEventListener('turbolinks:load', function() {
   }
   
   // Attach event listeners to all decrease quantity buttons
-  $('.remove-cart-item').on('click', handleDecreaseQuantityClick);
+  $('body').on('click', '.remove-cart-item', handleDecreaseQuantityClick);
 });
 
 

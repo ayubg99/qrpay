@@ -17,7 +17,7 @@ class CartsController < ApplicationController
     if params[:food_item_id].present?
       @cart_item = @cart.add_food_item(params[:food_item_id])
       if @cart_item.save
-        render json: { quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
+        render json: { restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity
       end

@@ -480,5 +480,34 @@ body {
 }
 
 .remove_special_menu {
-  color: #fff !important;
+  color: #fff !important; 
+}
+
+.cart-buttons-wrapper {
+  display: flex;
+  .cart-menos {
+    background-color:#dc3545 !important;
+    color: #fff !important;
+    padding: 6px;
+    font-size: 1rem !important;
+    border-radius: 5px;
+  }
+  .cart-plus {
+    background-color:rgb(128, 0, 255) !important;
+    color: #fff !important;
+    padding: 6px;
+    font-size: 1rem !important;
+    border-radius: 5px;
+  }
+  a {
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: transparent;
+    text-decoration: none !important;
+    margin-bottom: 10px;
+    &:hover {
+      background-color: transparent;
+      text-decoration: none !important;
+    }
+  }
 }
