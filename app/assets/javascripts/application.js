@@ -41,7 +41,7 @@ document.addEventListener('turbolinks:load', function() {
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
           var newQuantity = response.quantity;
-          existingCartItem.find('.quantity').text('x ' + newQuantity);
+          existingCartItem.find('.quantity').text(newQuantity + ' x');
           var newPrice = parseFloat(response.food_item.price * newQuantity).toFixed(2);
           existingCartItem.find('.price').text('€' + newPrice);
         } else {
@@ -51,12 +51,14 @@ document.addEventListener('turbolinks:load', function() {
           // Append the new cart item to the cart items list
           var cartItemHtml = `
             <div class="row cart_item" data-food-id="${response.cart_item.food_item_id}">
-              <div class="col-7 col-sm-7 col-md-7">
+              <div class="col-2 col-sm-2 col-md-2">
+              <h6 class="quantity">${response.quantity} x</h6>
+            </div>
+              <div class="col-6 col-sm-6 col-md-6">
                 <h6>${response.food_item.name}</h6>
               </div>
-              <div class="col-3 col-sm-3 col-md-3 cart-buttons-wrapper">
+              <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
                 <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item.food_item_id}" class="cart-menos remove-cart-item" data-method="delete" data-remote="true">-</a>
-                <h6 class="quantity">x ${response.quantity}</h6>
                 <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="cart-plus add-to-cartt" data-remote="true">+</a>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
@@ -102,7 +104,7 @@ document.addEventListener('turbolinks:load', function() {
         if (existingCartItem.length > 0) {
           var newQuantity = response.quantity;
   
-          existingCartItem.find('.quantity').text('x ' + newQuantity);
+          existingCartItem.find('.quantity').text(newQuantity + ' x');
           if (newQuantity === 0) {
             existingCartItem.find('.price').text('€' + 0.00);
             existingCartItem.remove();
@@ -143,7 +145,7 @@ document.addEventListener('turbolinks:load', function() {
         $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
   
         // Find the cart item by its food item id
-        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.special_menu_id}"]:last`);
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
   
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
@@ -165,14 +167,14 @@ document.addEventListener('turbolinks:load', function() {
   }
   
   // Attach event listeners to all decrease quantity buttons
-  $('.remove_special_menu').on('click', handleDecreaseQuantityClick);
+  $('body').on('click', '.remove_special_menu', handleDecreaseQuantityClick);
 });
 
 
 
 document.addEventListener('turbolinks:load', function() {
   // Special menu form submission
-  $(document).on('submit', '.special-menu-form', function(e) {
+  $('body').on('submit', '.special-menu-form', function(e) {
     e.preventDefault();
     var form = $(this);
     var url = form.attr('action');
@@ -202,13 +204,13 @@ document.addEventListener('turbolinks:load', function() {
 
         // Append the new cart item to the cart items list
         var cartItemHtml = `
-          <div class="row cart_item" data-menu-id="${response.cart_item.special_menu_id}">
+          <div class="row cart_item" data-menu-id="${response.cart_item.id}">
+          <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+              <h6>x ${response.quantity}</h6>
+          </div>
             <div class="col-8 col-sm-8 col-md-8">
               <h6>${response.special_menu.name}</h6>
               <p style="font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
-            </div>
-            <div class="col-2 col-sm-2 col-md-2">
-                <h6>x ${response.quantity}</h6>
             </div>
             <div class="col-2 col-sm-2 col-md-2">
               <h6>€${formattedPrice}</h6>
@@ -336,3 +338,64 @@ document.addEventListener('turbolinks:load', function() {
     modeText.innerText = 'Light mode';
   }
 });
+
+
+
+document.addEventListener("turbolinks:load", function () {
+  const paymentOptions = document.querySelectorAll(".payment-option");
+
+  paymentOptions.forEach(function (option) {
+    option.addEventListener("click", function () {
+      // Add the 'selected' class to the clicked option
+      this.classList.add("selected");
+
+      // Show the payment method selection modal
+      $('#paymentMethodModal').modal('show');
+
+      // Store the selected payment method in a hidden field
+      const hiddenInput = document.querySelector("#order_payment_method");
+      hiddenInput.value = this.getAttribute("data-method");
+    });
+  });
+
+  // Handle the "Select" button click in the payment method modal
+  document.getElementById("select-payment-method").addEventListener("click", function () {
+    // Hide the payment method selection modal
+    $('#paymentMethodModal').modal('hide');
+
+    // Redirect to the order new page
+    window.location.href = "/restaurants/" + restaurantId + "/orders/new";
+  });
+
+  // Prevent the default behavior of the "Pedir" link in the cart modal
+  document.getElementById("pedir-link").addEventListener("click", function (event) {
+    event.preventDefault();
+    $('#cartModal').modal('hide');
+    // Show the payment method selection modal
+    $('#paymentMethodModal').modal('show');
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const paymentOptions = document.querySelectorAll(".payment-option");
+
+  paymentOptions.forEach(function (option) {
+    option.addEventListener("click", function () {
+      // Remove the 'selected' class from all options
+      paymentOptions.forEach(function (el) {
+        el.classList.remove("selected");
+      });
+      // Add the 'selected' class to the clicked option
+      this.classList.add("selected");
+
+      // Update the hidden input field with the selected payment method
+      const paymentMethod = this.getAttribute("data-method");
+      const hiddenInput = document.querySelector("#order_payment_method");
+      hiddenInput.value = paymentMethod;
+
+      // Submit the form
+      document.getElementById("stripe-payment-form").submit();
+    });
+  });
+});
+

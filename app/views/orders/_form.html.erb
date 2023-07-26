@@ -16,17 +16,41 @@
       </div>
     <% end %>
 
-    <div id="payment-form">
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="card-element">Credit or Debit Card</label>
-        <div id="card-element">
-        </div>
-        <div id="card-errors" class="text-danger" role="alert"></div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-6">
-        <%= form.submit "Pagar", class: "btn btn-primary btn-margin-top", id: "submit-order" %>
-      </div>
-    </div>
+      <%= form.hidden_field :payment_method, id: "order_payment_method" %>
 
+      <h2 id="payment-method-value"></h2>
+      
+      <div id="payment-form">
+        <div class="form-group">
+          <label class="control-label" for="card-element">Credit or Debit Card</label>
+            <div id="card-element">
+            </div>
+            <div id="card-errors" class="text-danger" role="alert"></div>
+        </div>
+      </div>
+      <div class="form-group">
+          <%= form.submit "Pedir", class: "btn btn-primary btn-margin-top", id: "submit-order" %>
+      </div>
+
+    <script>
+    $(document).ready(function() {
+      var selectedPaymentMethod = sessionStorage.getItem("selectedPaymentMethod");
+
+      // If a payment method was selected on the restaurant show page, set it in the form
+      if (selectedPaymentMethod) {
+        $("#order_payment_method").val(selectedPaymentMethod);
+      }
+
+      $("#payment-method-value").text("Forma de pago: " + selectedPaymentMethod);
+
+      if (selectedPaymentMethod === "Tarjeta Bancaría") {
+        // Do something specific for the "Tarjeta Bancaría" payment method
+        // For example, display the payment form related to this payment method
+        $("#payment-form").show();
+      } else {
+        // For other payment methods, you can hide the payment form or perform other actions
+        $("#payment-form").hide();
+      }
+    });
+  </script>
   <% end %>

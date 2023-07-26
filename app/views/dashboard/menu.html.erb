@@ -20,7 +20,7 @@
               </div>
               <div class="col-6 col-sm-6 col-md-6">
                 <h5><%= food_item.name.upcase %></h5>
-                <p><%= simple_format(food_item.description) %></p>
+                <p><%= simple_format(food_item.description, class:"simple-format-description") %></p>
                 <%= link_to "Modificar", edit_restaurant_food_item_path(@restaurant, food_item), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
                 <%= link_to 'Eliminar', restaurant_food_item_path(@restaurant, food_item), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
               </div>

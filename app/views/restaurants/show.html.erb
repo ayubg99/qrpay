@@ -1,42 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-<% if controller_name == 'restaurants' && action_name == 'show' %>
-<%= link_to @restaurant, class: 'navbar-brand' do %>
-  <%= image_tag ("bamboo.png") %>
-<% end %>
-<% else %>
-  <%= link_to root_path, class: 'navbar-brand' do %>
-    <%= image_tag ("bamboo.png") %>
-  <% end %> 
-<% end %>
-<% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
-<% end %>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-    <% if controller_name != 'restaurants' && action_name != 'show' && controller_name != 'orders' %>
-      <% if restaurant_signed_in? %>
-        <li class="nav-item">
-          <%= link_to "Sign Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Log In", new_restaurant_session_path, class: 'nav-link' %>
-        </li>
-      <% end %>
-      <% end %>
-    </ul>
-  </div>
-  <% if controller_name == 'restaurants' && action_name == 'show' %>
-    <div class="navbar-nav ml-auto">
-    <%= link_to '#', class: 'navbar-brand cart-img', id: 'cart-icon', 'data-toggle' => 'modal', 'data-target' => '#cartModal' do %>
-      <%= image_tag ("trolley.png") %>
-      <span id="cart-item-count"><%= current_cart.cart_items_count %></span>
-    <% end %>
-    </div>
-  <% end %>
-</nav>
+<%= render 'layouts/header_customer' %>
 
 <div class="container margin-top-container">
   <h1>
@@ -76,8 +38,8 @@
                 <div class="col-4 col-sm-4 col-md-4">
                   <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
                 </div>
-                <div class="col-6 col-sm-6 col-md-6">
-                  <p><%= simple_format(special_menu.description) %></p>
+                <div class="col-5 col-sm-5 col-md-5">
+                  <p><%= simple_format(special_menu.description, class:"simple-format-description") %></p>
                   <% special_menu.food_types.each do |food_type| %>
                     <div class="form-group">
                     <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
@@ -93,13 +55,13 @@
                     </div>
                   <% end %>
                 </div>
-                <div class="col-2 col-sm-2 col-md-2">
+                <div class="col-3 col-sm-3 col-md-3">
                   <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
                   <%= form.submit '+', class: "btn btn-primary" %>
                   <%= link_to '-', remove_special_menu_restaurant_cart_path(@restaurant, special_menu_id: special_menu.id), method: :delete, class: "btn btn-danger remove_special_menu", remote: true , "data-remove-url": remove_special_menu_restaurant_cart_path(@restaurant, special_menu_id: special_menu.id) %>
-                  </div>
+                </div>
                 <% if special_menu.instructions.present? %>
-                  <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
+                  <p style="margin-top:10px"><%= simple_format(special_menu.instructions , class:"simple-format-description") %></p>
                 <% end %>
               </div>
               <h6><i class='bx bx-user' style="font-size: 25px;"></i> <%= special_menu.minimum_persons %> <% if special_menu.minimum_persons == 1 %>persona mínima<% else %> personas mínimas<% end %></h6>
@@ -119,14 +81,14 @@
             <div class="col-4 col-sm-4 col-md-4">
               <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
             </div>
-            <div class="col-6 col-sm-6 col-md-6">
+            <div class="col-5 col-sm-5 col-md-5">
               <h5><%= food_item.name %></h5>
-              <p><%= simple_format(food_item.description) %></p>
+              <%= simple_format(food_item.description, class:"simple-format-description") %>
               <% if food_item.minimum_persons.present? %>
                 <h6><i class='bx bx-user btn-margin-top' style="font-size: 20px;"></i> <%= food_item.minimum_persons %> <% if food_item.minimum_persons == 1 %>persona mínima<% else %> personas <% end %></h6>
               <% end %>
             </div>
-            <div class="col-2 col-sm-2 col-md-2">
+            <div class="col-3 col-sm-3 col-md-3">
               <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
               <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "btn btn-primary add-to-cartt", remote: true %>
               <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-danger remove-cart-item", remote: true, "data-remove-url": remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id) %>
@@ -142,6 +104,37 @@
         <%= render 'shared/cart' %>
       </div>
     </div>
+</div>
+
+<!-- Payment Method Selection Modal -->
+<div class="modal fade" id="paymentMethodModal" tabindex="-1" role="dialog" aria-labelledby="paymentMethodModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentMethodModalLabel">¿Cómo quieres pagar?</h5>
+      </div>
+      <div class="modal-body">
+        <!-- Add your payment options here -->
+        <div class="row text-center">
+          <div class="col-4 col-md-4 col-sm-4">
+            <%= image_tag "card.png", alt: "Visa", class: "payment-option selected", data: { method: "Tarjeta Bancaría" } %>
+            <h6 class="control-label">Tarjeta Bancaría <br> Apple Pay <br> Google Pay</h6>
+          </div> 
+          <div class="col-4 col-md-4 col-sm-4">
+            <%= image_tag "money-online.png", alt: "Mastercard", class: "payment-option", data: { method: "Datáfono" } %>
+            <h6 class="control-label">Datáfono</h6>
+          </div>
+          <div class="col-4 col-md-4 col-sm-4">  
+            <%= image_tag "money.png", alt: "PayPal", class: "payment-option", data: { method: "Pagar en efectivo" } %>
+            <h6 class="control-label">Pagar en efectivo</h6>
+          </div>
+        </div>
+      </div>
+      <div class="text-center" style="padding-bottom: 35px;">
+        <button type="button" class="btn btn-primary" id="select-payment-method" data-dismiss="modal">Elegir</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -173,3 +166,24 @@
   });
 </script>
 
+
+
+<script>
+  // Event listener for the "Elegir" button in the modal
+  $("#select-payment-method").on("click", function() {
+    // Get the selected payment_method from the clicked payment-option
+    var selectedPaymentMethod = $(".payment-option.selected").data("method");
+
+    // Store the selected payment method in session storage
+    sessionStorage.setItem("selectedPaymentMethod", selectedPaymentMethod);
+
+    // Close the modal
+    $("#paymentMethodModal").modal("hide");
+  });
+
+  // Event listener to highlight the selected payment-option
+  $(".payment-option").on("click", function() {
+    $(".payment-option").removeClass("selected");
+    $(this).addClass("selected");
+  });
+</script>
