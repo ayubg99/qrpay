@@ -41,7 +41,7 @@ document.addEventListener('turbolinks:load', function() {
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
           var newQuantity = response.quantity;
-          existingCartItem.find('.quantity').text(newQuantity + ' x');
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
           var newPrice = parseFloat(response.food_item.price * newQuantity).toFixed(2);
           existingCartItem.find('.price').text('€' + newPrice);
         } else {
@@ -51,11 +51,11 @@ document.addEventListener('turbolinks:load', function() {
           // Append the new cart item to the cart items list
           var cartItemHtml = `
             <div class="row cart_item" data-food-id="${response.cart_item.food_item_id}">
-              <div class="col-2 col-sm-2 col-md-2">
-              <h6 class="quantity">${response.quantity} x</h6>
-            </div>
               <div class="col-6 col-sm-6 col-md-6">
                 <h6>${response.food_item.name}</h6>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h6 class="quantity">x ${response.quantity}</h6>
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
                 <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item.food_item_id}" class="cart-menos remove-cart-item" data-method="delete" data-remote="true">-</a>
@@ -103,7 +103,7 @@ document.addEventListener('turbolinks:load', function() {
         if (existingCartItem.length > 0) {
           var newQuantity = response.quantity;
   
-          existingCartItem.find('.quantity').text(newQuantity + ' x');
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
           if (newQuantity === 0) {
             existingCartItem.find('.price').text('€' + 0.00);
             existingCartItem.remove();

@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :restaurant
-  has_many :cart_items, dependent: :nullify
+  has_many :cart_items, dependent: :destroy
 
   after_create :create_order_history
   before_destroy :clear_cart_items
