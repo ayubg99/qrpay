@@ -451,6 +451,7 @@ body {
   border: none;
   margin-top: 20px;
   margin-bottom: 20px;
+  text-align: center !important;
 }
 
 .custom-fixed-nav-tabs .nav-link {
@@ -549,4 +550,26 @@ body {
     font-size: 14px;
     background: none;
   }
+}
+
+.terms {
+  p {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+.terms-link{
+  background-color: transparent;
+  text-decoration: none;
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.restaurant-show-image {
+  width: 150px;
+  height: 150px;
+  padding: 15px;
+  border-radius: 50%;
+  border: 5px solid #333;
 }

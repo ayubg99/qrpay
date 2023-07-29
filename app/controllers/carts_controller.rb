@@ -17,19 +17,19 @@ class CartsController < ApplicationController
     if params[:food_item_id].present?
       @cart_item = @cart.add_food_item(params[:food_item_id])
       if @cart_item.save
-        render json: { restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
+        render json: { restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, total_price: @cart.total_price }
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity
       end
-    elsif params[:special_menu_id].present?
+    elsif params[:special_menu_id].present? && params[:food_item_ids].present?
       @cart_item = @cart.add_special_menu(params[:special_menu_id], params[:food_item_ids])
       if @cart_item.save
-        render json: { restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, remove_url: remove_from_cart_restaurant_cart_path(@restaurant, @cart_item), total_price: @cart.total_price }
+        render json: { food_item_ids: params[:food_item_ids].values.map(&:to_i).sort, restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, total_price: @cart.total_price }
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity   
       end
     end
-  end
+  end 
 
   def remove_from_cart
     food_item_id = params[:food_item_id]

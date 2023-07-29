@@ -1,0 +1,113 @@
+<!-- app/views/orders/_new_order_modal.html.erb -->
+<div class="modal fade" id="newOrderModal" tabindex="-1" role="dialog" aria-labelledby="newOrderModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newOrderModalLabel">Tu Pedido</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="container" style="margin-top: 50px">
+      <div>
+      <% @cart.cart_items.each do |cart_item| %>              
+        <% if cart_item.special_menu.present? %>
+          <div class="row cart-item">
+            <div class="col-8 col-sm-8 col-md-8">
+              <h6><%= cart_item.special_menu.name %></h6>
+              <p style="font-size: 10px; color:rgb(128, 0, 255);">
+              <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+                <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
+              <% end %>
+              </p>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
+              <h6>x <%= cart_item.quantity %></h6>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
+              <h6><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
+              <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
+               method: :delete, 
+               remote: true, 
+               class: 'btn remove-from-cart-link' %></h6>            
+            </div>
+            </div>  
+        <% elsif cart_item.cart_item_food_items.present? %>
+        <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+        <div class="row cart-item">
+        <div class="col-8 col-sm-8 col-md-8">
+            <h6><%= cart_item_food_item.food_item.name %></h6>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2">
+          <h6 class="cart-item-quantity">x <%= cart_item.quantity %></h6>
+        </div>
+        <div class="col-2 col-sm-2 col-md-2">
+          <h6><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
+        </div>
+        </div>
+        <% end %>
+        <% end %>
+      <% end %>
+        <h2>Total: <%= number_to_currency(@cart.total_price, precision: 2, unit: '€') %></h2>
+        <%= form_for([@restaurant, @order], html: {class: "form-horizontal", id: "stripe-payment-form", data: { clientSecret: @client_secret }}) do |form| %>
+            <% if flash[:error].present? %>
+              <div class="alert alert-danger">
+                <%= flash[:error] %>
+              </div>
+            <% end %>
+              <% if @order.errors.any? %>
+                <div id="error_explanation" class="alert alert-danger">
+                  <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+            
+                  <ul>
+                  <% @order.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                  </ul>
+                </div>
+              <% end %>
+          
+                <%= form.hidden_field :payment_method, id: "order_payment_method" %>
+          
+                <h2 id="payment-method-value"></h2>
+                
+                <div id="payment-form">
+                  <div class="form-group">
+                    <label class="control-label" for="card-element">Credit or Debit Card</label>
+                      <div id="card-element">
+                      </div>
+                      <div id="card-errors" class="text-danger" role="alert"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <%= form.submit "Pedir", class: "btn btn-primary btn-margin-top", id: "submit-order" %>
+                </div>
+          
+              <script>
+              $(document).ready(function() {
+                var selectedPaymentMethod = sessionStorage.getItem("selectedPaymentMethod");
+          
+                // If a payment method was selected on the restaurant show page, set it in the form
+                if (selectedPaymentMethod) {
+                  $("#order_payment_method").val(selectedPaymentMethod);
+                }
+          
+                $("#payment-method-value").text("Forma de pago: " + selectedPaymentMethod);
+          
+                if (selectedPaymentMethod === "Tarjeta Bancaría") {
+                  // Do something specific for the "Tarjeta Bancaría" payment method
+                  // For example, display the payment form related to this payment method
+                  $("#payment-form").show();
+                } else {
+                  // For other payment methods, you can hide the payment form or perform other actions
+                  $("#payment-form").hide();
+                }
+              });
+            </script>
+            <% end %>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>

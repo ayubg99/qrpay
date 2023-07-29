@@ -45,6 +45,11 @@
         <%= f.text_field :postal_code, class: "form-control" %>
       </div>
 
+      <div class="field">
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+      </div>
+
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div class="alert alert-info">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>

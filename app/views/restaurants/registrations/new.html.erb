@@ -44,6 +44,11 @@
         <%= f.text_field :postal_code, class: "form-control" %>
       </div>
 
+      <div class="field">
+        <%= f.label :image %>
+        <%= f.file_field :image %>
+      </div>
+
       <div class="form-group">
         <%= f.label "contraseña" %>
         <% if @minimum_password_length %>

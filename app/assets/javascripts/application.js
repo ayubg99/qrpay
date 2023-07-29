@@ -80,7 +80,6 @@ document.addEventListener('turbolinks:load', function() {
   });
 });
 
-// app/assets/javascripts/cart.js
 
 document.addEventListener('turbolinks:load', function() {
   // Function to handle the decrease quantity button click
@@ -171,14 +170,63 @@ document.addEventListener('turbolinks:load', function() {
 });
 
 
+document.addEventListener('turbolinks:load', function() {
+  // Add special menu to cart
+  $('body').on('click', '.special-menu-cart-plus-link', function(e) {
+    e.preventDefault();
+    console.log('special-menu-cart-plus-link clicked!');
+
+    var link = $(this);
+    var url = link.attr('href');
+    var menuId = link.data('menu-id');
+
+    console.log('menuId:', menuId);
+
+
+    $.ajax({
+      url: url,
+      method: 'POST',
+      dataType: 'json',
+      data: { menu_id: menuId },
+      success: function(response) {
+        // Update cart item count dynamically
+        var cartItemCount = parseInt($('#cart-item-count').text());
+        $('#cart-item-count').text(cartItemCount + 1);
+
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item.id}"]`);
+        console.log('Existing cart item:', existingCartItem);
+
+          // Update the quantity of the existing cart item
+          var newQuantity = response.quantity;
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
+          console.log(existingCartItem.find('.quantity'));
+          var newPrice = parseFloat(response.special_menu.price * newQuantity).toFixed(2);
+          existingCartItem.find('.price').text('€' + newPrice);
+
+        // Update cart total price
+        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
+        $('#cart-total-price').text('Total: €' + newTotalPrice);
+        console.log('AJAX response:', response);
+
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  });
+});
 
 document.addEventListener('turbolinks:load', function() {
   // Special menu form submission
   $('body').on('submit', '.special-menu-form', function(e) {
     e.preventDefault();
+    console.log('Form submitted!'); // Add this line to check if the event is triggered
+
     var form = $(this);
     var url = form.attr('action');
     var submitButton = form.find('input[type="submit"]');
+
+    submitButton.prop('disabled', true);
 
     $.ajax({
       url: url,
@@ -186,13 +234,26 @@ document.addEventListener('turbolinks:load', function() {
       dataType: 'json',
       data: form.serialize(),
       success: function(response) {
+        console.log('AJAX response:', response);
         // Update cart item count dynamically
         var cartItemCount = parseInt($('#cart-item-count').text());
         $('#cart-item-count').text(cartItemCount + 1);
 
+
+        // Check if the cart item already exists
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item.id}"]`);
+
+        if (existingCartItem.length > 0) {
+          // Update the quantity of the existing cart item
+          var newQuantity = response.quantity;
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
+          var newPrice = parseFloat(response.special_menu.price * newQuantity).toFixed(2);
+          existingCartItem.find('.price').text('€' + newPrice);
+        
+        } else {
         // Format the price with two decimal places
         var formattedPrice = parseFloat(response.special_menu.price).toFixed(2);
-
+        console.log(response.food_items);
         // Build the cart item food items HTML
         var foodItemsHtml = '';
         response.food_items.forEach(function(food_item, index) {
@@ -202,23 +263,48 @@ document.addEventListener('turbolinks:load', function() {
           }
         });
 
+        var specialMenuId = response.cart_item.special_menu_id;
+        var foodItemIds = response.food_item_ids;
+        console.log(foodItemIds);
+        var restaurantId = response.restaurant_id;
+        
+        var linkUrl = '/restaurants/' + encodeURIComponent(restaurantId) + '/cart/add_to_cart?';
+        
+        // Append the food_item_ids to the linkUrl
+        for (var i = 0; i < foodItemIds.length; i++) {
+          if (i === 0) {
+            linkUrl += 'food_item_ids[' + encodeURIComponent(foodItemIds[i]) + ']=' + encodeURIComponent(foodItemIds[i]);
+          } else {
+            linkUrl += '&food_item_ids[' + encodeURIComponent(foodItemIds[i]) + ']=' + encodeURIComponent(foodItemIds[i]);
+          }
+        }
+        linkUrl += '&special_menu_id=' + encodeURIComponent(specialMenuId);
+        
+        // Replace square brackets encoding with %5B and %5D
+        linkUrl = linkUrl.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
+        
+        var cartItemLink = '<a href="' + linkUrl + '" class="cart-plus special-menu-cart-plus-link" data-remote="true" data-method="post" data-menu-id="' + response.cart_item.id + '">+</a>';
+         console.log(cartItemLink);
         // Append the new cart item to the cart items list
         var cartItemHtml = `
           <div class="row cart_item" data-menu-id="${response.cart_item.id}">
-          <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
-              <h6>x ${response.quantity}</h6>
-          </div>
-            <div class="col-8 col-sm-8 col-md-8">
+            <div class="col-6 col-sm-6 col-md-6">
               <h6>${response.special_menu.name}</h6>
-              <p style="font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
+              <p style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+              <h6 class="quantity">x ${response.quantity}</h6>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+            ${cartItemLink}
             </div>
             <div class="col-2 col-sm-2 col-md-2">
-              <h6>€${formattedPrice}</h6>
+              <h6 class="price">€${formattedPrice}</h6>
             </div>
           </div>
         `;
         $('#cart-items').append(cartItemHtml);
-
+        }
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
@@ -366,17 +452,9 @@ document.addEventListener("turbolinks:load", function () {
     // Redirect to the order new page
     window.location.href = "/restaurants/" + restaurantId + "/orders/new";
   });
-
-  // Prevent the default behavior of the "Pedir" link in the cart modal
-  document.getElementById("pedir-link").addEventListener("click", function (event) {
-    event.preventDefault();
-    $('#cartModal').modal('hide');
-    // Show the payment method selection modal
-    $('#paymentMethodModal').modal('show');
-  });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("turbolinks:load", function () {
   const paymentOptions = document.querySelectorAll(".payment-option");
 
   paymentOptions.forEach(function (option) {
@@ -398,4 +476,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
