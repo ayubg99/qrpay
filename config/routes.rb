@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   }, skip: :registrations
   resources :contacts
   root 'welcome#index'
+  get '/terms', to: 'terms#index'
   devise_for :restaurants, controllers: { 
     registrations: 'restaurants/registrations',
     sessions: 'restaurants/sessions' 

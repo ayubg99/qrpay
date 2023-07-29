@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bamboo</title>
+    <title><%= yield(:title) || "Bamboo" %></title>
     <%= favicon_link_tag 'bamboo.png' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>

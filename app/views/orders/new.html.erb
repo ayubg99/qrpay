@@ -1,6 +1,6 @@
-<%= render 'layouts/header_customer' %>
+<%= render 'layouts/header_order' %>
 
-<div class="container" style="margin-top: 50px">
+<div class="container" style="margin-top: 50px; padding-bottom: 50px;">
   <h2>Tu pedido</h2>
   <div>
   <% current_cart.cart_items.each do |cart_item| %>              
@@ -8,7 +8,7 @@
       <div class="row cart-item">
         <div class="col-8 col-sm-8 col-md-8">
           <h6><%= cart_item.special_menu.name %></h6>
-          <p style="font-size: 10px; color:rgb(128, 0, 255);">
+          <p style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">
           <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
             <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
           <% end %>
