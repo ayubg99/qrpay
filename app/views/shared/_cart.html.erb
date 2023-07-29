@@ -3,10 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cartModalLabel"><%= image_tag ("trolley.png"), class: "cart-image" %>Carrito</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="cartModalLabel">Carrito</h5>
       </div>
       <div class="modal-body">
         <div class="container" style="margin-top: 0px" id="cart-container">
@@ -15,20 +12,23 @@
         <div id="cart-items">
           <% current_cart.cart_items.each do |cart_item| %>              
             <% if cart_item.special_menu.present? %>
-              <div class="row cart-item">
-                <div class="col-8 col-sm-8 col-md-8">
+              <div class="row cart-item" data-menu-id="<%= cart_item.id %>">
+              <div class="col-6 col-sm-6 col-md-6">
                   <h6><%= cart_item.special_menu.name %></h6>
-                  <p style="font-size: 10px; color:rgb(128, 0, 255);">
+                  <p class="special-menu-cart-item-food-items" style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">
                   <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
                     <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
                   <% end %>
                   </p>
-                </div>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+                <h6 class="cart-item-quantity quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, special_menu_id: cart_item.special_menu_id, food_item_ids: cart_item.cart_item_food_items.map { |item| [item.food_item_id, item.food_item_id.to_s] }.to_h ), method: :post, data: { menu_id: cart_item.id }, class: "special-menu-cart-plus-link cart-plus", remote: true %>
+              </div>
                 <div class="col-2 col-sm-2 col-md-2">
-                <h6 class="cart-item-quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
-                </div>
-                <div class="col-2 col-sm-2 col-md-2">
-                  <h6><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
+                  <h6 class="price"><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
                   <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
                    method: :delete, 
                    remote: true, 
@@ -37,15 +37,19 @@
                 </div>  
             <% elsif cart_item.cart_item_food_items.present? %>
             <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-            <div class="row cart-item">
-            <div class="col-8 col-sm-8 col-md-8">
+            <div class="row cart-item" data-food-id="<%= cart_item_food_item.food_item_id %>">
+            <div class="col-6 col-sm-6 col-md-6">
                 <h6><%= cart_item_food_item.food_item.name %></h6>
             </div>
             <div class="col-2 col-sm-2 col-md-2">
-            <h6 class="cart-item-quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
+              <h6 class="cart-item-quantity quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+            <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: cart_item_food_item.food_item_id), method: :delete, class: "cart-menos remove-cart-item", remote: true %>
+            <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: cart_item_food_item.food_item_id), class: "cart-plus add-to-cartt", remote: true %>
             </div>
             <div class="col-2 col-sm-2 col-md-2">
-              <h6><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
+              <h6 class="price"><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
             </div>
             </div>
             <% end %>
@@ -53,16 +57,18 @@
           <% end %>
         </div>
             <h2 id="cart-total-price">Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h2>
-            <%= link_to 'Pagar', new_restaurant_order_path(@restaurant), class: 'btn btn-primary', style:"margin-top: 20px" %>
+            <%= link_to 'Pedir', '#', class: 'btn btn-primary', style:"margin-top: 20px; width: 100%;", 'data-toggle' => 'modal', 'data-target' => '#paymentMethodModal' %>
           <% else %>
             <p>Your cart is empty.</p>
           <% end %>
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="row justify-content-end" style="padding-bottom: 20px; margin-top: 30px">
+      <div class="col-auto">
       <%= link_to 'Vaciar', clear_cart_restaurant_cart_path(@restaurant), method: :delete, class: 'btn btn-danger clear-cart' %>
-        <button type="button" class="btn btn btn-primary" data-dismiss="modal">Volver</button>
+      <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link', style: "margin-right: 20px;" %>
       </div>
+    </div>
     </div>
   </div>
 </div>

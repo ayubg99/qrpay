@@ -1,0 +1,83 @@
+<nav class="sidebar close">
+<header>
+    <div class="image-text">
+        <span class="image">
+          <%= link_to "#", class: 'navbar-brand' do %>
+            <%= image_tag ("bamboo.png") %>
+          <% end %> 
+        </span>
+
+        <div class="text logo-text">
+            <span class="name">Bamboo</span>
+            <span class="profession">Dashboard</span>
+        </div>
+    </div>
+
+    <i class='bx bx-chevron-right toggle'></i>
+</header>
+
+<div class="menu-bar">
+    <div class="menu">
+        <ul class="menu-links">
+            <li class="nav-link">
+            <%= link_to admin_dashboard_path do %>
+              <%= content_tag :i, '', class: 'bx bx-stats icon' %>
+              <%= content_tag :span, 'Ingresos', class: 'text nav-text' %>
+            <% end %>
+          </li>
+            <li class="nav-link">
+              <%= link_to admin_dashboard_restaurants_path do %>
+                <%= content_tag :i, '', class: 'bx bx-store icon' %>
+                <%= content_tag :span, 'Restaurantes', class: 'text nav-text' %>
+              <% end %>
+            </li>
+            <li class="nav-link">
+              <%= link_to new_restaurant_registration_path do %>
+                <%= content_tag :i, '', class: 'bx bx-user-plus icon' %>
+                <%= content_tag :span, 'Nuevo restaurante', class: 'text nav-text' %>
+              <% end %>
+            </li>
+            <li class="nav-link">
+              <%= link_to admin_dashboard_contacts_path do %>
+                <%= content_tag :i, '', class: 'bx bx-user-voice icon' %>
+                <%= content_tag :span, 'Contacto', class: 'text nav-text' %>
+              <% end %>
+            </li>
+        </ul>
+    </div>
+
+    <div class="bottom-content">
+        <li class="">
+          <%= link_to '#', class: 'nav-link' do %>
+            <%= content_tag :i, '', class: 'bx bx-user icon' %>
+            <%= content_tag :span, 'Perfil', class: 'text nav-text' %>
+          <% end %>                
+        </li>
+        <li class="">
+          <%= link_to '#', class: 'nav-link' do %>
+            <%= content_tag :i, '', class: 'bx bx-credit-card icon' %>
+            <%= content_tag :span, 'Facturación', class: 'text nav-text' %>
+          <% end %>                
+        </li>
+        <li class="">
+              <%= link_to destroy_admin_session_path, method: :delete, class: 'nav-link' do %>
+                <%= content_tag :i, '', class: 'bx bx-log-out icon' %>
+                <%= content_tag :span, 'Logout', class: 'text nav-text' %>
+              <% end %>                
+        </li>
+
+        <li class="mode">
+            <div class="sun-moon">
+                <i class='bx bx-moon icon moon'></i>
+                <i class='bx bx-sun icon sun'></i>
+            </div>
+            <span class="mode-text text">Dark mode</span>
+
+            <div class="toggle-switch">
+                <span class="switch"></span>
+            </div>
+        </li>
+        
+    </div>
+</div>
+</nav>

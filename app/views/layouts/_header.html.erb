@@ -9,7 +9,7 @@
 
         <div class="text logo-text">
             <span class="name">Bamboo</span>
-            <span class="profession"><%= current_restaurant.name %></span>
+            <span class="profession"><%= @restaurant.name %></span>
         </div>
     </div>
 
@@ -20,42 +20,42 @@
     <div class="menu">
         <ul class="menu-links">
             <li class="nav-link">
-              <%= link_to dashboard_path do %>
-                <%= content_tag :i, '', class: 'bx bx-home-alt icon' %>
-                <%= content_tag :span, 'Dashboard', class: 'text nav-text' %>
+              <%= link_to restaurant_dashboard_path(@restaurant) do %>
+                <%= content_tag :i, '', class: 'bx bx-stats icon' %>
+                <%= content_tag :span, 'Datos', class: 'text nav-text' %>
               <% end %>
             </li>
 
             <li class="nav-link">
-            <%= link_to dashboard_orders_path do %>
+            <%= link_to restaurant_dashboard_orders_path(@restaurant) do %>
               <%= content_tag :i, '', class: 'bx bx-user-voice icon' %>
               <%= content_tag :span, 'Pedidos', class: 'text nav-text' %>
             <% end %>                
             </li>
 
             <li class="nav-link">
-              <%= link_to dashboard_special_menus_path do %>
+              <%= link_to restaurant_dashboard_special_menus_path(@restaurant) do %>
                 <%= content_tag :i, '', class: 'bx bx-food-menu icon' %>
                 <%= content_tag :span, 'Menus especiales', class: 'text nav-text' %>
               <% end %>                
             </li>
 
             <li class="nav-link">
-              <%= link_to dashboard_menu_path do %>
+              <%= link_to restaurant_dashboard_menu_path(@restaurant) do %>
                 <%= content_tag :i, '', class: 'bx bx-bowl-hot icon' %>
                 <%= content_tag :span, 'Carta', class: 'text nav-text' %>
               <% end %>                
             </li>
 
             <li class="nav-link">
-            <%= link_to dashboard_history_path do %>
+            <%= link_to restaurant_dashboard_history_path(@restaurant) do %>
               <%= content_tag :i, '', class: 'bx bx-history icon' %>
               <%= content_tag :span, 'Historial', class: 'text nav-text' %>
             <% end %>                
             </li>
 
             <li class="nav-link">
-              <%= link_to dashboard_tables_path do %>
+              <%= link_to restaurant_dashboard_tables_path(@restaurant) do %>
                 <%= content_tag :i, '', class: 'bx bx-qr-scan icon' %>
                 <%= content_tag :span, 'Tablas', class: 'text nav-text' %>
               <% end %>                
@@ -65,13 +65,13 @@
 
     <div class="bottom-content">
         <li class="">
-          <%= link_to edit_restaurant_registration_path(current_restaurant), class: 'nav-link' do %>
+          <%= link_to edit_restaurant_registration_path(@restaurant), class: 'nav-link' do %>
             <%= content_tag :i, '', class: 'bx bx-user icon' %>
             <%= content_tag :span, 'Perfil', class: 'text nav-text' %>
           <% end %>                
         </li>
         <li class="">
-          <%= link_to dashboard_payment_information_path, class: 'nav-link' do %>
+          <%= link_to restaurant_dashboard_payment_information_path(@restaurant), class: 'nav-link' do %>
             <%= content_tag :i, '', class: 'bx bx-credit-card icon' %>
             <%= content_tag :span, 'Facturación', class: 'text nav-text' %>
           <% end %>                

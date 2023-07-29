@@ -18,6 +18,10 @@ class Restaurants::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def after_sign_in_path_for(resource)
+    restaurant_dashboard_path(current_restaurant)
+  end
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bamboo</title>
+    <title><%= yield(:title) || "Bamboo" %></title>
     <%= favicon_link_tag 'bamboo.png' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -20,11 +20,6 @@
     
   <div class="home1">
     <%= yield %>
-    <% if controller_name != 'dashboard' %>
-    <footer class="text-center py-3">
-      <p>&copy; 2023 Bamboo, todos los derechos reservados.</p>
-    </footer>
-    <% end %>
   </div>
   </body>
 </html>

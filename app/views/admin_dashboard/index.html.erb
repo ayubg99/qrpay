@@ -1,0 +1,125 @@
+<%= render 'layouts/header_admin' %>
+
+<section class="home dashboard-index">
+<div class="container">
+<div class="row">
+<h1>Ingresos</h1>
+
+                <div class="col-md-4">
+                    <div class="profit-box-admin">
+                            <h2>Ingresos del día</h2>
+                            <h3><%= number_to_currency(@current_day_revenue) %></h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="profit-box-admin">
+                        <h2>Ingresos del mes</h2>
+                        <h3><%= number_to_currency(@current_month_revenue) %></h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="profit-box-admin">
+                        <h2>Ingresos del año</h2>
+                        <h3><%= number_to_currency(@current_year_revenue) %></h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+            <div class="col-10 col-md-10">
+              <div id="revenue_chart"></div>
+    
+              <%= javascript_tag do %>
+                var revenues = <%= raw @revenues.to_json.html_safe %>;
+    
+                var categories = revenues.map(function(item) {
+                  return item[0].toString();
+                });
+    
+                var data = revenues.map(function(item) {
+                  return parseFloat(item[1]);
+                });
+
+                var dataWith2Percent = data.map(function(revenue) {
+                  return revenue * 0.02;
+                });
+    
+                Highcharts.chart('revenue_chart', {
+                  chart: {
+                    style: {
+                      borderRadius: '10px', // Adjust the border radius here
+                    },
+                    backgroundColor: 'transparent'
+                  },
+                  title: {
+                    enabled: false 
+                  },
+                  xAxis: {
+                    categories: categories,
+                    labels: {
+                      enabled: false,
+                      style: {
+                        color: 'white', // Set the color of the x-axis labels to white
+                      },
+                      formatter: function() {
+                        return Highcharts.dateFormat('%e', new Date(this.value));
+                      }
+                    }
+                  },
+                  yAxis: {
+                    labels: {
+                      enabled: false
+                    }
+                  },
+                  series: [{
+                    name: 'Ingresos',
+                    data: data,
+                    color: 'rgb(128, 0, 255)',
+                    lineColor: 'rgb(128, 0, 255)',
+                    lineWidth: 2
+                  }],
+                  credits: {
+                    enabled: false
+                  },
+                  legend: {
+                    itemStyle: {
+                      fontSize: '14px', // Set the desired color for legend items
+                    },
+                  },
+                  tooltip: {
+                    style: {
+                      fontSize: '14px'
+                    },
+                    pointFormatter: function() {
+                      var originalRevenue = this.y.toFixed(2) + '€';
+                      var twoPercentOfRevenue = (this.y * 0.02).toFixed(2) + '€';
+                      return '<span style="color:' + this.color + '">\u25CF</span> ' + originalRevenue + ' (2%: ' + twoPercentOfRevenue + ')';
+                    }
+                  }
+                });
+              <% end %>
+            </div>
+          </div>
+</div>
+</section>
+
+<style>
+    .highcharts-title {
+      display: none;
+    }
+  
+    body.dark .highcharts-legend-item text {
+      fill: white !important; 
+      color: white !important;
+    }
+  
+    .highcharts-yaxis {
+      display: none;
+    }
+
+    body.dark #ingresos-series {
+      fill: #fff !important;
+      color: #fff !important;
+    }
+
+</style>

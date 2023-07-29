@@ -301,6 +301,7 @@
     width: 100%;
     object-fit: cover;
     max-height: 300px;
+    min-height: 300px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -450,6 +451,7 @@ body {
   border: none;
   margin-top: 20px;
   margin-bottom: 20px;
+  text-align: center !important;
 }
 
 .custom-fixed-nav-tabs .nav-link {
@@ -468,4 +470,106 @@ body {
 
 .special-menus {
   margin-bottom: 40px;
+}
+
+.admin-restaurants {
+  font-size: 15px;
+}
+
+.remove-cart-item {
+  color: #fff !important;
+}
+
+.remove_special_menu {
+  color: #fff !important; 
+}
+
+.cart-buttons-wrapper {
+  display: flex;
+  .cart-menos {
+    background-color:#dc3545 !important;
+    color: #fff !important;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 1rem !important;
+    border-radius: 5px;
+    max-height: 25px;
+  }
+  .cart-plus {
+    background-color:rgb(128, 0, 255) !important;
+    color: #fff !important;
+    padding-bottom: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    font-size: 1rem !important;
+    border-radius: 5px;
+    max-height: 25px;
+  }
+  a {
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: transparent;
+    text-decoration: none !important;
+    margin-bottom: 10px;
+    &:hover {
+      background-color: transparent;
+      text-decoration: none !important;
+    }
+  }
+}
+
+.payment-option {
+  width: 120px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+.payment-option.selected {
+  border: 3px solid rgb(128, 0, 255);
+  background-color: rgb(128, 0, 255);
+  border-radius: 10px;
+  padding: 10px;
+  color: #fff;
+}
+
+.simple-format-description {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.carta-link {
+  border: 2px solid #555;
+  padding: 8px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333 !important;
+  font-size: 14px;
+  &:hover {
+    color:rgb(128, 0, 255) !important;
+    font-size: 14px;
+    background: none;
+  }
+}
+
+.terms {
+  p {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+.terms-link{
+  background-color: transparent;
+  text-decoration: none;
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.restaurant-show-image {
+  width: 150px;
+  height: 150px;
+  padding: 15px;
+  border-radius: 50%;
+  border: 5px solid #333;
 }

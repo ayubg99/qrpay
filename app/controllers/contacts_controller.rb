@@ -1,4 +1,8 @@
 class ContactsController < ApplicationController
+  before_action :authenticate_admin!, only: %i[ index ]
+
+  def index 
+  end
 
   def new
     @contact = Contact.new
@@ -7,7 +11,7 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
 
-    respond_to do |format|
+    respond_to do |format|[]
       if @contact.save
         format.html { redirect_to root_path, notice: "Contact was successfully created." }
         format.json { render :show, status: :created, location: @contact }
@@ -20,6 +24,6 @@ class ContactsController < ApplicationController
 
   private
     def contact_params
-      params.require(:contact).permit(:first_name, :last_name, :email, :address, :phone_number, :restaurant_name)
+      params.require(:contact).permit(:first_name, :last_name, :email, :address, :phone_number, :restaurant_name, :city, :country, :postal_code)
     end
 end

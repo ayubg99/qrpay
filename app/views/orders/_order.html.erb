@@ -35,9 +35,9 @@
   <td><h6>1</h6></td>
   <td><h6 class=""><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
   <td>
-    <h6>Pagado</h6>
+    <h6><%= order.payment_method %></h6>
   </td>
   <td>
-    <%= link_to 'Hecho', restaurant_order_path(current_restaurant, order), method: :delete, class: 'btn btn-primary btn-dashboard' %>
+    <%= link_to 'Hecho', restaurant_order_path(@restaurant, order), method: :delete, class: 'btn btn-primary btn-dashboard' %>
   </td>
 </tr>

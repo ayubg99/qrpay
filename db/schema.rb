@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_18_201742) do
+ActiveRecord::Schema.define(version: 2023_07_22_131801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(version: 2023_07_18_201742) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
   create_table "cart_item_food_items", force: :cascade do |t|
@@ -87,6 +99,9 @@ ActiveRecord::Schema.define(version: 2023_07_18_201742) do
     t.string "restaurant_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "city"
+    t.string "country"
+    t.string "postal_code"
   end
 
   create_table "daily_revenues", force: :cascade do |t|
@@ -238,6 +253,9 @@ ActiveRecord::Schema.define(version: 2023_07_18_201742) do
     t.string "bank_account_number"
     t.string "bank_routing_number"
     t.string "bank_account_holder_name"
+    t.string "city"
+    t.string "country"
+    t.string "postal_code"
     t.index ["reset_password_token"], name: "index_restaurants_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_restaurants_on_slug", unique: true
   end

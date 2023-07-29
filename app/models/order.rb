@@ -30,6 +30,6 @@ class Order < ApplicationRecord
     cart_items.each do |item|
 			item.order_id = nil
       item.save
-		end    
+		end
   end
 end
