@@ -4,3 +4,5 @@
 <h1>¡Gracias por su pedido!</h1>
 <%= link_to 'Descargar Recibo', download_receipt_path(pdf_path: @pdf_path, restaurant_id: @restaurant.id), class: "btn btn-primary" %>
 </div>
+
+<%= render 'layouts/footer_customer' %>

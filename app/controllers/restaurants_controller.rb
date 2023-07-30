@@ -3,6 +3,11 @@ class RestaurantsController < ApplicationController
   
   def show
     @categories = @restaurant.categories
+    @food_items = []
+    
+    @restaurant.categories.each do |category|
+      @food_items.concat(category.food_items)
+    end
   end
 
   private
