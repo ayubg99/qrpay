@@ -7,7 +7,6 @@
       <thead>
         <tr>
           <th>Fecha y hora</th>
-          <th>Pedido</th>
           <th>Tabla</th>
           <th>Total</th>
           <th>Estado</th>
@@ -17,38 +16,6 @@
         <% @deleted_orders.each do |order| %>
           <tr>
           <td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
-          <td>
-          <% order.cart_items.each do |cart_item| %>              
-            <% if cart_item.special_menu.present? %>
-            <p class="order-food-item" style="display: inline;">
-            <%= cart_item.quantity %>x
-            <%= cart_item.special_menu.name %>: </p>
-            <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-              <p class="order-food-item pedido-special-menu" style="display: inline;"> 
-              <%= cart_item_food_item.food_item.name %>
-            </p><% end %>
-            <br>
-            <% end %>
-          <% end %>
-          <% order.cart_items.each do |cart_item| %>              
-            <% if cart_item.special_menu.present? %>
-              <p class="order-food-item" style="display: inline;">
-              <% cart_item.special_menu.food_types.where(have_to_select_one: nil).each do |food_type| %>
-                <% food_type.food_items.each do |food_item| %>
-                  <p class="order-food-item" style="display: inline;"><%= cart_item.quantity %>x
-                  <%= food_item.name %><% if food_type.food_items.last != food_item %>, <% end %></p>  
-                <% end %>
-              <% end %>
-            <br>
-            <% elsif cart_item.cart_item_food_items.present? %>
-              <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-                <p class="order-food-item" style="display: inline;">
-                <%= cart_item.quantity %>x
-                  <%= cart_item_food_item.food_item.name %><% if order.cart_items.where(special_menu_id: nil).last.cart_item_food_items.first != cart_item_food_item %>, <% end %></p>
-              <% end %>
-            <% end %>
-          <% end %>
-          </td>
           <td><h6>1</h6></td>
           <td><h6 class=""><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
           <td>

@@ -1,4 +1,4 @@
-<% content_for :title, "Carta | " + @restaurant.name %>
+<% content_for :title, @restaurant.name %>
 
 <%= render 'layouts/header_customer' %>
 
@@ -7,6 +7,40 @@
     <%= @restaurant.name %>
   </h1>
 
+  <div id="foodItemCarousel" class="carousel slide text-center" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <% @food_items.each_with_index do |food_item, index| %>
+      <li data-target="#foodItemCarousel" data-slide-to="<%= index %>" <% if index == 0 %>class="active"<% end %>></li>
+    <% end %>
+  </ol>
+
+  <!-- Slides -->
+  <div class="carousel-inner">
+    <% @food_items.each_slice(4).each_with_index do |grouped_items, index| %>
+      <div class="carousel-item <%= 'active' if index == 0 %>">
+        <div class="row">
+          <% grouped_items.each do |food_item| %>
+            <div class="col-xs-3 col-md-3 col-3 col-sm-3">
+              <% if food_item.image.attached? %>
+                <%= image_tag food_item.image, class: "food-item-carousel-image" %>
+              <% end %>
+              <p style="font-size: 13px !important"><%= food_item.name %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <a class="carousel-control-prev" href="#foodItemCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#foodItemCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 
 
     <div class="row">
@@ -28,78 +62,88 @@
 </ul>
       <div class="col-md-12 tables-margin-top">
       <div id="special-menus" class="special-menus category-content special-menus-content">
-      <h4 class="menu-name">MENÚS ESPECIALES</h4>
-
-      <% @restaurant.special_menus.each do |special_menu| %>
-        <% if special_menu.in_time_range? %>
-          <div class="special-menu-container container">
-              <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant), method: :post, remote: true, local:true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
-              <%= form.hidden_field :special_menu_id, value: special_menu.id %>
-              <h4 class="special-menu-name"><%= special_menu.name %></h4>
-              <div class="row">
-                <div class="col-4 col-sm-4 col-md-4">
-                  <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
-                </div>
-                <div class="col-5 col-sm-5 col-md-5">
-                  <p><%= simple_format(special_menu.description, class:"simple-format-description") %></p>
-                  <% special_menu.food_types.each do |food_type| %>
-                    <div class="form-group">
-                    <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
-                      <% if food_type.have_to_select_one == true %>
-                      <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control'  %>
-                      <% else %>
-                        <p>
-                          <% food_type.food_items.each do |food_item| %>
-                            <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %> 
-                          <% end %>
-                        </p>
-                      <% end %>
+      <h5 class="menu-name">MENÚS ESPECIALES</h5>
+    
+      <% @restaurant.special_menus.each_slice(2) do |special_menus_group| %>
+        <div class="row">
+          <% special_menus_group.each do |special_menu| %>
+            <% if special_menu.in_time_range? %>
+              <div class="col-md-6">
+                <div class="special-menu-container container">
+                  <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant), method: :post, remote: true, local:true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
+                    <%= form.hidden_field :special_menu_id, value: special_menu.id %>
+                    <div class="row">
+                      <div class="col-6 col-sm-6 col-md-6">
+                        <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
+                      </div>
+                      <div class="col-6 col-sm-6 col-md-6">
+                        <p><%= simple_format(special_menu.description, class: "simple-format-description") %></p>
+                        <% special_menu.food_types.each do |food_type| %>
+                          <div class="form-group">
+                            <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
+                            <% if food_type.have_to_select_one == true %>
+                              <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control' %>
+                            <% else %>
+                              <p style="font-size: 12px">
+                                <% food_type.food_items.each do |food_item| %>
+                                  <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %>
+                                <% end %>
+                              </p>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
                     </div>
+                    <div class="text-center">
+                        <h4 class="special-menu-name"><%= special_menu.name %></h4>
+                        <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6>
+                        <%= form.submit '+', class: "btn btn-primary btn-dashboard" %>
+                        <% end %>
+                    </div>
+                    <h6><i class='bx bx-user' style="font-size: 20px;"></i> <%= special_menu.minimum_persons %></h6>
+                        <% if special_menu.instructions.present? %>
+                        <p style="margin-top:10px"><%= simple_format(special_menu.instructions, class: "simple-format-description") %></p>
                   <% end %>
                 </div>
-                <div class="col-3 col-sm-3 col-md-3">
-                  <h6><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6> 
-                  <%= form.submit '+', class: "btn btn-primary" %>
-                  <%= link_to '-', remove_special_menu_restaurant_cart_path(@restaurant, special_menu_id: special_menu.id), method: :delete, class: "btn btn-danger remove_special_menu", remote: true , "data-remove-url": remove_special_menu_restaurant_cart_path(@restaurant, special_menu_id: special_menu.id) %>
-                </div>
-                <% if special_menu.instructions.present? %>
-                  <p style="margin-top:10px"><%= simple_format(special_menu.instructions , class:"simple-format-description") %></p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
+
+      <% @restaurant.categories.each_with_index do |category, index| %>
+        <% if category.food_items.present? %>
+          <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
+            <h5><%= category.name %></h5>
+            <% category.food_items.each_slice(3) do |food_items_slice| %>
+              <div class="row">
+                <% food_items_slice.each do |food_item| %>
+                  <div class="col-4 col-sm-4 col-md-4">
+                    <div class="food-item-container" data-toggle="modal" data-target="#foodItemModal"
+                         data-name="<%= food_item.name %>"
+                         data-description="<%= food_item.description %>"
+                         data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
+                         data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
+                      <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
+                      <h6><%= food_item.name %></h6>
+                      <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
+                      <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-dashboard btn-danger remove-cart-item", remote: true, "data-remove-url": remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id) %>
+                      <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "btn btn-dashboard btn-primary add-to-cartt", remote: true %>
+                      <% if food_item.minimum_persons.present? %>
+                        <h6><i class='bx bx-user btn-margin-top' style="font-size: 20px;"></i> <%= food_item.minimum_persons %></h6>
+                      <% end %>
+                    </div>
+                  </div>
                 <% end %>
               </div>
-              <h6><i class='bx bx-user' style="font-size: 25px;"></i> <%= special_menu.minimum_persons %> <% if special_menu.minimum_persons == 1 %>persona mínima<% else %> personas mínimas<% end %></h6>
             <% end %>
           </div>
         <% end %>
       <% end %>
-      </div>
-      <h4 class="menu-name">CARTA</h4>
-
-      <% @restaurant.categories.each_with_index do |category, index| %> 
-        <% if category.food_items.present? %>
-        <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
-        <h4><%= category.name %></h4>
-        <% category.food_items.each do |food_item| %>
-          <div class="row food-item-container">
-            <div class="col-4 col-sm-4 col-md-4">
-              <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
-            </div>
-            <div class="col-5 col-sm-5 col-md-5">
-              <h5><%= food_item.name %></h5>
-              <%= simple_format(food_item.description, class:"simple-format-description") %>
-              <% if food_item.minimum_persons.present? %>
-                <h6><i class='bx bx-user btn-margin-top' style="font-size: 20px;"></i> <%= food_item.minimum_persons %> <% if food_item.minimum_persons == 1 %>persona mínima<% else %> personas <% end %></h6>
-              <% end %>
-            </div>
-            <div class="col-3 col-sm-3 col-md-3">
-              <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "btn btn-primary add-to-cartt", remote: true %>
-              <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), method: :delete, class: "btn btn-danger remove-cart-item", remote: true, "data-remove-url": remove_from_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id) %>
-              </div>
-          </div>
-          <% end %>
-        <% end %>
-      </div>
-        <% end %>
+      
+      
       </div>
       <div class="col-md-5 tables-margin-top">
         <!-- Cart -->
@@ -146,6 +190,68 @@
     </div>
   </div>
 </div>
+
+<%= render 'layouts/footer_customer' %>
+
+<div class="modal fade" id="foodItemModal" tabindex="-1" role="dialog" aria-labelledby="foodItemModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+              <div id="foodItemImageContainer">
+              </div>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+              <div id="foodItemDetails">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('.food-item-container').click(function() {
+      var name = $(this).data('name');
+      var description = $(this).data('description');
+      var imageUrl = $(this).data('image-url');
+      
+      var imageContent = '<img src="' + imageUrl + '" alt="' + name + '" class="food-item-image">';
+      var detailsContent = '<div class="food-item-name">' + name + '</div>';
+      detailsContent += '<div class="food-item-description">' + description + '</div>';
+
+      $('#foodItemImageContainer').html(imageContent);
+      $('#foodItemDetails').html(detailsContent);
+    });
+  });
+</script>
+<style>
+
+  /* Mobile-style window */
+  .food-item-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .food-item-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .food-item-description {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+</style>
+
+
+
 
 
 <script>
@@ -198,3 +304,4 @@
     $(this).addClass("selected");
   });
 </script>
+

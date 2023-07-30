@@ -38,13 +38,15 @@
   // Change the color of the navbar links
   .navbar-nav .nav-link {
     color: #333;
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: bold;
   }
   
   // Change the hover color of the navbar links
   .navbar-nav .nav-link:hover {
     color:rgb(128, 0, 255);
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: bold;
     background: none;
   }
 
@@ -148,7 +150,6 @@
   
   // Footer Styles
   footer {
-    margin-top: 100px;
     background-color: #ffffff;
     color: #777;
   }
@@ -163,7 +164,6 @@
     font-size: 18px;
     margin-bottom: 70px;
   }
-
 
   .btn-primary {
     background-color: rgb(128, 0, 255);
@@ -291,7 +291,8 @@
 
   .menu-image {
     width: 100%;
-    max-height: 250px;
+    max-height: 150px;
+    min-height: 150px;
     object-fit: cover;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -300,8 +301,8 @@
   .special-menu-image {
     width: 100%;
     object-fit: cover;
-    max-height: 300px;
-    min-height: 300px;
+    max-height: 200px;
+    min-height: 200px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -319,6 +320,7 @@
   border-radius: 5%;
   border: 1px solid #e7e7e7;
   margin-bottom: 15px;
+  padding: 10px;
   .special-menu-name {
     margin-top: 20px;
   }
@@ -328,6 +330,11 @@
 }
 
 .food-item-container{
+  border-radius: 5%;
+  border: 1px solid #e7e7e7;
+  margin-bottom: 15px;
+  padding: 5px;
+  padding-bottom: 20px;
   &:hover {
     cursor: pointer;
   }   
@@ -355,15 +362,6 @@
 body {
   padding-top: 70px;
   font-family: 'Montserrat', sans-serif;
-}
-
-.cart-img {
-  font-size: 14px;
-}
-
-.cart-image {
-  width: 50px;
-  height: 50px;
 }
 
 .remove-from-cart-link {
@@ -461,11 +459,10 @@ body {
 }
 
 .custom-fixed-nav-tabs .nav-link.active {
-  background-color: rgb(128, 0, 255);
-  color: white;
+  color: #8000ff;
   padding: 8px;
   border-radius: 5px;
-
+  border: 1px solid #8000ff;
 }
 
 .special-menus {
@@ -572,4 +569,49 @@ body {
   padding: 15px;
   border-radius: 50%;
   border: 5px solid #333;
+}
+
+.food-item-carousel-image {
+  width: 100%;
+  height: 120px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  font-size: 16px; /* Adjust the font size as needed */
+  width: 40px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the background color and opacity as needed */
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  /* Adjust the arrow icon size as needed */
+  width: 20px;
+  height: 20px;
+}
+
+/* Adjust the position of the carousel arrows */
+.carousel-control-prev {
+  left: -45px; /* Adjust the left position as needed */
+}
+
+.carousel-control-next {
+  right: -45px; /* Adjust the right position as needed */
+}
+
+#cart-item-count {
+  background-color: rgb(128, 0, 255);
+  padding: 10px;
+  font-size: 10px;
+  border-radius: 100%;
+  color: #fff;
+}
+
+.food-item-image {
+  width: 100%;
+  max-height: 180px;
+  min-height: 180px;
+  border-radius: 5px;
 }

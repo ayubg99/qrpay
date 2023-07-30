@@ -44,3 +44,5 @@
     <h2>Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h2>
   <%= render 'form', order: @order %>
 </div>
+
+<%= render 'layouts/footer_customer' %>
