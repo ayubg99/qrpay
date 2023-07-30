@@ -236,8 +236,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.11)
       thread_safe (~> 0.1)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (3.7.0)
@@ -285,7 +283,6 @@ DEPENDENCIES
   stripe
   turbolinks (~> 5)
   tzinfo-data
-  uglifier
   web-console (>= 3.3.0)
   whenever
   wicked_pdf
