@@ -285,7 +285,7 @@ DEPENDENCIES
   stripe
   turbolinks (~> 5)
   tzinfo-data
-  uglifier (~> 4.2.0)
+  uglifier
   web-console (>= 3.3.0)
   whenever
   wicked_pdf
