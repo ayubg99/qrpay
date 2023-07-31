@@ -13,7 +13,7 @@ class Table < ApplicationRecord
     # host = Rails.application.routes.default_url_options[:host]
     # Create the QR code object
     # qrcode = RQRCode::QRCode.new("http://#{host}/posts/#{id}")
-    host = Rails.application.config.action_controller.default_url_options[:host]
+    #host = Rails.application.config.action_controller.default_url_options[:host]
     
     qrcode = RQRCode::QRCode.new('https://nameless-journey-71604-bcaa0875548a.herokuapp.com' + restaurant_path(self.restaurant, table_number: self.table_number))
 
