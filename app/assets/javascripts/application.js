@@ -59,7 +59,7 @@ document.addEventListener('turbolinks:load', function() {
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
                 <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item.food_item_id}" class="cart-menos remove-cart-item" data-method="delete" data-remote="true">-</a>
-                <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="cart-plus add-to-cartt" data-remote="true">+</a>
+                <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="cart-plus add-to-cartt" data-method="post" data-remote="true">+</a>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
                 <h6 class="price">€${formattedPrice}</h6>
