@@ -2,7 +2,7 @@
 
 <%= render 'layouts/header_customer' %>
 
-<div class="container margin-top-container">
+<div class="container restaurant-show-page">
   <h1>
     <%= @restaurant.name %>
   </h1>
@@ -51,7 +51,7 @@
                             <% if food_type.have_to_select_one == true %>
                               <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control' %>
                             <% else %>
-                              <p style="font-size: 12px">
+                              <p>
                                 <% food_type.food_items.each do |food_item| %>
                                   <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %>
                                 <% end %>

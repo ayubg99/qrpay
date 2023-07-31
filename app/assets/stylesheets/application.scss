@@ -180,8 +180,14 @@
     margin-top: 15px;
   }
 
-  .margin-top-container {
+  .restaurant-show-page {
     margin-top: 100px;
+    label {
+      font-weight: bold;
+    }
+    h1, h5, h6 {
+      font-weight: bold;
+    }
   }
 
   .qr-code {
@@ -315,6 +321,7 @@
 .menu-name {
   margin-bottom: 20px;
   font-size: 30px;
+  font-weight: bold;
 }
 
 .special-menu-container {
@@ -325,9 +332,11 @@
   .special-menu-name {
     margin-top: 20px;
     font-size: 25px;
+    font-weight: bold;
   }
   .menu-price {
     font-size: 25px;
+    font-weight: bold;
   }
   &:hover {
     cursor: pointer;
@@ -341,8 +350,10 @@
   padding: 5px;
   padding-bottom: 20px;
   font-size: 20px !important;
+  font-weight: bold;
   h6 {
     font-size: 20px !important;
+    font-weight: bold;
   }
   &:hover {
     cursor: pointer;
@@ -627,6 +638,8 @@ body {
 
 .category-name {
   font-size: 30px !important;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .navbar-customer {
@@ -660,4 +673,13 @@ body {
 
 .modal {
   font-size: 25px !important;
+  a, button {
+    font-size: 25px !important;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 30px !important;
+  }
+  p {
+    font-size: 25px !important;
+  }
 }
