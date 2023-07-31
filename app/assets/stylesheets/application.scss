@@ -314,6 +314,7 @@
 
 .menu-name {
   margin-bottom: 20px;
+  font-size: 30px;
 }
 
 .special-menu-container {
@@ -321,8 +322,13 @@
   border: 1px solid #e7e7e7;
   margin-bottom: 15px;
   padding: 10px;
+  font-size: 25px !important;
   .special-menu-name {
     margin-top: 20px;
+    font-size: 25px;
+  }
+  .menu-price {
+    font-size: 25px;
   }
   &:hover {
     cursor: pointer;
@@ -335,6 +341,10 @@
   margin-bottom: 15px;
   padding: 5px;
   padding-bottom: 20px;
+  font-size: 20px !important;
+  h6 {
+    font-size: 25px !important;
+  }
   &:hover {
     cursor: pointer;
   }   
@@ -455,7 +465,7 @@ body {
 .custom-fixed-nav-tabs .nav-link {
   color: #000; /* Set the text color to black */
   border: none;
-  font-size: 16px;
+  font-size: 25px;
 }
 
 .custom-fixed-nav-tabs .nav-link.active {
@@ -614,4 +624,8 @@ body {
   max-height: 180px;
   min-height: 180px;
   border-radius: 5px;
+}
+
+.category-name {
+  font-size: 30px !important;
 }
