@@ -71,4 +71,4 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'lazy_high_charts'
 gem 'dotenv-rails', groups: [:development, :test]
-gem 'uglifier', '~> 4.2'
+gem 'terser'
