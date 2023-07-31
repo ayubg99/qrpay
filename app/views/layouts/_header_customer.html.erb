@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-customer navbar-expand-lg navbar-light bg-light fixed-top">
 
 
     <ul class="navbar-nav">
@@ -8,8 +8,8 @@
     </ul>
 
     <div class="navbar-nav ml-auto">
-        <%= link_to '#', class: 'navbar-brand cart-img', id: 'cart-icon', 'data-toggle' => 'modal', 'data-target' => '#cartModal' do %>
-        <%= image_tag ("trolley1.png") %>
+        <%= link_to '#', class: 'navbar-brand', id: 'cart-icon', 'data-toggle' => 'modal', 'data-target' => '#cartModal' do %>
+        <%= image_tag ("trolley1.png"), class: "cart-img" %>
         <span id="cart-item-count"><%= current_cart.cart_items_count %></span>
         <% end %>
     </div>

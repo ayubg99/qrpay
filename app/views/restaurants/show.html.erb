@@ -121,7 +121,7 @@
 
 <!-- Payment Method Selection Modal -->
 <div class="modal fade" id="paymentMethodModal" tabindex="-1" role="dialog" aria-labelledby="paymentMethodModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="paymentMethodModalLabel">¿Cómo quieres pagar?</h5>
@@ -158,8 +158,6 @@
   </div>
 </div>
 
-<%= render 'layouts/footer_customer' %>
-
 <div class="modal fade" id="foodItemModal" tabindex="-1" role="dialog" aria-labelledby="foodItemModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -180,6 +178,10 @@
     </div>
   </div>
 </div>
+
+<%= render 'layouts/footer_customer' %>
+
+
 
 <script>
   $(document).ready(function() {
@@ -271,4 +273,5 @@
     $(this).addClass("selected");
   });
 </script>
+
 

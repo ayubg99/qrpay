@@ -181,7 +181,7 @@
   }
 
   .margin-top-container {
-    margin-top: 40px;
+    margin-top: 100px;
   }
 
   .qr-code {
@@ -550,10 +550,10 @@ body {
   font-weight: bold;
   text-decoration: none;
   color: #333 !important;
-  font-size: 14px;
+  font-size: 30px;
   &:hover {
     color:rgb(128, 0, 255) !important;
-    font-size: 14px;
+    font-size: 30px;
     background: none;
   }
 }
@@ -613,7 +613,7 @@ body {
 #cart-item-count {
   background-color: rgb(128, 0, 255);
   padding: 10px;
-  font-size: 10px;
+  font-size: 20px;
   border-radius: 100%;
   color: #fff;
 }
@@ -627,4 +627,37 @@ body {
 
 .category-name {
   font-size: 30px !important;
+}
+
+.navbar-customer {
+  height: 120px;
+}
+
+.cart-img {
+  min-height: 100px !important;
+  min-width: 100px !important;
+}
+
+@media (max-width: 767px) {
+  .modal-dialog {
+    max-width: 90%;
+    margin: 1.75rem auto;
+    max-height: 80vh;
+  }
+}
+
+.modal-dialog {
+  max-width: 90%;
+  margin: 1.75rem auto;
+  max-height: 80vh;
+}
+
+.modal-content {
+  max-height: 100%;
+  overflow-y: auto;
+  font-size: 25px !important;
+}
+
+.modal {
+  font-size: 25px !important;
 }
