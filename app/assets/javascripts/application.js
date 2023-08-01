@@ -59,7 +59,7 @@ document.addEventListener('turbolinks:load', function() {
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
                 <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item.food_item_id}" class="cart-menos remove-cart-item" data-method="delete" data-remote="true">-</a>
-                <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="cart-plus add-to-cartt" data-method="post" data-remote="true">+</a>
+                <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="cart-plus add-to-cartt" data-remote="true">+</a>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
                 <h6 class="price">€${formattedPrice}</h6>
@@ -451,28 +451,5 @@ document.addEventListener("turbolinks:load", function () {
 
     // Redirect to the order new page
     window.location.href = "/restaurants/" + restaurantId + "/orders/new";
-  });
-});
-
-document.addEventListener("turbolinks:load", function () {
-  const paymentOptions = document.querySelectorAll(".payment-option");
-
-  paymentOptions.forEach(function (option) {
-    option.addEventListener("click", function () {
-      // Remove the 'selected' class from all options
-      paymentOptions.forEach(function (el) {
-        el.classList.remove("selected");
-      });
-      // Add the 'selected' class to the clicked option
-      this.classList.add("selected");
-
-      // Update the hidden input field with the selected payment method
-      const paymentMethod = this.getAttribute("data-method");
-      const hiddenInput = document.querySelector("#order_payment_method");
-      hiddenInput.value = paymentMethod;
-
-      // Submit the form
-      document.getElementById("stripe-payment-form").submit();
-    });
   });
 });

@@ -18,5 +18,6 @@ module Qrpay
     I18n.available_locales = [:en, :es]
     config.i18n.default_locale = :en
     config.time_zone = 'Madrid'
+    config.serve_static_assets = true
   end
 end
