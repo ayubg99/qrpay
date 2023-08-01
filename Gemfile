@@ -73,3 +73,4 @@ gem 'lazy_high_charts'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'terser'
 gem 'rails_12factor', group: :production
+gem 'aws-sdk-s3'
