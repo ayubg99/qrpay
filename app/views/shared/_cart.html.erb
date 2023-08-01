@@ -25,8 +25,8 @@
                 <h6 class="cart-item-quantity quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h6>
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
-              <%= link_to '-', "#", method: :delete, class: "cart-menos remove-cart-item", remote: true %>
-              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, special_menu_id: cart_item.special_menu_id, food_item_ids: cart_item.cart_item_food_items.map { |item| [item.food_item_id, item.food_item_id.to_s] }.to_h ), method: :post, data: { menu_id: cart_item.id }, class: "special-menu-cart-plus-link cart-plus", remote: true %>
+              <%= link_to '-', "#", method: :delete, class: "btn btn-danger remove-cart-item", remote: true %>
+              <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, special_menu_id: cart_item.special_menu_id, food_item_ids: cart_item.cart_item_food_items.map { |item| [item.food_item_id, item.food_item_id.to_s] }.to_h ), method: :post, data: { menu_id: cart_item.id }, class: "btn btn-primary special-menu-cart-plus-link", remote: true %>
               </div>
                 <div class="col-2 col-sm-2 col-md-2">
                   <h6 class="price"><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
