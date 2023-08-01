@@ -683,3 +683,9 @@ body {
     font-size: 25px !important;
   }
 }
+
+@media (min-width: 768px){
+.container-md, .container-sm, .container {
+    max-width: 900px !important;
+}
+}
