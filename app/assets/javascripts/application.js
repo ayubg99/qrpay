@@ -18,7 +18,7 @@
 //= require turbolinks
 //= require_tree .
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   $('body').on('click', '.add-to-cartt', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   // Function to handle the decrease quantity button click
   function handleDecreaseQuantityClick(event) {
     event.preventDefault();
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   // Function to handle the decrease quantity button click
   function handleDecreaseQuantityClick(event) {
     event.preventDefault();
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   // Add special menu to cart
   $('body').on('click', '.special-menu-cart-plus-link', function(e) {
     e.preventDefault();
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   // Special menu form submission
   $('body').on('submit', '.special-menu-form', function(e) {
     e.preventDefault();
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   const stripe = Stripe('pk_test_51NS2OyIULic551znN5qUeq7168Gyt9bka1OWGD4jmbI8MkfJSy9axar3uiwSMoOTipm9lclj9eWqI7iRl7mEeufe000lH5hnuT'); // Replace with your own test publishable key
   const elements = stripe.elements();
   const cardElement = elements.create('card');
@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   const body = document.querySelector('body');
   const sidebar = body.querySelector('nav');
   const toggle = body.querySelector('.toggle');
@@ -424,7 +424,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   const paymentOptions = document.querySelectorAll(".payment-option");
 
   paymentOptions.forEach(function (option) {
