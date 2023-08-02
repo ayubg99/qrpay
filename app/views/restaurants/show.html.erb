@@ -31,11 +31,11 @@
       <div id="special-menus" class="special-menus category-content special-menus-content">
       <h5 class="menu-name">MENÚS ESPECIALES</h5>
     
-      <% @restaurant.special_menus.each_slice(2) do |special_menus_group| %>
+      <% @restaurant.special_menus.each_slice(1) do |special_menus_group| %>
         <div class="row">
           <% special_menus_group.each do |special_menu| %>
             <% if special_menu.in_time_range? %>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <div class="special-menu-container container">
                   <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant), method: :post, remote: true, local:true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
                     <%= form.hidden_field :special_menu_id, value: special_menu.id %>
@@ -84,11 +84,11 @@
         <% if category.food_items.present? %>
           <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
             <h5 class="category-name"><%= category.name %></h5>
-            <% category.food_items.each_slice(3) do |food_items_slice| %>
+            <% category.food_items.each_slice(2) do |food_items_slice| %>
               <div class="row">
                 <% food_items_slice.each do |food_item| %>
-                  <div class="col-4 col-sm-4 col-md-4">
-                    <div class="food-item-container" data-toggle="modal" data-target="#foodItemModal"
+                  <div class="col-6 col-sm-6 col-md-6">
+                    <div class="food-item-container text-center" data-toggle="modal" data-target="#foodItemModal"
                          data-name="<%= food_item.name %>"
                          data-description="<%= food_item.description %>"
                          data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
