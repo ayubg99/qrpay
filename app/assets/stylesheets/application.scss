@@ -665,7 +665,7 @@ body {
 }
 
 @media (min-width: 768px){
-.container-md, .container-sm, .container {
+.client-container {
     max-width: 900px !important;
 }
 }
@@ -675,5 +675,24 @@ body {
   h6 {
     font-size: 30px !important;
     margin-bottom: 20px;
+  }
+}
+
+.new-order-view {
+  margin-top: 120px;
+  padding-bottom: 70px;
+  font-size: 25px !important;
+  a, button {
+    font-size: 30px !important;
+  }
+  h1, h2, h6 {
+    font-size: 30px !important;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: 30px !important;
+  }
+  p {
+    font-size: 20px !important;
   }
 }
