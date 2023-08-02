@@ -183,6 +183,7 @@
 
   .restaurant-show-page {
     margin-top: 80px;
+    padding-bottom: 70px;
     label {
       font-weight: bold;
     }
@@ -508,8 +509,8 @@ body {
 }
 
 .payment-option {
-  width: 120px;
-  height: 200px;
+  width: 100%;
+  height: 400px;
   margin-bottom: 20px;
 }
 
@@ -602,8 +603,7 @@ body {
 
 .food-item-image {
   width: 100%;
-  max-height: 180px;
-  min-height: 180px;
+  height: 100%;
   border-radius: 5px;
 }
 
@@ -636,10 +636,19 @@ body {
   max-height: 80vh;
 }
 
+.modal-dialog-food {
+  max-width: 70%;
+  margin: 1.75rem auto;
+}
+
+
 .modal-content {
   max-height: 100%;
   overflow-y: auto;
   font-size: 25px !important;
+  #foodItemImageContainer {
+    height: 100%;
+  }
 }
 
 .modal {
@@ -659,4 +668,12 @@ body {
 .container-md, .container-sm, .container {
     max-width: 900px !important;
 }
+}
+
+#paymentMethodModal {
+  font-size: 30px !important;
+  h6 {
+    font-size: 30px !important;
+    margin-bottom: 20px;
+  }
 }
