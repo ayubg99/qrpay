@@ -16,6 +16,21 @@
   body {
     border-color: transparent !important; /* Make borders transparent */
     border: none !important;
+    font-size: 25px !important;
+  }
+
+  a, button {
+    font-size: 30px !important;
+  }
+  h1, h2, h6 {
+    font-size: 30px !important;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: 30px !important;
+  }
+  p {
+    font-size: 20px !important;
   }
 </style>
 
@@ -24,28 +39,28 @@
     <% if cart_item.special_menu.present? %>
       <tr class="cart-item">
         <td>
-          <p><%= cart_item.special_menu.name %></p>
-          <p style="font-size: 10px; color: rgb(128, 0, 255);">
+          <h2><%= cart_item.special_menu.name %></h2>
+          <h2 style="font-size: 10px; color: rgb(128, 0, 255);">
             <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
               <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
             <% end %>
-          </p>
+          </h2>
         </td>
         <td></td>
         <td></td>
-        <td><p>x <%= cart_item.quantity %></p></td>
-        <td><p><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %></p></td>
+        <td><h2>x <%= cart_item.quantity %></h2></td>
+        <td><h2><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %></h2></td>
       </tr>
     <% elsif cart_item.cart_item_food_items.present? %>
       <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
         <tr class="cart-item">
           <td>
-            <p><%= cart_item_food_item.food_item.name %></p>
+            <h2><%= cart_item_food_item.food_item.name %></h2>
           </td>
           <td></td>
           <td></td>
-          <td><p class="cart-item-quantity">x <%= cart_item.quantity %></p></td>
-          <td><p><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></p></td>
+          <td><h2 class="cart-item-quantity">x <%= cart_item.quantity %></h2></td>
+          <td><h2><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h2></td>
         </tr>
       <% end %>
     <% end %>
@@ -53,7 +68,7 @@
 
   <tr> 
     <td colspan="5">
-      <p>Total: <%= number_to_currency(cart.total_price, precision: 2, unit: '€') %></p>
+      <h2>Total: <%= number_to_currency(cart.total_price, precision: 2, unit: '€') %></h2>
     </td>
   </tr>
 </table>
