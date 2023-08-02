@@ -1,46 +1,74 @@
 <%= render 'layouts/header_order' %>
 
-<div class="container new-order-view client-container">
-  <h1>Tu pedido</h1>
-  <div>
-  <% current_cart.cart_items.each do |cart_item| %>              
-    <% if cart_item.special_menu.present? %>
-      <div class="row cart-item">
-        <div class="col-8 col-sm-8 col-md-8">
-          <h6><%= cart_item.special_menu.name %></h6>
-          <p style="font-weight: bold; color:rgb(128, 0, 255);">
-          <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-            <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
+
+
+<div class="modal new-order-modal fade" id="orderModal">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-edit">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tu pedido</h5>
+      </div>
+      <div class="modal-body">
+        <% current_cart.cart_items.each do |cart_item| %>              
+          <% if cart_item.special_menu.present? %>
+            <div class="row cart-item">
+              <div class="col-8 col-sm-8 col-md-8">
+                <h6><%= cart_item.special_menu.name %></h6>
+                <p style="font-weight: bold; color:rgb(128, 0, 255);">
+                <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+                  <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
+                <% end %>
+                </p>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h6>x <%= cart_item.quantity %></h6>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h6><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
+                <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
+                method: :delete, 
+                remote: true, 
+                class: 'btn remove-from-cart-link' %></h6>            
+              </div>
+              </div>  
+          <% elsif cart_item.cart_item_food_items.present? %>
+            <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
+              <div class="row cart-item">
+                <div class="col-8 col-sm-8 col-md-8">
+                    <h6><%= cart_item_food_item.food_item.name %></h6>
+                </div>
+                <div class="col-2 col-sm-2 col-md-2">
+                  <h6 class="cart-item-quantity">x <%= cart_item.quantity %></h6>
+                </div>
+                <div class="col-2 col-sm-2 col-md-2">
+                  <h6><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
+                </div>
+              </div>
+            <% end %>
           <% end %>
-          </p>
+        <% end %>
+        <h3>Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h3>
+        <%= render 'form', order: @order %>
+      <div>
+      <div class="row justify-content-end" style="padding-bottom: 20px; margin-top: 30px">
+        <div class="col-auto">
+        <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 1px" %>
         </div>
-        <div class="col-2 col-sm-2 col-md-2">
-          <h6>x <%= cart_item.quantity %></h6>
-        </div>
-        <div class="col-2 col-sm-2 col-md-2">
-          <h6><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
-          <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
-           method: :delete, 
-           remote: true, 
-           class: 'btn remove-from-cart-link' %></h6>            
-        </div>
-        </div>  
-    <% elsif cart_item.cart_item_food_items.present? %>
-    <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-    <div class="row cart-item">
-    <div class="col-8 col-sm-8 col-md-8">
-        <h6><%= cart_item_food_item.food_item.name %></h6>
+      </div>
     </div>
-    <div class="col-2 col-sm-2 col-md-2">
-      <h6 class="cart-item-quantity">x <%= cart_item.quantity %></h6>
-    </div>
-    <div class="col-2 col-sm-2 col-md-2">
-      <h6><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h6>
-    </div>
-    </div>
-    <% end %>
-    <% end %>
-  <% end %>
-    <h3>Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h3>
-  <%= render 'form', order: @order %>
+  </div>
 </div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var modalElement = document.getElementById("orderModal");
+
+    var orderModal = new bootstrap.Modal(modalElement, {
+      backdrop: 'static', 
+      keyboard: false
+    });
+
+    orderModal.show();
+  });
+</script>
