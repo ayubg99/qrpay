@@ -362,6 +362,21 @@
   }   
 }
 
+.food-item-dashboard {
+  border-radius: 5%;
+  border: 1px solid #e7e7e7;
+  margin-bottom: 15px;
+  padding: 5px;
+  padding-bottom: 20px;
+  font-size: 20px !important;
+  h6 {
+    font-size: 20px !important;
+  }
+  &:hover {
+    cursor: pointer;
+  }   
+}
+
 #card-element {
   padding: 10px;
   border: 1px solid #ccc;
@@ -412,7 +427,7 @@ body {
 }
 
 .btn-dashboard {
-  font-size: 10px;
+  font-size: 10px !important;
   color: #fff !important;
 }
 
