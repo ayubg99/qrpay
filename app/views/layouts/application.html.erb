@@ -5,6 +5,9 @@
     <%= favicon_link_tag 'bamboo.png' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <% if controller.controller_name == 'welcome' || controller.controller_name == 'terms' || controller.controller_name == 'contacts' %>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% end %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
