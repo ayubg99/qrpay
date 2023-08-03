@@ -2,8 +2,8 @@
 
 <section class="home">
 <div class="container dashboard-index" style="height: 100%">
-<%= link_to 'nueva categoría', new_restaurant_category_path(@restaurant), class: "btn btn-primary btn-dashboard2 btn-margin-bottom" %> 
-<%= link_to 'nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary btn-dashboard2 btn-margin-bottom" %> 
+<%= link_to 'Nueva categoría', new_restaurant_category_path(@restaurant), class: "btn btn-primary btn-dashboard2 btn-margin-bottom" %> 
+<%= link_to 'Nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary btn-dashboard2 btn-margin-bottom" %> 
 <% @restaurant.categories.each_with_index do |category, index| %>
   <% if category.food_items.present? %>
   <h4><%= category.name %>
@@ -62,7 +62,7 @@
 
 <script>
   $(document).ready(function() {
-    $('.food-item-container').click(function() {
+    $('.food-item-dashboard').click(function() {
       var name = $(this).data('name');
       var description = $(this).data('description');
       var imageUrl = $(this).data('image-url');
