@@ -19,6 +19,76 @@
 //= require_tree .
 
 document.addEventListener("turbolinks:load", function() {
+  // Special menu form submission
+  $('body').on('submit', '.add-to-cart', function(e) {
+    e.preventDefault();
+    console.log('Form submitted!'); // Add this line to check if the event is triggered
+
+    var form = $(this);
+    var url = form.attr('action');
+    var submitButton = form.find('input[type="submit"]');
+
+    submitButton.prop('disabled', true);
+
+    $.ajax({
+      url: url,
+      method: 'POST',
+      dataType: 'json',
+      data: form.serialize(),
+      success: function(response) {
+        // Update cart item count dynamically
+        var cartItemCount = parseInt($('#cart-item-count').text());
+        $('#cart-item-count').text(cartItemCount + 1);
+
+        // Check if the cart item already exists
+        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item_id}"]`);
+
+        if (existingCartItem.length > 0) {
+          // Update the quantity of the existing cart item
+          var newQuantity = response.quantity;
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
+          var newPrice = parseFloat(response.food_item.price * newQuantity).toFixed(2);
+          existingCartItem.find('.price').text('€' + newPrice);
+        } else {
+          // Format the price with two decimal places
+          var formattedPrice = parseFloat(response.food_item.price).toFixed(2);
+
+          // Append the new cart item to the cart items list
+          var cartItemHtml = `
+            <div class="row cart_item" data-food-id="${response.cart_item_id}">
+              <div class="col-6 col-sm-6 col-md-6">
+                <h5>${response.food_item.name}</h5>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h5 class="quantity">x ${response.quantity}</h5>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+                <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item_id}" class="btn btn-danger remove-cart-item" data-method="delete" data-remote="true">-</a>
+                <form class="add-to-cart" action="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" data-remote="true" data-local="true" method="post">
+                  <input type="submit" name="commit" value="+" class="btn btn-primary" data-disable-with="+" />
+                </form>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <h5 class="price">€${formattedPrice}</h5>
+              </div>
+            </div>
+          `;
+          $('#cart-items').append(cartItemHtml);
+        }
+
+        // Update cart total price
+        var newTotalPrice = parseFloat(response.total_price).toFixed(2);
+        $('#cart-total-price').text('Total: €' + newTotalPrice);
+        submitButton.prop('disabled', false);
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  });
+});
+
+document.addEventListener("turbolinks:load", function() {
   $('body').on('click', '.add-to-cartt', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
@@ -267,11 +337,18 @@ document.addEventListener("turbolinks:load", function() {
           }
         }
         linkUrl += '&special_menu_id=' + encodeURIComponent(specialMenuId);
+
+        
         
         // Replace square brackets encoding with %5B and %5D
         linkUrl = linkUrl.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
         
-        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-menu-id="' + response.cart_item_id + '">+</a>';
+        var cartItemForm =
+  '<form class="special-menu-form" action="' +
+  linkUrl +
+  '" data-remote="true" data-local="true" method="post">' +
+  '<input type="submit" name="commit" value="+" class="btn btn-primary" data-disable-with="+" />' +
+  '</form>';
         // Append the new cart item to the cart items list
         var cartItemHtml = `
           <div class="row cart_item" data-menu-id="${response.cart_item_id}">
@@ -284,7 +361,7 @@ document.addEventListener("turbolinks:load", function() {
             </div>
             <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
             <a href="/restaurants/${response.restaurant_id}/cart/remove_special_menu/${response.cart_item_id}" class="btn btn-danger remove_special_menu" data-method="delete" data-remote="true">-</a>
-            ${cartItemLink}
+            ${cartItemForm}
             </div>
             <div class="col-2 col-sm-2 col-md-2">
               <h5 class="price">€${formattedPrice}</h5>
