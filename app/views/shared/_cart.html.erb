@@ -37,7 +37,7 @@
                 </div>  
             <% elsif cart_item.cart_item_food_items.present? %>
             <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-            <div class="row cart-item" data-food-id="<%= cart_item_food_item.food_item_id %>">
+            <div class="row cart-item" data-food-id="<%= cart_item.id %>">
             <div class="col-6 col-sm-6 col-md-6">
                 <h5><%= cart_item_food_item.food_item.name %></h5>
             </div>
