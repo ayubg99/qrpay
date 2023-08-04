@@ -177,6 +177,15 @@
     }
   }
 
+  .btn-danger {
+    font-size: 25px;
+    &:hover {
+      border-color: #dc3545;
+      background-color: white !important;
+      color: #dc3545 !important;
+    }
+  }
+
   .restaurant-demo-btn {
     margin-top: 15px;
   }
@@ -436,15 +445,6 @@ body {
   color: #fff !important;
 }
 
-.btn-danger {
-  font-size: 25px;
-  &:hover {
-    border-color: #dc3545;
-    background-color: white !important;
-    color: #dc3545 !important;
-  }
-}
-
 .pink {
   color: rgb(128, 0, 255);
 }
@@ -679,6 +679,9 @@ body {
   font-size: 25px !important;
   a, button {
     font-size: 35px !important;
+  }
+  .btn-danger {
+    font-size: 32px !important;
   }
   h1, h2, h5 {
     font-size: 30px !important;
