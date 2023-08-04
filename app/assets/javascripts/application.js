@@ -33,7 +33,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(cartItemCount + 1);
 
         // Check if the cart item already exists
-        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item_id}"]`);
 
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
@@ -47,7 +47,7 @@ document.addEventListener("turbolinks:load", function() {
 
           // Append the new cart item to the cart items list
           var cartItemHtml = `
-            <div class="row cart_item" data-cart-id="${response.cart_item_id}">
+            <div class="row cart_item" data-food-id="${response.cart_item_id}">
               <div class="col-6 col-sm-6 col-md-6">
                 <h5>${response.food_item.name}</h5>
               </div>
@@ -94,7 +94,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
   
         // Find the cart item by its food item id
-        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item_id}"]`);
   
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
@@ -140,7 +140,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
   
         // Find the cart item by its food item id
-        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
   
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
@@ -177,19 +177,17 @@ document.addEventListener("turbolinks:load", function() {
 
     var link = $(this);
     var url = link.attr('href');
-    var cartId = link.data('cart-id');
 
     $.ajax({
       url: url,
       method: 'POST',
       dataType: 'json',
-      data: { cart_id: cartId },
       success: function(response) {
         // Update cart item count dynamically
         var cartItemCount = parseInt($('#cart-item-count').text());
         $('#cart-item-count').text(cartItemCount + 1);
 
-        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
 
           // Update the quantity of the existing cart item
           var newQuantity = response.quantity;
@@ -233,7 +231,7 @@ document.addEventListener("turbolinks:load", function() {
 
 
         // Check if the cart item already exists
-        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
 
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
@@ -273,10 +271,10 @@ document.addEventListener("turbolinks:load", function() {
         // Replace square brackets encoding with %5B and %5D
         linkUrl = linkUrl.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
         
-        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-cart-id="' + response.cart_item_id + '">+</a>';
+        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-menu-id="' + response.cart_item_id + '">+</a>';
         // Append the new cart item to the cart items list
         var cartItemHtml = `
-          <div class="row cart_item" data-cart-id="${response.cart_item_id}">
+          <div class="row cart_item" data-menu-id="${response.cart_item_id}">
             <div class="col-6 col-sm-6 col-md-6">
               <h5>${response.special_menu.name}</h5>
               <p style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
@@ -306,42 +304,6 @@ document.addEventListener("turbolinks:load", function() {
     });
   });
 });
-
-document.addEventListener("turbolinks:load", function() {
-  const body = document.querySelector('body');
-  const sidebar = body.querySelector('nav');
-  const toggle = body.querySelector('.toggle');
-  const modeSwitch = body.querySelector('.toggle-switch');
-  const modeText = body.querySelector('.mode-text');
-
-  // Function to toggle dark mode
-  function toggleDarkMode() {
-    body.classList.toggle('dark');
-    if (body.classList.contains('dark')) {
-      modeText.innerText = 'Light mode';
-      // Store dark mode preference in local storage
-      localStorage.setItem('darkMode', 'true');
-    } else {
-      modeText.innerText = 'Dark mode';
-      // Remove dark mode preference from local storage
-      localStorage.removeItem('darkMode');
-    }
-  }
-
-  toggle.addEventListener("click" , () =>{
-    sidebar.classList.toggle("close");
-  })
-
-  modeSwitch.addEventListener('click', toggleDarkMode);
-
-  // Check for dark mode preference on page load
-  const darkModePreference = localStorage.getItem('darkMode');
-  if (darkModePreference === 'true') {
-    body.classList.add('dark');
-    modeText.innerText = 'Light mode';
-  }
-});
-
 
 
 document.addEventListener("turbolinks:load", function() {
