@@ -522,6 +522,13 @@ body {
 
 .cart-buttons-wrapper {
   margin-bottom: 10px;
+  display: inline;
+  a {
+    display: inline;
+  }
+  form {
+    display: inline;
+  }
 }
 
 .payment-option {
