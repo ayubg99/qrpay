@@ -37,7 +37,7 @@
             <% if special_menu.in_time_range? %>
               <div class="col-md-12">
                 <div class="special-menu-container container">
-                  <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant), method: :post, remote: true, local:true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
+                  <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant), method: :post, remote: true, local:true, class: 'special-menu-form') do |form| %>
                     <%= form.hidden_field :special_menu_id, value: special_menu.id %>
                     <div class="row">
                       <div class="col-6 col-sm-6 col-md-6">
