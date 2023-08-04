@@ -25,16 +25,12 @@
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
               <%= link_to '-', remove_special_menu_restaurant_cart_path(@restaurant, cart_item_id: cart_item.id), method: :delete, class: "btn btn-danger remove_special_menu", remote: true %>
-              <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant, special_menu_id: cart_item.special_menu_id, food_item_ids: cart_item.cart_item_food_items.map { |item| [item.food_item_id, item.food_item_id.to_s] }.to_h ), method: :post, remote: true, local:true, class: 'special-menu-form') do |form| %>
+              <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant, special_menu_id: cart_item.special_menu_id, food_item_ids: cart_item.cart_item_food_items.map { |item| [item.food_item_id, item.food_item_id.to_s] }.to_h ), method: :post, local:true, class: 'special-menu-form') do |form| %>
               <%= form.submit '+', class: "btn btn-primary" %>
               <% end %>
               </div>
                 <div class="col-2 col-sm-2 col-md-2">
-                  <h5 class="price"><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
-                  <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
-                   method: :delete, 
-                   remote: true, 
-                   class: 'btn remove-from-cart-link' %></h5>            
+                  <h5 class="price"><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %></h5>            
                 </div>
                 </div>  
             <% elsif cart_item.cart_item_food_items.present? %>
@@ -48,7 +44,7 @@
             </div>
             <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
             <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, cart_item_id: cart_item.id), method: :delete, class: "btn btn-danger remove-cart-item", remote: true %>
-            <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: cart_item_food_item.food_item_id), class: "add-to-cart", method: :post, remote: true, local:true do |form| %>
+            <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: cart_item_food_item.food_item_id), class: "add-to-cart", method: :post, local:true do |form| %>
               <%= form.submit '+', class: "btn btn-primary" %>
             <% end %>
             </div>

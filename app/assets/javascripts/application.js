@@ -64,7 +64,7 @@ document.addEventListener("turbolinks:load", function() {
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
                 <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item_id}" class="btn btn-danger remove-cart-item" data-method="delete" data-remote="true">-</a>
-                <form class="add-to-cart" action="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" data-remote="true" data-local="true">
+                <form class="add-to-cart" action="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" data-local="true">
                   <input type="submit" name="commit" value="+" class="btn btn-primary" data-disable-with="+" />
                 </form>
               </div>
@@ -126,7 +126,7 @@ document.addEventListener("turbolinks:load", function() {
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
                 <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item_id}" class="btn btn-danger remove-cart-item" data-method="delete" data-remote="true">-</a>
-                <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="btn btn-primary add-to-cartt" data-remote="true">+</a>
+                <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="btn btn-primary add-to-cartt" data-local="true">+</a>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
                 <h5 class="price">€${formattedPrice}</h5>
@@ -346,7 +346,7 @@ document.addEventListener("turbolinks:load", function() {
         var cartItemForm =
   '<form class="special-menu-form" action="' +
   linkUrl +
-  '" data-remote="true" data-local="true">' +
+  '" data-local="true">' +
   '<input type="submit" name="commit" value="+" class="btn btn-primary" data-disable-with="+" />' +
   '</form>';
         // Append the new cart item to the cart items list
