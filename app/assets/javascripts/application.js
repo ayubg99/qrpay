@@ -49,17 +49,17 @@ document.addEventListener("turbolinks:load", function() {
           var cartItemHtml = `
             <div class="row cart_item" data-food-id="${response.cart_item.food_item_id}">
               <div class="col-6 col-sm-6 col-md-6">
-                <h6>${response.food_item.name}</h6>
+                <h5>${response.food_item.name}</h5>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
-                <h6 class="quantity">x ${response.quantity}</h6>
+                <h5 class="quantity">x ${response.quantity}</h5>
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
                 <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item.food_item_id}" class="btn btn-danger remove-cart-item" data-method="delete" data-remote="true">-</a>
                 <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="btn btn-primary add-to-cartt" data-remote="true">+</a>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
-                <h6 class="price">€${formattedPrice}</h6>
+                <h5 class="price">€${formattedPrice}</h5>
               </div>
             </div>
           `;
@@ -286,17 +286,17 @@ document.addEventListener("turbolinks:load", function() {
         var cartItemHtml = `
           <div class="row cart_item" data-menu-id="${response.cart_item.id}">
             <div class="col-6 col-sm-6 col-md-6">
-              <h6>${response.special_menu.name}</h6>
+              <h5>${response.special_menu.name}</h5>
               <p style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
             </div>
             <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
-              <h6 class="quantity">x ${response.quantity}</h6>
+              <h5 class="quantity">x ${response.quantity}</h5>
             </div>
             <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
             ${cartItemLink}
             </div>
             <div class="col-2 col-sm-2 col-md-2">
-              <h6 class="price">€${formattedPrice}</h6>
+              <h5 class="price">€${formattedPrice}</h5>
             </div>
           </div>
         `;

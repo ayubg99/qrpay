@@ -9,11 +9,11 @@
         <h5 class="modal-title">Tu pedido</h5>
       </div>
       <div class="modal-body">
-        <% current_cart.cart_items.each do |cart_item| %>              
+        <% current_cart.cart_items.each do |cart_item| %>               
           <% if cart_item.special_menu.present? %>
             <div class="row cart-item">
               <div class="col-8 col-sm-8 col-md-8">
-                <h6><%= cart_item.special_menu.name %></h6>
+                <h5><%= cart_item.special_menu.name %></h5>
                 <p style="font-weight: bold; color:rgb(128, 0, 255);">
                 <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
                   <%= cart_item_food_item.food_item.name %><% if cart_item.cart_item_food_items.last.food_item != cart_item_food_item.food_item %>, <% end %>
@@ -21,14 +21,14 @@
                 </p>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
-                <h6>x <%= cart_item.quantity %></h6>
+                <h5>x <%= cart_item.quantity %></h5>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
-                <h6><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
+                <h5><%= number_to_currency(cart_item.special_menu.price * cart_item.quantity, precision: 2, unit: '€') %> 
                 <%# link_to 'x', remove_from_cart_restaurant_cart_path(@restaurant, cart_item),
                 method: :delete, 
                 remote: true, 
-                class: 'btn remove-from-cart-link' %></h6>            
+                class: 'btn remove-from-cart-link' %></h5>            
               </div>
               </div>  
           <% elsif cart_item.cart_item_food_items.present? %>
