@@ -171,7 +171,6 @@ document.addEventListener("turbolinks:load", function() {
           var newQuantity = response.quantity;
           existingCartItem.find('.quantity').text('x ' + newQuantity);
           if (newQuantity === 0) {
-            existingCartItem.find('.price').text('€' + 0.00);
             existingCartItem.remove();
           } else {
             var newPrice = parseFloat(response.food_item.price * newQuantity).toFixed(2);
@@ -217,7 +216,6 @@ document.addEventListener("turbolinks:load", function() {
           var newQuantity = response.quantity;
           existingCartItem.find('.quantity').text('x ' + newQuantity);
           if (newQuantity === 0) {
-            existingCartItem.find('.price').text('€' + 0.00);
             existingCartItem.remove();
           } else {
             var newPrice = parseFloat(response.special_menu.price * newQuantity).toFixed(2);
