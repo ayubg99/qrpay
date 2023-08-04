@@ -65,8 +65,8 @@ class Cart < ApplicationRecord
     current_item
   end
 
-  def remove_special_menu(special_menu_id)
-    current_item = cart_items.find_by(special_menu_id: special_menu_id)
+  def remove_special_menu(cart_item_id)
+    current_item = cart_items.find_by(id: cart_item_id)
     if current_item.present?
       if current_item.quantity > 1
         current_item.quantity -= 1

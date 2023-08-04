@@ -21,10 +21,10 @@
                   </p>
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
-                <h5 class="cart-item-quantity quantity" data-cart-item-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h5>
+                <h5 class="cart-item-quantity quantity" data-menu-id="<%= cart_item.id %>">x <%= cart_item.quantity %></h5>
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
-              <%= link_to '-', "#", method: :delete, class: "btn btn-danger remove-cart-item", remote: true %>
+              <%= link_to '-', remove_special_menu_restaurant_cart_path(@restaurant, cart_item_id: cart_item.id), method: :delete, class: "btn btn-danger remove_special_menu", remote: true %>
               <%= link_to '+', add_to_cart_restaurant_cart_path(@restaurant, special_menu_id: cart_item.special_menu_id, food_item_ids: cart_item.cart_item_food_items.map { |item| [item.food_item_id, item.food_item_id.to_s] }.to_h ), method: :post, data: { menu_id: cart_item.id }, class: "btn btn-primary special-menu-cart-plus-link", remote: true %>
               </div>
                 <div class="col-2 col-sm-2 col-md-2">
