@@ -283,7 +283,7 @@ document.addEventListener("turbolinks:load", function() {
         // Replace square brackets encoding with %5B and %5D
         linkUrl = linkUrl.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
         
-        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-method="post" data-menu-id="' + response.cart_item.id + '">+</a>';
+        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-menu-id="' + response.cart_item.id + '">+</a>';
          console.log(cartItemLink);
         // Append the new cart item to the cart items list
         var cartItemHtml = `
