@@ -99,7 +99,6 @@ document.addEventListener("turbolinks:load", function() {
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
           var newQuantity = response.quantity;
-  
           existingCartItem.find('.quantity').text('x ' + newQuantity);
           if (newQuantity === 0) {
             existingCartItem.find('.price').text('€' + 0.00);
@@ -146,10 +145,14 @@ document.addEventListener("turbolinks:load", function() {
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
           var newQuantity = response.quantity;
-  
+          existingCartItem.find('.quantity').text('x ' + newQuantity);
           if (newQuantity === 0) {
+            existingCartItem.find('.price').text('€' + 0.00);
             existingCartItem.remove();
-          }          
+          } else {
+            var newPrice = parseFloat(response.special_menu.price * newQuantity).toFixed(2);
+            existingCartItem.find('.price').text('€' + newPrice);
+          }           
         }
         
         // Update cart total price
@@ -293,6 +296,7 @@ document.addEventListener("turbolinks:load", function() {
               <h5 class="quantity">x ${response.quantity}</h5>
             </div>
             <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
+            <a href="/restaurants/${response.restaurant_id}/cart/remove_special_menu/${response.cart_item_id}" class="btn btn-danger remove_special_menu" data-method="delete" data-remote="true">-</a>
             ${cartItemLink}
             </div>
             <div class="col-2 col-sm-2 col-md-2">

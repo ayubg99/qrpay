@@ -24,7 +24,7 @@ class CartsController < ApplicationController
     elsif params[:special_menu_id].present? && params[:food_item_ids].present?
       @cart_item = @cart.add_special_menu(params[:special_menu_id], params[:food_item_ids])
       if @cart_item.save
-        render json: { food_item_ids: params[:food_item_ids].values.map(&:to_i).sort, restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, total_price: @cart.total_price }
+        render json: { cart_item_id: @cart_item.id, food_item_ids: params[:food_item_ids].values.map(&:to_i).sort, restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, total_price: @cart.total_price }
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity   
       end
@@ -43,14 +43,14 @@ class CartsController < ApplicationController
   end
 
   def remove_special_menu
-    special_menu_id = params[:special_menu_id]
-    @cart_item = @cart.cart_items.find_by(special_menu_id: special_menu_id)
-    @cart_item_id = @cart_item.id
+    cart_item_id = params[:cart_item_id]
+    @cart_item = @cart.remove_special_menu(cart_item_id)
+    special_menu = SpecialMenu.find_by(id: @cart_item.special_menu_id) if @cart_item.present?
     
-    if @cart_item.destroy
-      render json: { cart_item_id: @cart_item_id, quantity: 0, total_price: @cart.total_price  }
+    if @cart_item.save
+      render json: { restaurant_id: @restaurant.id, cart_item_id: cart_item_id, quantity: @cart_item.quantity, total_price: @cart.total_price, special_menu: special_menu  }
     else 
-      render json: { cart_item_id: @cart_item_id, quantity: 0, total_price: @cart.total_price  }
+      render json: { restaurant_id: @restaurant.id, cart_item_id: cart_item_id, quantity: 0, total_price: @cart.total_price, special_menu: special_menu }
     end
   end
 
