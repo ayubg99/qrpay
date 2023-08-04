@@ -35,7 +35,9 @@ class CartsController < ApplicationController
     cart_item_id = params[:cart_item_id]
     @cart_item = @cart.remove_food(cart_item_id)
     
-    if @cart_item.save
+    if @cart_item.nil?
+      render json: { cart_item_id: cart_item_id, quantity: 0, total_price: @cart.total_price  }
+    elsif @cart_item.save
       render json: { cart_item_id: cart_item_id, quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, total_price: @cart.total_price }
     else 
       render json: { cart_item_id: cart_item_id, quantity: 0, total_price: @cart.total_price  }
@@ -47,10 +49,12 @@ class CartsController < ApplicationController
     @cart_item = @cart.remove_special_menu(cart_item_id)
     special_menu = SpecialMenu.find_by(id: @cart_item.special_menu_id) if @cart_item.present?
     
-    if @cart_item.save
+    if @cart_item.nil?
+      render json: { restaurant_id: @restaurant.id, cart_item_id: cart_item_id, quantity: 0, total_price: @cart.total_price, special_menu: nil }
+    elsif @cart_item.save
       render json: { restaurant_id: @restaurant.id, cart_item_id: cart_item_id, quantity: @cart_item.quantity, total_price: @cart.total_price, special_menu: special_menu  }
     else 
-      render json: { restaurant_id: @restaurant.id, cart_item_id: cart_item_id, quantity: 0, total_price: @cart.total_price, special_menu: special_menu }
+      render json: { restaurant_id: @restaurant.id, cart_item_id: cart_item_id, quantity: 0, total_price: @cart.total_price, special_menu: nil }
     end
   end
 

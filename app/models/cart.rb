@@ -60,6 +60,7 @@ class Cart < ApplicationRecord
         current_item.quantity -= 1
       elsif current_item.quantity == 1
         current_item.destroy
+        current_item = nil
       end
     end
     current_item
@@ -72,6 +73,7 @@ class Cart < ApplicationRecord
         current_item.quantity -= 1
       elsif current_item.quantity == 1
         current_item.destroy
+        current_item = nil
       end
     end
     current_item
