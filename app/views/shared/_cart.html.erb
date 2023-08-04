@@ -6,7 +6,6 @@
         <h5 class="modal-title" id="cartModalLabel">Tu pedido</h5>
       </div>
       <div class="modal-body">
-        <div class="container" style="margin-top: 0px" id="cart-container">
 
         <% if current_cart.present? %>
         <div id="cart-items">
@@ -57,17 +56,16 @@
             <% end %>
           <% end %>
         </div>
-            <h2 id="cart-total-price">Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h2>
-            <%= link_to 'Pedir', '#', class: 'btn btn-primary', style:"margin-top: 20px; width: 100%; font-size: 35px !important", 'data-toggle' => 'modal', 'data-target' => '#paymentMethodModal' %>
-          <% else %>
-            <p>Your cart is empty.</p>
-          <% end %>
-        </div>
+        <h2 id="cart-total-price">Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h2>
+        <%= link_to 'Pedir', '#', class: 'btn btn-primary', style:"margin-top: 20px; width: 100%; font-size: 35px !important", 'data-toggle' => 'modal', 'data-target' => '#paymentMethodModal' %>
+        <% else %>
+          <p>Your cart is empty.</p>
+        <% end %>
       </div>
       <div class="row justify-content-end" style="padding-bottom: 20px; margin-top: 30px">
         <div class="col-auto">
         <%= link_to 'Vaciar', clear_cart_restaurant_cart_path(@restaurant), method: :delete, class: 'btn btn-danger clear-cart' %>
-        <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 1px" %>
+        <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 5px" %>
         </div>
     </div>
     </div>
