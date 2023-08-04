@@ -33,12 +33,12 @@ class CartsController < ApplicationController
 
   def remove_from_cart
     cart_item_id = params[:cart_item_id]
-    @cart_item = @cart.remove_food(food_item_id)
+    @cart_item = @cart.remove_food(cart_item_id)
     
     if @cart_item.save
-      render json: { cart_item_id: @cart_item.id, food_item_id: food_item_id, quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, total_price: @cart.total_price }
+      render json: { cart_item_id: @cart_item.id, quantity: @cart_item.quantity, cart_item: @cart_item, food_item: @cart_item.cart_item_food_items.first.food_item, total_price: @cart.total_price }
     else 
-      render json: { cart_item_id: @cart_item.id, food_item_id: food_item_id, quantity: 0, total_price: @cart.total_price  }
+      render json: { cart_item_id: @cart_item.id, quantity: 0, total_price: @cart.total_price  }
     end
   end
 
@@ -53,7 +53,7 @@ class CartsController < ApplicationController
       render json: { restaurant_id: @restaurant.id, cart_item_id: cart_item_id, quantity: 0, total_price: @cart.total_price, special_menu: special_menu }
     end
   end
-
+  
   def clear_cart
     @cart.cart_items.destroy_all
 

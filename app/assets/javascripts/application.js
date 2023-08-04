@@ -55,7 +55,7 @@ document.addEventListener("turbolinks:load", function() {
                 <h5 class="quantity">x ${response.quantity}</h5>
               </div>
               <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
-                <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item.food_item_id}" class="btn btn-danger remove-cart-item" data-method="delete" data-remote="true">-</a>
+                <a href="/restaurants/${response.restaurant_id}/cart/remove_from_cart/${response.cart_item_id}" class="btn btn-danger remove-cart-item" data-method="delete" data-remote="true">-</a>
                 <a href="/restaurants/${response.restaurant_id}/cart/add_to_cart?food_item_id=${response.cart_item.food_item_id}" class="btn btn-primary add-to-cartt" data-remote="true">+</a>
               </div>
               <div class="col-2 col-sm-2 col-md-2">
