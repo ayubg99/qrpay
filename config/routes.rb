@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     end
     resource :cart, only: [:show] do
       post 'add_to_cart', to: 'carts#add_to_cart'
-      delete 'remove_from_cart/:food_item_id', to: 'carts#remove_from_cart', as: 'remove_from_cart'
+      delete 'remove_from_cart/:cart_item_id', to: 'carts#remove_from_cart', as: 'remove_from_cart'
       delete 'remove_special_menu/:cart_item_id', to: 'carts#remove_special_menu', as: 'remove_special_menu'
       delete 'clear_cart', to: 'carts#clear_cart', as: 'clear_cart'
     end
