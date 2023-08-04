@@ -32,7 +32,7 @@ class CartsController < ApplicationController
   end 
 
   def remove_from_cart
-    food_item_id = params[:food_item_id]
+    cart_item_id = params[:cart_item_id]
     @cart_item = @cart.remove_food(food_item_id)
     
     if @cart_item.save

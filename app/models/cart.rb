@@ -54,7 +54,7 @@ class Cart < ApplicationRecord
 
 
   def remove_food(food_item_id)
-    current_item = cart_items.find_by(food_item_id: food_item_id)
+    current_item = cart_items.find_by(id: cart_item_id)
     if current_item.present?
       if current_item.quantity > 1
         current_item.quantity -= 1
