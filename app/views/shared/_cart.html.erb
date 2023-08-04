@@ -11,7 +11,7 @@
         <div id="cart-items">
           <% current_cart.cart_items.each do |cart_item| %>              
             <% if cart_item.special_menu.present? %>
-              <div class="row cart-item" data-menu-id="<%= cart_item.id %>">
+              <div class="row cart-item" data-cart-id="<%= cart_item.id %>">
               <div class="col-6 col-sm-6 col-md-6">
                   <h5><%= cart_item.special_menu.name %></h5>
                   <p class="special-menu-cart-item-food-items" style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">
@@ -37,7 +37,7 @@
                 </div>  
             <% elsif cart_item.cart_item_food_items.present? %>
             <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
-            <div class="row cart-item" data-food-id="<%= cart_item.id %>">
+            <div class="row cart-item" data-cart-id="<%= cart_item.id %>">
             <div class="col-6 col-sm-6 col-md-6">
                 <h5><%= cart_item_food_item.food_item.name %></h5>
             </div>

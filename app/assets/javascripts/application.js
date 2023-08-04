@@ -33,7 +33,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(cartItemCount + 1);
 
         // Check if the cart item already exists
-        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
 
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
@@ -47,7 +47,7 @@ document.addEventListener("turbolinks:load", function() {
 
           // Append the new cart item to the cart items list
           var cartItemHtml = `
-            <div class="row cart_item" data-food-id="${response.cart_item_id}">
+            <div class="row cart_item" data-cart-id="${response.cart_item_id}">
               <div class="col-6 col-sm-6 col-md-6">
                 <h5>${response.food_item.name}</h5>
               </div>
@@ -94,7 +94,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
   
         // Find the cart item by its food item id
-        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
   
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
@@ -140,7 +140,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
   
         // Find the cart item by its food item id
-        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
   
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
@@ -152,7 +152,7 @@ document.addEventListener("turbolinks:load", function() {
           } else {
             var newPrice = parseFloat(response.special_menu.price * newQuantity).toFixed(2);
             existingCartItem.find('.price').text('€' + newPrice);
-          }           
+          }
         }
         
         // Update cart total price
@@ -174,40 +174,32 @@ document.addEventListener("turbolinks:load", function() {
   // Add special menu to cart
   $('body').on('click', '.special-menu-cart-plus-link', function(e) {
     e.preventDefault();
-    console.log('special-menu-cart-plus-link clicked!');
 
     var link = $(this);
     var url = link.attr('href');
-    var menuId = link.data('menu-id');
-
-    console.log('menuId:', menuId);
-
+    var cartId = link.data('cart-id');
 
     $.ajax({
       url: url,
       method: 'POST',
       dataType: 'json',
-      data: { menu_id: menuId },
+      data: { cart_id: cartId },
       success: function(response) {
         // Update cart item count dynamically
         var cartItemCount = parseInt($('#cart-item-count').text());
         $('#cart-item-count').text(cartItemCount + 1);
 
-        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
-        console.log('Existing cart item:', existingCartItem);
+        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
 
           // Update the quantity of the existing cart item
           var newQuantity = response.quantity;
           existingCartItem.find('.quantity').text('x ' + newQuantity);
-          console.log(existingCartItem.find('.quantity'));
           var newPrice = parseFloat(response.special_menu.price * newQuantity).toFixed(2);
           existingCartItem.find('.price').text('€' + newPrice);
 
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
-        console.log('AJAX response:', response);
-
       },
       error: function(xhr, status, error) {
         console.log(error);
@@ -241,7 +233,7 @@ document.addEventListener("turbolinks:load", function() {
 
 
         // Check if the cart item already exists
-        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-cart-id="${response.cart_item_id}"]`);
 
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
@@ -253,7 +245,6 @@ document.addEventListener("turbolinks:load", function() {
         } else {
         // Format the price with two decimal places
         var formattedPrice = parseFloat(response.special_menu.price).toFixed(2);
-        console.log(response.food_items);
         // Build the cart item food items HTML
         var foodItemsHtml = '';
         response.food_items.forEach(function(food_item, index) {
@@ -265,7 +256,6 @@ document.addEventListener("turbolinks:load", function() {
 
         var specialMenuId = response.cart_item.special_menu_id;
         var foodItemIds = response.food_item_ids;
-        console.log(foodItemIds);
         var restaurantId = response.restaurant_id;
         
         var linkUrl = '/restaurants/' + encodeURIComponent(restaurantId) + '/cart/add_to_cart?';
@@ -283,11 +273,10 @@ document.addEventListener("turbolinks:load", function() {
         // Replace square brackets encoding with %5B and %5D
         linkUrl = linkUrl.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
         
-        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-menu-id="' + response.cart_item_id + '">+</a>';
-         console.log(cartItemLink);
+        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-cart-id="' + response.cart_item_id + '">+</a>';
         // Append the new cart item to the cart items list
         var cartItemHtml = `
-          <div class="row cart_item" data-menu-id="${response.cart_item_id}">
+          <div class="row cart_item" data-cart-id="${response.cart_item_id}">
             <div class="col-6 col-sm-6 col-md-6">
               <h5>${response.special_menu.name}</h5>
               <p style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
