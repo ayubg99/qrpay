@@ -33,7 +33,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(cartItemCount + 1);
 
         // Check if the cart item already exists
-        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item.food_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item_id}"]`);
 
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
@@ -47,7 +47,7 @@ document.addEventListener("turbolinks:load", function() {
 
           // Append the new cart item to the cart items list
           var cartItemHtml = `
-            <div class="row cart_item" data-food-id="${response.cart_item.food_item_id}">
+            <div class="row cart_item" data-food-id="${response.cart_item_id}">
               <div class="col-6 col-sm-6 col-md-6">
                 <h5>${response.food_item.name}</h5>
               </div>
@@ -94,7 +94,7 @@ document.addEventListener("turbolinks:load", function() {
         $('#cart-item-count').text(Math.max(cartItemCount - 1, 0));
   
         // Find the cart item by its food item id
-        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.food_item_id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-food-id="${response.cart_item_id}"]`);
   
         // Update the quantity and price of the existing cart item
         if (existingCartItem.length > 0) {
@@ -193,7 +193,7 @@ document.addEventListener("turbolinks:load", function() {
         var cartItemCount = parseInt($('#cart-item-count').text());
         $('#cart-item-count').text(cartItemCount + 1);
 
-        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item.id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
         console.log('Existing cart item:', existingCartItem);
 
           // Update the quantity of the existing cart item
@@ -241,7 +241,7 @@ document.addEventListener("turbolinks:load", function() {
 
 
         // Check if the cart item already exists
-        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item.id}"]`);
+        var existingCartItem = $('#cart-items').find(`[data-menu-id="${response.cart_item_id}"]`);
 
         if (existingCartItem.length > 0) {
           // Update the quantity of the existing cart item
@@ -283,11 +283,11 @@ document.addEventListener("turbolinks:load", function() {
         // Replace square brackets encoding with %5B and %5D
         linkUrl = linkUrl.replace(/\[/g, '%5B').replace(/\]/g, '%5D');
         
-        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-menu-id="' + response.cart_item.id + '">+</a>';
+        var cartItemLink = '<a href="' + linkUrl + '" class="btn btn-primary special-menu-cart-plus-link" data-remote="true" data-menu-id="' + response.cart_item_id + '">+</a>';
          console.log(cartItemLink);
         // Append the new cart item to the cart items list
         var cartItemHtml = `
-          <div class="row cart_item" data-menu-id="${response.cart_item.id}">
+          <div class="row cart_item" data-menu-id="${response.cart_item_id}">
             <div class="col-6 col-sm-6 col-md-6">
               <h5>${response.special_menu.name}</h5>
               <p style="font-weight: bold; font-size: 10px; color:rgb(128, 0, 255);">${foodItemsHtml}</p>
