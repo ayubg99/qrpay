@@ -392,14 +392,13 @@ document.addEventListener("turbolinks:load", function() {
       // Show the payment method selection modal
       $('#paymentMethodModal').modal('show');
 
+      const hiddenInput = document.querySelector("#order_payment_method");
+      hiddenInput.value = this.getAttribute("data-method");
     });
   });
 
-
-});
-
-document.addEventListener("turbolinks:load", function() {
-  document.getElementById("select-payment-method").addEventListener("click", function() {
+  // Handle the "Select" button click in the payment method modal
+  document.getElementById("select-payment-method").addEventListener("click", function () {
     // Hide the payment method selection modal
     $('#paymentMethodModal').modal('hide');
     console.log(tableNumber);
