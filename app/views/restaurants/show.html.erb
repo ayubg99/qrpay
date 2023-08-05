@@ -148,7 +148,7 @@
 
       <div class="row justify-content-end" style="padding-bottom: 35px;">
       <div class="col-auto">
-        <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link', style: "margin: 20px" %>
+        <%= link_to "CARTA", restaurant_path(@restaurant, table_number: params[:table_number]), class: 'carta-link', style: "margin: 20px" %>
       </div>
     </div>
 
@@ -214,6 +214,8 @@
 
 <script>
   var restaurantId = <%= @restaurant.id %>;
+  var tableNumber = <%= params[:table_number] %>;
+
 
   $(document).ready(function() {
     $('.category-content, .special-menus-content').show();

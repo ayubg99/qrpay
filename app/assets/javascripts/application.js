@@ -392,18 +392,18 @@ document.addEventListener("turbolinks:load", function() {
       // Show the payment method selection modal
       $('#paymentMethodModal').modal('show');
 
-      // Store the selected payment method in a hidden field
-      const hiddenInput = document.querySelector("#order_payment_method");
-      hiddenInput.value = this.getAttribute("data-method");
     });
   });
 
-  // Handle the "Select" button click in the payment method modal
-  document.getElementById("select-payment-method").addEventListener("click", function () {
+
+});
+
+document.addEventListener("turbolinks:load", function() {
+  document.getElementById("select-payment-method").addEventListener("click", function() {
     // Hide the payment method selection modal
     $('#paymentMethodModal').modal('hide');
-
+    console.log(tableNumber);
     // Redirect to the order new page
-    window.location.href = "/restaurants/" + restaurantId + "/orders/new";
+    window.location.href = "/restaurants/" + restaurantId + "/orders/new?table_number=" + tableNumber;
   });
 });

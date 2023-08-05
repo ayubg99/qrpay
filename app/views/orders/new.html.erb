@@ -52,7 +52,7 @@
       <div>
       <div class="row justify-content-end" style="padding-bottom: 20px; margin-top: 30px">
         <div class="col-auto">
-        <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 1px" %>
+        <%= link_to "CARTA", restaurant_path(@restaurant, table_number: params[:table_number]), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 1px" %>
         </div>
       </div>
     </div>
