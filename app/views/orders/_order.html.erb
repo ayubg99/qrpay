@@ -32,7 +32,7 @@
     <% end %>
   <% end %>
   </td>
-  <td><h6>1</h6></td>
+  <td><h6><%= order.table_number %></h6></td>
   <td><h6 class=""><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
   <td>
     <h6><%= order.payment_method %></h6>

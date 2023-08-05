@@ -3,7 +3,7 @@
 
     <ul class="navbar-nav">
         <li class="nav-item">
-        <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link' %>
+        <%= link_to "CARTA", restaurant_path(@restaurant, table_number: params[:table_number]), class: 'carta-link' %>
         </li>
     </ul>
 

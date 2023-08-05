@@ -64,8 +64,8 @@
       </div>
       <div class="row justify-content-end" style="padding-bottom: 20px; margin-top: 30px">
         <div class="col-auto">
-        <%= link_to 'Vaciar', clear_cart_restaurant_cart_path(@restaurant), method: :delete, class: 'btn btn-danger clear-cart' %>
-        <%= link_to "CARTA", restaurant_path(@restaurant), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 5px" %>
+        <%= link_to 'Vaciar', clear_cart_restaurant_cart_path(@restaurant, table_number: params[:table_number]), method: :delete, class: 'btn btn-danger clear-cart' %>
+        <%= link_to "CARTA", restaurant_path(@restaurant, table_number: params[:table_number]), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 5px" %>
         </div>
     </div>
     </div>
