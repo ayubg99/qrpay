@@ -31,7 +31,7 @@
       <div id="special-menus" class="special-menus category-content special-menus-content">
       <h5 class="menu-name">MENÚS ESPECIALES</h5>
     
-      <% @restaurant.special_menus.each_slice(1) do |special_menus_group| %>
+      <% @restaurant.special_menus.where(deleted_at: nil).each_slice(1) do |special_menus_group| %>
         <div class="row">
           <% special_menus_group.each do |special_menu| %>
             <% if special_menu.in_time_range? %>
@@ -81,10 +81,10 @@
     
 
       <% @restaurant.categories.each_with_index do |category, index| %>
-        <% if category.food_items.present? %>
+        <% if category.food_items.where(deleted_at: nil).present? %>
           <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
             <h5 class="category-name"><%= category.name %></h5>
-            <% category.food_items.each_slice(2) do |food_items_slice| %>
+            <% category.food_items.where(deleted_at: nil).each_slice(2) do |food_items_slice| %>
               <div class="row">
                 <% food_items_slice.each do |food_item| %>
                   <div class="col-6 col-sm-6 col-md-6">
@@ -264,5 +264,3 @@
     $(this).addClass("selected");
   });
 </script>
-
-

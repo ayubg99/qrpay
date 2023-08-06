@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :restaurant
-  has_many :cart_items, dependent: :destroy
+  has_many :cart_items, dependent: :nullify
 
   after_create :create_order_history
   before_destroy :clear_cart_items
@@ -16,7 +16,8 @@ class Order < ApplicationRecord
     deleted_order = DeletedOrder.new( 
       restaurant_id: restaurant_id,
       total_price: total_price,
-      order_date: created_at
+      order_date: created_at,
+      table_number: table_number
     )
 
     cart_items.each do |cart_item|

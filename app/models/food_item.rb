@@ -9,8 +9,7 @@ class FoodItem < ApplicationRecord
   
   has_one_attached :image
   before_save :name_uppercase
-  before_destroy :clear_food_item
-
+  
   validates :name, presence: true
   validates :price, presence: true
   
@@ -18,7 +17,11 @@ class FoodItem < ApplicationRecord
     self.name = self.name.upcase
   end
 
-  def clear_food_item
-    cart_items.update_all(food_item_id: nil)
+  def soft_delete
+    update(deleted_at: Time.now)
+  end
+
+  def active?
+    deleted_at.nil?
   end
 end

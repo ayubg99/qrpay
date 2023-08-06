@@ -22,4 +22,12 @@ class SpecialMenu < ApplicationRecord
     end_hour_hour = end_hour.hour
     current_hour >= start_hour_hour && current_hour <= end_hour_hour
   end
+
+  def soft_delete
+    update(deleted_at: Time.now)
+  end
+
+  def active?
+    deleted_at.nil?
+  end
 end

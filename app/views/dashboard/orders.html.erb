@@ -14,9 +14,16 @@
           <th></th>
         </tr>
       </thead>
-      <tbody id="orders-table-body">
+      <tbody id="orders-container">
         <%= render partial: 'orders/order', collection: @orders %>
       </tbody>
     </table>
   </div>
 </section>
+
+
+<script>
+var restaurantId = <%= @restaurant.id %>
+// app/assets/javascripts/orders.js
+
+</script>
