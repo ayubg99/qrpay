@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_05_145147) do
+ActiveRecord::Schema.define(version: 2023_08_05_204505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 2023_08_05_145147) do
     t.datetime "order_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "table_number"
   end
 
   create_table "food_items", force: :cascade do |t|
@@ -163,7 +164,9 @@ ActiveRecord::Schema.define(version: 2023_08_05_145147) do
     t.bigint "category_id"
     t.integer "special_menu_id"
     t.integer "minimum_persons"
+    t.datetime "deleted_at"
     t.index ["category_id"], name: "index_food_items_on_category_id"
+    t.index ["deleted_at"], name: "index_food_items_on_deleted_at"
     t.index ["restaurant_id"], name: "index_food_items_on_restaurant_id"
   end
 
@@ -298,6 +301,8 @@ ActiveRecord::Schema.define(version: 2023_08_05_145147) do
     t.time "start_hour"
     t.time "end_hour"
     t.integer "minimum_persons"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_special_menus_on_deleted_at"
     t.index ["restaurant_id"], name: "index_special_menus_on_restaurant_id"
   end
 

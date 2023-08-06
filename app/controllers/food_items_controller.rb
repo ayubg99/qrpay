@@ -42,7 +42,7 @@ class FoodItemsController < ApplicationController
   end
 
   def destroy
-    @food_item.destroy
+    @food_item.soft_delete
 
     respond_to do |format|
       format.html { redirect_to restaurant_dashboard_menu_path(@restaurant), notice: "Food item was successfully destroyed." }

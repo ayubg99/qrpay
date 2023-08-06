@@ -17,7 +17,7 @@
   </div>
 
   <div class="form-group" style="margin-top: 20px">
-    <% @restaurant.food_items.each do |food_item| %>
+    <% @restaurant.food_items.where(deleted_at: nil).each do |food_item| %>
       <%= check_box_tag 'food_type[food_item_ids][]', food_item.id %>
       <%= label_tag food_item.name %>
       <br>

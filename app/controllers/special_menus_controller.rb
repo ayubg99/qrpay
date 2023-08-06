@@ -38,7 +38,7 @@ class SpecialMenusController < ApplicationController
   end
 
   def destroy
-    @special_menu.destroy
+    @special_menu.soft_delete
 
     respond_to do |format|
       format.html { redirect_to restaurant_dashboard_special_menus_path(@restaurant), notice: "Special menu was successfully destroyed." }
