@@ -64,7 +64,7 @@
                     <div class="text-center">
                         <h4 class="special-menu-name"><%= special_menu.name %></h4>
                         <h6 class="menu-price"><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6>
-                        <%= form.submit '+', class: "btn btn-primary" %>
+                        <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
                         <% end %>
                     </div>
                     <h6><i class='bx bx-user' style="font-size: 30px;"></i> <%= special_menu.minimum_persons %></h6>
@@ -99,7 +99,7 @@
                       <h6><%= food_item.name %></h6>
                       <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
                       <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
-                        <%= form.submit '+', class: "btn btn-primary" %>
+                        <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
                       <% end %>
                       <% if food_item.minimum_persons.present? %>
                         <h6><i class='bx bx-user btn-margin-top' style="font-size: 20px;"></i> <%= food_item.minimum_persons %></h6>
