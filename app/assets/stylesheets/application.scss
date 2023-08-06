@@ -195,6 +195,7 @@
     padding-bottom: 70px;
     label {
       font-weight: bold;
+      font-size: 25px;
     }
     h1, h5, h6 {
       font-weight: bold;
@@ -342,12 +343,15 @@
   padding: 10px;
   .special-menu-name {
     margin-top: 20px;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
   }
   .menu-price {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
+  }
+  .form-control {
+    font-size: 25px;
   }
   &:hover {
     cursor: pointer;
@@ -363,7 +367,7 @@
   font-size: 20px !important;
   font-weight: bold;
   h6 {
-    font-size: 20px !important;
+    font-size: 25px !important;
     font-weight: bold;
   }
   &:hover {
@@ -743,4 +747,8 @@ body {
   p {
     font-size: 20px !important;
   }
+}
+
+.show-add-btn {
+  font-size: 30px;
 }
