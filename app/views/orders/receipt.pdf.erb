@@ -22,7 +22,7 @@
   a, button {
     font-size: 30px !important;
   }
-  h1, h2, h6 {
+  h1, h2 {
     font-size: 30px !important;
     font-weight: bold;
   }
@@ -31,6 +31,7 @@
   }
   p {
     font-size: 20px !important;
+    font-weight: bold
   }
 </style>
 
@@ -73,4 +74,6 @@
   </tr>
 </table>
 
-<h2>Forma de pago: <%= order.payment_method %></h2>
+<p>Tabla: <%= order.table_number %></p>
+<p>Forma de pago: <%= order.payment_method %></p>
+<p><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></p>
