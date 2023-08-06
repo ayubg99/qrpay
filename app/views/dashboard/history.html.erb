@@ -10,7 +10,7 @@
           <th>Pedido</th>
           <th>Tabla</th>
           <th>Total</th>
-          <th>Estado</th>
+          <th>Forma de pago</th>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +52,7 @@
           <td><h6><%= order.table_number %></h6></td>
           <td><h6 class=""><%= number_to_currency(order.total_price, precision: 2, unit: '€') %></h6></td>
           <td>
-            <h6>Pagado</h6>
+            <h6><%= order.payment_method %></h6>
           </td>
         </tr>
         

@@ -17,7 +17,8 @@ class Order < ApplicationRecord
       restaurant_id: restaurant_id,
       total_price: total_price,
       order_date: created_at,
-      table_number: table_number
+      table_number: table_number,
+      payment_method: payment_method
     )
 
     cart_items.each do |cart_item|
