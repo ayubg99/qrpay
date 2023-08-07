@@ -10,10 +10,10 @@
   <%= link_to "Modificar", edit_restaurant_category_path(@restaurant, category), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
           <%= link_to 'Eliminar', restaurant_category_path(@restaurant, category), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
           </h4>
-      <% category.food_items.where(deleted_at: nil).each_slice(3) do |food_items_slice| %>
+      <% category.food_items.where(deleted_at: nil).each_slice(4) do |food_items_slice| %>
         <div class="row">
           <% food_items_slice.each do |food_item| %>
-            <div class="col-4 col-sm-4 col-md-4">
+            <div class="col-3 col-sm-3 col-md-3">
               <div class="food-item-dashboard text-center" data-toggle="modal" data-target="#foodItemModal"
                    data-name="<%= food_item.name %>"
                    data-description="<%= food_item.description %>"
