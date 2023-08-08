@@ -15,6 +15,7 @@
       <div class="row">
         <div class="col-4 col-sm-4 col-md-4">
           <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
+          <%= link_to "Añadir Imagen", new_restaurant_special_menu_images_path(@restaurant, @special_menu), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
           <h4><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h4> 
           <%= form.submit '', class: "btn btn-primary invisible" %>        
         </div>
