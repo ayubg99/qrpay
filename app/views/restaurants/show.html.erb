@@ -45,7 +45,7 @@
                         <div class="carousel-inner">
                           <% special_menu.images.each_with_index do |image, index| %>
                             <div class="carousel-item <%= 'active' if index == 0 %>">
-                              <%= image_tag image.image, class: "d-block w-100 special-menu-image" %>
+                              <%= image_tag image.image, class: "d-block w-100 special-menu-show-image" %>
                             </div>
                           <% end %>
                         </div>

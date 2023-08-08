@@ -324,6 +324,15 @@
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  .special-menu-show-image {
+    width: 100%;
+    object-fit: cover;
+    max-height: 500px;
+    min-height: 500px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
   
   .menu-item {
     text-align: center;
