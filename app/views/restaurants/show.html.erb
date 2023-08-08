@@ -41,7 +41,23 @@
                     <%= form.hidden_field :special_menu_id, value: special_menu.id %>
                     <div class="row">
                       <div class="col-6 col-sm-6 col-md-6">
-                        <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
+                      <div id="carousel<%= special_menu.id %>" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                          <% special_menu.images.each_with_index do |image, index| %>
+                            <div class="carousel-item <%= 'active' if index == 0 %>">
+                              <%= image_tag image.image, class: "d-block w-100 special-menu-image" %>
+                            </div>
+                          <% end %>
+                        </div>
+                        <a class="carousel-control-prev" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </a>
+                      </div>
                       </div>
                       <div class="col-6 col-sm-6 col-md-6">
                         <p><%= simple_format(special_menu.description, class: "simple-format-description") %></p>

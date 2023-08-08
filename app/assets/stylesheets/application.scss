@@ -752,3 +752,24 @@ body {
 .show-add-btn {
   font-size: 30px;
 }
+
+/* Move the carousel controls inside the carousel items */
+.carousel-item {
+  position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.carousel-control-prev {
+  left: 0;
+}
+
+.carousel-control-next {
+  right: 0;
+}
