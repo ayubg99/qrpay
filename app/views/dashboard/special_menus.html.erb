@@ -14,8 +14,24 @@
       <h4 class="special-menu-name"><%= special_menu.name %></h4>
       <div class="row">
         <div class="col-4 col-sm-4 col-md-4">
-          <%= image_tag special_menu.image, class: "special-menu-image menu-item" if special_menu.image.attached? %>
-          <%= link_to "Añadir Imagen", new_restaurant_special_menu_images_path(@restaurant, @special_menu), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
+          <div id="carousel<%= special_menu.id %>" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% special_menu.images.each_with_index do |image, index| %>
+                <div class="carousel-item <%= 'active' if index == 0 %>">
+                  <%= image_tag image.image, class: "d-block w-100 special-menu-image" %>
+                </div>
+              <% end %>
+            </div>
+            <a class="carousel-control-prev" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </a>
+          </div>
+          <%= link_to "Añadir Imagen", new_restaurant_special_menu_image_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
           <h4><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h4> 
           <%= form.submit '', class: "btn btn-primary invisible" %>        
         </div>

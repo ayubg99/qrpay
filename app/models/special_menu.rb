@@ -7,7 +7,7 @@ class SpecialMenu < ApplicationRecord
   has_many :deleted_order_special_menus, dependent: :destroy
   has_many :deleted_orders, through: :deleted_order_special_menus
   
-  has_one_attached :image
+  has_many :images, dependent: :destroy
 
   validates :name, presence: true
   validates :price, presence: true

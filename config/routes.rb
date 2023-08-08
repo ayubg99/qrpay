@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :food_types do 
         resources :food_items
       end
+      resources :images
     end 
     resources :tables do
       member do
