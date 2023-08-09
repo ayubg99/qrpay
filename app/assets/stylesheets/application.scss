@@ -782,3 +782,10 @@ body {
 .carousel-control-next {
   right: 0;
 }
+
+
+.bx-info-circle {
+  &:hover {
+    color:rgb(128, 0, 255);
+  }
+}

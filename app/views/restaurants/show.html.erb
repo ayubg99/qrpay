@@ -104,23 +104,35 @@
               <div class="row">
                 <% food_items_slice.each do |food_item| %>
                   <div class="col-6 col-sm-6 col-md-6">
-                  <div class="food-item-container text-center">
-                    <div class="food-item-image" data-toggle="modal" data-target="#foodItemModal"
-                         data-name="<%= food_item.name %>"
-                         data-description="<%= food_item.description %>"
-                         data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                         data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
-                      <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
-                    </div> 
-                      <h6><%= food_item.name %></h6>
-                      <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-                      <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
-                        <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
-                      <% end %>
-                      <% if food_item.minimum_persons.present? %>
-                        <h6><i class='bx bx-user btn-margin-top' style="font-size: 20px;"></i> <%= food_item.minimum_persons %></h6>
-                      <% end %>
+                  <div class="food-item-container">
+                    <div class="text-center">
+                      <div class="food-item-image">
+                        <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
+                      </div> 
+                        <h6><%= food_item.name %></h6>
+                        <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
+                        <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
+                          <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
+                        <% end %>
                     </div>
+                      <div class="row">
+                          <div class="col-md-2">
+                          <% if food_item.minimum_persons.present? %>
+                            <h6><i class='bx bx-user btn-margin-top' style="font-size: 30px;"></i> <%= food_item.minimum_persons %></h6>
+                          <% end %>
+                          </div>
+                          <div class="col-md-8">
+                          </div>
+                          <div class="col-md-2">
+                            <div class="food-info-circle" data-toggle="modal" data-target="#foodItemModal"
+                              data-name="<%= food_item.name %>"
+                              data-description="<%= food_item.description %>"
+                              data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
+                              data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
+                            <h6><i class='bx bx-info-circle' style="font-size: 40px;"></i></h6>
+                            </div>
+                          </div>
+                      </div>
                   </div>
                 <% end %>
               </div>
@@ -195,7 +207,7 @@
 
 <script>
   $(document).ready(function() {
-    $('.food-item-image').click(function() {
+    $('.food-info-circle').click(function() {
       var name = $(this).data('name');
       var description = $(this).data('description');
       var imageUrl = $(this).data('image-url');
