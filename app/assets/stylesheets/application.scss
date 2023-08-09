@@ -346,6 +346,7 @@
 }
 
 .special-menu-container {
+  position: relative;
   border-radius: 5%;
   border: 1px solid #e7e7e7;
   margin-bottom: 15px;
@@ -368,13 +369,14 @@
 }
 
 .food-item-container{
+  position: relative;
   border-radius: 5%;
   border: 1px solid #e7e7e7;
   margin-bottom: 15px;
   padding: 5px;
   padding-bottom: 20px;
-  font-size: 20px !important;
-  font-weight: bold;
+  min-height: 505px;
+  max-height: 505px;
   h6 {
     font-size: 25px !important;
     font-weight: bold;
@@ -788,4 +790,17 @@ body {
   &:hover {
     color:rgb(128, 0, 255);
   }
+}
+
+.move-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 20px;
+  margin-right: 15px;
+}
+
+.menu-item-name {
+  font-weight: bold;
+  font-size: 30px;
 }
