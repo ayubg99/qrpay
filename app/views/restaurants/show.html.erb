@@ -268,7 +268,7 @@
 
 <script>
   var restaurantId = <%= @restaurant.id %>;
-  var tableNumber = <%= params[:table_number] %>;
+  var tableNumber = <%= params[:table_number] || '0' %>;
 
 
   $(document).ready(function() {
