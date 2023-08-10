@@ -513,10 +513,11 @@ body {
 }
 
 .custom-fixed-nav-tabs .nav-link.active {
-  color: #8000ff;
-  padding: 8px;
+  color: #fff;
+  padding: 10px;
   border-radius: 5px;
   border: 1px solid #8000ff;
+  background-color: #8000ff;
 }
 
 .special-menus {
