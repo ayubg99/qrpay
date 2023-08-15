@@ -1,8 +1,8 @@
-<nav class="navbar navbar-customer navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="navbar-nav ml-auto">
-        <%= link_to '#', class: 'navbar-brand', id: 'cart-icon', 'data-toggle' => 'modal', 'data-target' => '#cartModal' do %>
-        <%= image_tag ("trolley1.png"), class: "cart-img" %>
-        <span id="cart-item-count"><%= current_cart.cart_items_count %></span>
-        <% end %>
+<nav class="navbar navbar-customer navbar-expand-lg navbar-light bg-light fixed-bottom"
+    data-toggle="modal"
+    data-target="#cartModal">
+
+    <div class="navbar-nav mx-auto">
+        <p>Pedido: <span id="order-total-price"><%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></span></p>
     </div>
 </nav>
