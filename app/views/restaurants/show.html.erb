@@ -31,11 +31,11 @@
       <div id="special-menus" class="special-menus category-content special-menus-content">
       <h5 class="menu-name">MENÚS ESPECIALES</h5>
     
-      <% @restaurant.special_menus.where(deleted_at: nil).each_slice(1) do |special_menus_group| %>
+      <% @restaurant.special_menus.where(deleted_at: nil).each_slice(2) do |special_menus_group| %>
         <div class="row">
           <% special_menus_group.each do |special_menu| %>
             <% if special_menu.in_time_range? %>
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="special-menu-container container">
                   <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant), method: :post, local:true, class: 'special-menu-form') do |form| %>
                     <%= form.hidden_field :special_menu_id, value: special_menu.id %>
@@ -103,29 +103,36 @@
         <% if category.food_items.where(deleted_at: nil).present? %>
           <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
             <h5 class="category-name"><%= category.name %></h5>
-            <% category.food_items.where(deleted_at: nil).each_slice(2) do |food_items_slice| %>
+            <% category.food_items.where(deleted_at: nil).each_slice(1) do |food_items_slice| %>
               <div class="row">
                 <% food_items_slice.each do |food_item| %>
-                  <div class="col-6 col-sm-6 col-md-6">
+                  <div class="col-12 col-sm-12 col-md-12">
                     <div class="food-item-container">
-                      <div class="text-center">
+                      <div class="row">
+                      <div class="col-md-2">
                         <div class="food-item-image">
                           <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
-                        </div> 
-                        <h6><%= food_item.name %></h6>
-                        <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-                        <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
-                          <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
-                        <% end %>
+                        </div>
                       </div>
-                      <% if food_item.minimum_persons.present? %>
-                        <i class='bx bx-user btn-margin-top' style="font-size: 30px;"></i> <%= food_item.minimum_persons %>
-                      <% end %>
-                      <i class='bx bx-info-circle btn-margin-top food-item-info move-right' style="font-size: 40px;" data-toggle="modal" data-target="#foodItemModal"
+                      <div class="col-md-6">
+                      <h6 class="food-info" data-toggle="modal" data-target="#foodItemModal"
                       data-name="<%= food_item.name %>"
                       data-description="<%= food_item.description %>"
                       data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                      data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"></i>
+                      data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= food_item.name %></h6>
+                      </div>
+                      <div class="col-md-2">
+                      <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
+                      </div>
+                      <div class="col-md-2">
+                      <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
+                        <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
+                      <% end %>
+                      </div>
+                        
+                        
+                      
+                      </div>
                     </div>
                   </div>
                 <% end %>
@@ -218,7 +225,7 @@
 
 <script>
   $(document).ready(function() {
-    $('.food-item-info').click(function() {
+    $('.food-info').click(function() {
       var name = $(this).data('name');
       var description = $(this).data('description');
       var imageUrl = $(this).data('image-url');
@@ -318,3 +325,11 @@
     $(this).addClass("selected");
   });
 </script>
+
+
+<style> 
+body {
+  background-color: black; 
+  color: #fff;
+}
+</style>
