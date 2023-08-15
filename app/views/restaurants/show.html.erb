@@ -3,9 +3,14 @@
 <%= render 'layouts/header_customer' %>
 
 <div class="container client-container restaurant-show-page">
-  <h1>
-    <%= @restaurant.name %>
-  </h1>
+
+
+  <div class="text-center">
+  <% if @restaurant.image.attached? %>
+  <%= image_tag url_for(@restaurant.image), class: "restaurant-image" %>
+<% end %>
+
+</div>
 
 
 
