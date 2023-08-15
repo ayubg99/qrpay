@@ -652,6 +652,14 @@ body {
 
 .navbar-customer {
   height: 120px;
+  background-color: rgb(128, 0, 255) !important;
+  color: #fff !important;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  cursor: pointer;
+  p {
+    font-size: 25px;
+  }
 }
 
 .cart-img {

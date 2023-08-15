@@ -79,6 +79,7 @@ document.addEventListener("turbolinks:load", function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+        $('#order-total-price').text('€' + newTotalPrice);
         submitButton.prop('disabled', false);
       },
       error: function(xhr, status, error) {
@@ -139,6 +140,7 @@ document.addEventListener("turbolinks:load", function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+        $('#order-total-price').text('€' + newTotalPrice);
       },
       error: function(xhr, status, error) {
         console.log(error);
@@ -181,6 +183,7 @@ document.addEventListener("turbolinks:load", function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+        $('#order-total-price').text('€' + newTotalPrice);
       },
       error: function(xhr, status, error) {
         console.log(error);
@@ -226,6 +229,7 @@ document.addEventListener("turbolinks:load", function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+        $('#order-total-price').text('€' + newTotalPrice);
       },
       error: function(xhr, status, error) {
         console.log(error);
@@ -266,6 +270,7 @@ document.addEventListener("turbolinks:load", function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+        $('#order-total-price').text('€' + newTotalPrice);
       },
       error: function(xhr, status, error) {
         console.log(error);
@@ -371,6 +376,7 @@ document.addEventListener("turbolinks:load", function() {
         // Update cart total price
         var newTotalPrice = parseFloat(response.total_price).toFixed(2);
         $('#cart-total-price').text('Total: €' + newTotalPrice);
+        $('#order-total-price').text('€' + newTotalPrice);
         submitButton.prop('disabled', false); // Enable the button after the request is completed
       },
       error: function(xhr, status, error) {
