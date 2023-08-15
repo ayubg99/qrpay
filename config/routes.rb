@@ -52,5 +52,6 @@ Rails.application.routes.draw do
     end
   end
   resources :contacts, only: [:new, :create]
+  get '/stripe_checkout', to: 'orders#stripe_checkout', as: 'stripe_checkout'
   get '/receipts/:pdf_path/:restaurant_id', to: 'receipts#download', as: 'download_receipt'
 end

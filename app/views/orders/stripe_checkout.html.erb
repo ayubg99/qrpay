@@ -1,0 +1,13 @@
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const stripe = Stripe('pk_test_51NS2OyIULic551znN5qUeq7168Gyt9bka1OWGD4jmbI8MkfJSy9axar3uiwSMoOTipm9lclj9eWqI7iRl7mEeufe000lH5hnuT');
+    stripe.redirectToCheckout({ sessionId: '<%= params[:session_id] %>' })
+      .then(function (result) {
+        if (result.error) {
+          // Handle errors during the payment process
+          console.error('Payment error:', result.error);
+        }
+      });
+  });
+</script>
