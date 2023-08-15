@@ -658,7 +658,7 @@ body {
   border-top-right-radius: 15px;
   cursor: pointer;
   p {
-    font-size: 30px;
+    font-size: 35px;
   }
 }
 
@@ -814,4 +814,14 @@ body {
 
 .non-bold-icon {
   font-weight: normal !important;
+}
+
+.restaurant-image {
+  max-height: 300px;
+  min-height: 300px;
+  margin-bottom: 50px;
+}
+
+.restaurant-name {
+  font-size: 45px;
 }
