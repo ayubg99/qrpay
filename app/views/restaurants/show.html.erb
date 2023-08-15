@@ -3,7 +3,7 @@
 <%= render 'layouts/header_customer' %>
 
 <div class="container client-container restaurant-show-page">
-  <h1>
+  <h1 style="font-weight: bold">
     <%= @restaurant.name %>
   </h1>
 
@@ -110,7 +110,11 @@
                     <div class="food-item-container">
                       <div class="row">
                       <div class="col-md-2">
-                        <div class="food-item-image">
+                        <div class="food-item-image food-info" data-toggle="modal" data-target="#foodItemModal"
+                        data-name="<%= food_item.name %>"
+                        data-description="<%= food_item.description %>"
+                        data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
+                        data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
                           <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
                         </div>
                       </div>
@@ -121,8 +125,12 @@
                       data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
                       data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= food_item.name %></h6>
                       </div>
-                      <div class="col-md-2">
-                      <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
+                      <div class="col-md-2" >
+                      <h6 class="food-info" data-toggle="modal" data-target="#foodItemModal"
+                      data-name="<%= food_item.name %>"
+                      data-description="<%= food_item.description %>"
+                      data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
+                      data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
                       </div>
                       <div class="col-md-2">
                       <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
