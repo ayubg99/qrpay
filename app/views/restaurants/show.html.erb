@@ -18,10 +18,10 @@
     <div class="row">
     <ul class="nav nav-tabs custom-fixed-nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" href="#" data-category-target="all">Todos</a>
+    <a class="nav-link active" href="#" data-category-target="all">TODOS</a>
   </li>
   <li class="nav-item">
-  <a class="nav-link" href="#" data-category-target="#special-menus">Menús especiales</a>
+  <a class="nav-link" href="#" data-category-target="#special-menus">MENÚS ESPECIALES</a>
 </li>
   <% @restaurant.categories.each_with_index do |category, index| %>
     <% if category.food_items.present? %>
@@ -34,7 +34,7 @@
 </ul>
       <div class="col-md-12 tables-margin-top">
       <div id="special-menus" class="special-menus category-content special-menus-content">
-      <h5 class="menu-name">Menús especiales</h5>
+      <h5 class="menu-name">MENÚS ESPECIALES</h5>
     
       <% @restaurant.special_menus.where(deleted_at: nil).each_slice(2) do |special_menus_group| %>
         <div class="row">
