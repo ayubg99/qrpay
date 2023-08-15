@@ -1,6 +1,11 @@
-<%= render 'layouts/header_order' %>
-
 <div class="container new-order-view client-container">
 <h1>¡Gracias por su pedido!</h1>
 <%= link_to 'Descargar Recibo', download_receipt_path(pdf_path: @pdf_path, restaurant_id: @restaurant.id), class: "btn btn-primary" %>
 </div>
+
+<style> 
+body {
+  background-color: black; 
+  color: #fff;
+}
+</style>
