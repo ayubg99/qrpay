@@ -169,7 +169,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-edit" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="paymentMethodModalLabel" style="font-size: 30px !important;">Forma de pago</h5>
+        <h5 class="modal-title" id="paymentMethodModalLabel" style="font-size: 35px !important;">Forma de pago</h5>
       </div>
       <div class="modal-body">
         <div class="row text-center">
@@ -178,13 +178,13 @@
             <h6 class="control-label">Tarjeta Bancaría <br> Apple Pay <br> Google Pay</h6>
           </div>
           <div class="col-6 col-md-6 col-sm-6">  
-            <%= image_tag "money.png", alt: "PayPal", class: "payment-option", data: { method: "Efectivo" } %>
+            <%= image_tag "money-euro.png", alt: "PayPal", class: "payment-option", data: { method: "Efectivo" } %>
             <h6 class="control-label">Efectivo</h6>
           </div>
         </div>
         <div class="text-center" style="padding-bottom: 35px;">
         <!-- Update the button to trigger the AJAX request -->
-        <button type="button" class="btn btn-primary btn-margin-top" style="width: 100%; font-size: 35px !important" id="select-payment-method">Continuar</button>
+        <button type="button" class="btn btn-primary btn-margin-top" style="width: 100%; font-size: 35px !important; padding: 15px" id="select-payment-method">Continuar</button>
         </div>
       </div>
 
