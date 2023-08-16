@@ -29,12 +29,18 @@
     $(document).ready(function() {
       var selectedPaymentMethod = sessionStorage.getItem("selectedPaymentMethod");
 
-      // If a payment method was selected on the restaurant show page, set it in the form
       if (selectedPaymentMethod) {
         $("#order_payment_method").val(selectedPaymentMethod);
       }
 
       $("#payment-method-value").text("Forma de pago: " + selectedPaymentMethod);
+
+      var submitButton = $("#submit-order");
+      if (selectedPaymentMethod === "Efectivo") {
+        submitButton.val("Pedir");
+      } else {
+        submitButton.val("Pagar");
+      }
     });
   </script>
   <% end %>
