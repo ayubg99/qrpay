@@ -692,6 +692,11 @@ body {
   }
 }
 
+.modal-food {
+  border: 1px solid#e7e7e7;
+  border-radius: 20px;
+}
+
 .modal {
   font-size: 25px !important;
   a, button {
@@ -816,4 +821,10 @@ body {
 
 .restaurant-name {
   font-size: 45px;
+}
+
+.food-item-popup-image {
+  width: 244px;
+  height: 244px;
+  border-radius: 10px;
 }
