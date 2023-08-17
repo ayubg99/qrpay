@@ -57,7 +57,7 @@
           <% end %>
         </div>
         <h5 id="cart-total-price">Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h5>
-        <%= link_to 'Pedir', '#', class: 'btn btn-primary', style:"margin-top: 20px; width: 100%; font-size: 35px !important; padding: 15px", 'data-toggle' => 'modal', 'data-target' => '#paymentMethodModal' %>
+        <%= link_to 'Pedir', '#', class: 'btn btn-primary', style:"margin-top: 20px; width: 100%; font-size: 35px !important; padding: 10px", 'data-toggle' => 'modal', 'data-target' => '#paymentMethodModal' %>
         <% else %>
           <p>Your cart is empty.</p>
         <% end %>
