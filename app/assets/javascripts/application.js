@@ -412,3 +412,38 @@ document.addEventListener("turbolinks:load", function() {
     window.location.href = "/restaurants/" + restaurantId + "/orders/new?table_number=" + tableNumber;
   });
 });
+
+document.addEventListener("turbolinks:load", function() {
+  const body = document.querySelector('body');
+  const sidebar = body.querySelector('nav');
+  const toggle = body.querySelector('.toggle');
+  const modeSwitch = body.querySelector('.toggle-switch');
+  const modeText = body.querySelector('.mode-text');
+
+  // Function to toggle dark mode
+  function toggleDarkMode() {
+    body.classList.toggle('dark');
+    if (body.classList.contains('dark')) {
+      modeText.innerText = 'Light mode';
+      // Store dark mode preference in local storage
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      modeText.innerText = 'Dark mode';
+      // Remove dark mode preference from local storage
+      localStorage.removeItem('darkMode');
+    }
+  }
+
+  toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+  })
+
+  modeSwitch.addEventListener('click', toggleDarkMode);
+
+  // Check for dark mode preference on page load
+  const darkModePreference = localStorage.getItem('darkMode');
+  if (darkModePreference === 'true') {
+    body.classList.add('dark');
+    modeText.innerText = 'Light mode';
+  }
+});
