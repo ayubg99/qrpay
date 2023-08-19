@@ -23,8 +23,8 @@
   <li class="nav-item">
   <a class="nav-link" href="#" data-category-target="#special-menus">MENÚS ESPECIALES</a>
 </li>
-  <% @restaurant.categories.each_with_index do |category, index| %>
-    <% if category.food_items.present? %>
+  <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
+    <% if category.food_items.where(deleted_at: nil).present? %>
       <li class="nav-item">
         <a class="nav-link" href="#" data-category-target="#category<%= index %>"><%= category.name %></a>
       </li>
@@ -104,7 +104,7 @@
     </div>
     
 
-      <% @restaurant.categories.each_with_index do |category, index| %>
+      <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
         <% if category.food_items.where(deleted_at: nil).present? %>
           <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
             <h5 class="category-name"><%= category.name %></h5>

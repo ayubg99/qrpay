@@ -33,7 +33,7 @@ class CategoriesController < ApplicationController
   end
   
   def destroy
-    @category.destroy
+    @category.soft_delete
   
     respond_to do |format|
       format.html { redirect_to restaurant_dashboard_menu_path(@restaurant), notice: "Category was successfully destroyed." }

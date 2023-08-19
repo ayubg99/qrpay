@@ -20,8 +20,9 @@ class ImagesController < ApplicationController
     end
   
     def destroy
+      special_menu = @image.special_menu
       @image.destroy
-      redirect_to restaurant_dashboard_special_menus_path(@restaurant), notice: 'Image was successfully deleted.'
+      redirect_to edit_restaurant_special_menu_path(@restaurant, special_menu), notice: 'Image was successfully deleted.'
     end
   
     private

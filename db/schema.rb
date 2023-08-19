@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_06_192733) do
+ActiveRecord::Schema.define(version: 2023_08_19_192205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,8 @@ ActiveRecord::Schema.define(version: 2023_08_06_192733) do
     t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_categories_on_deleted_at"
     t.index ["restaurant_id"], name: "index_categories_on_restaurant_id"
   end
 
@@ -114,33 +116,6 @@ ActiveRecord::Schema.define(version: 2023_08_06_192733) do
     t.integer "day"
     t.date "date"
     t.index ["restaurant_id"], name: "index_daily_revenues_on_restaurant_id"
-  end
-
-  create_table "deleted_order_cart_items", force: :cascade do |t|
-    t.bigint "deleted_order_id"
-    t.bigint "cart_item_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cart_item_id"], name: "index_deleted_order_cart_items_on_cart_item_id"
-    t.index ["deleted_order_id"], name: "index_deleted_order_cart_items_on_deleted_order_id"
-  end
-
-  create_table "deleted_order_food_items", force: :cascade do |t|
-    t.bigint "deleted_order_id"
-    t.bigint "food_item_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_order_id"], name: "index_deleted_order_food_items_on_deleted_order_id"
-    t.index ["food_item_id"], name: "index_deleted_order_food_items_on_food_item_id"
-  end
-
-  create_table "deleted_order_special_menus", force: :cascade do |t|
-    t.bigint "deleted_order_id"
-    t.bigint "special_menu_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deleted_order_id"], name: "index_deleted_order_special_menus_on_deleted_order_id"
-    t.index ["special_menu_id"], name: "index_deleted_order_special_menus_on_special_menu_id"
   end
 
   create_table "deleted_orders", force: :cascade do |t|
@@ -200,6 +175,13 @@ ActiveRecord::Schema.define(version: 2023_08_06_192733) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "images", force: :cascade do |t|
+    t.bigint "special_menu_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["special_menu_id"], name: "index_images_on_special_menu_id"
+  end
+
   create_table "monthly_revenues", force: :cascade do |t|
     t.decimal "revenue"
     t.bigint "restaurant_id"
@@ -208,24 +190,6 @@ ActiveRecord::Schema.define(version: 2023_08_06_192733) do
     t.integer "year"
     t.integer "month"
     t.index ["restaurant_id"], name: "index_monthly_revenues_on_restaurant_id"
-  end
-
-  create_table "order_food_items", force: :cascade do |t|
-    t.bigint "order_id"
-    t.bigint "food_item_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["food_item_id"], name: "index_order_food_items_on_food_item_id"
-    t.index ["order_id"], name: "index_order_food_items_on_order_id"
-  end
-
-  create_table "order_special_menus", force: :cascade do |t|
-    t.bigint "order_id"
-    t.bigint "special_menu_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_order_special_menus_on_order_id"
-    t.index ["special_menu_id"], name: "index_order_special_menus_on_special_menu_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -265,14 +229,6 @@ ActiveRecord::Schema.define(version: 2023_08_06_192733) do
     t.index ["slug"], name: "index_restaurants_on_slug", unique: true
   end
 
-  create_table "sessions", force: :cascade do |t|
-    t.bigint "cart_id"
-    t.string "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cart_id"], name: "index_sessions_on_cart_id"
-  end
-
   create_table "special_menu_food_items", force: :cascade do |t|
     t.bigint "special_menu_id"
     t.bigint "food_item_id"
@@ -280,15 +236,6 @@ ActiveRecord::Schema.define(version: 2023_08_06_192733) do
     t.datetime "updated_at", null: false
     t.index ["food_item_id"], name: "index_special_menu_food_items_on_food_item_id"
     t.index ["special_menu_id"], name: "index_special_menu_food_items_on_special_menu_id"
-  end
-
-  create_table "special_menu_items", force: :cascade do |t|
-    t.bigint "special_menu_id"
-    t.bigint "food_item_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["food_item_id"], name: "index_special_menu_items_on_food_item_id"
-    t.index ["special_menu_id"], name: "index_special_menu_items_on_special_menu_id"
   end
 
   create_table "special_menus", force: :cascade do |t|
@@ -326,29 +273,17 @@ ActiveRecord::Schema.define(version: 2023_08_06_192733) do
   add_foreign_key "carts", "restaurants"
   add_foreign_key "categories", "restaurants"
   add_foreign_key "daily_revenues", "restaurants"
-  add_foreign_key "deleted_order_cart_items", "cart_items"
-  add_foreign_key "deleted_order_cart_items", "deleted_orders"
-  add_foreign_key "deleted_order_food_items", "deleted_orders"
-  add_foreign_key "deleted_order_food_items", "food_items"
-  add_foreign_key "deleted_order_special_menus", "deleted_orders"
-  add_foreign_key "deleted_order_special_menus", "special_menus"
   add_foreign_key "food_items", "categories"
   add_foreign_key "food_items", "restaurants"
   add_foreign_key "food_type_food_items", "food_items"
   add_foreign_key "food_type_food_items", "food_types", on_delete: :cascade
   add_foreign_key "food_types", "special_menus"
+  add_foreign_key "images", "special_menus"
   add_foreign_key "monthly_revenues", "restaurants"
-  add_foreign_key "order_food_items", "food_items"
-  add_foreign_key "order_food_items", "orders"
-  add_foreign_key "order_special_menus", "orders"
-  add_foreign_key "order_special_menus", "special_menus"
   add_foreign_key "orders", "carts"
   add_foreign_key "orders", "restaurants"
-  add_foreign_key "sessions", "carts"
   add_foreign_key "special_menu_food_items", "food_items"
   add_foreign_key "special_menu_food_items", "special_menus"
-  add_foreign_key "special_menu_items", "food_items"
-  add_foreign_key "special_menu_items", "special_menus", on_delete: :cascade
   add_foreign_key "special_menus", "restaurants"
   add_foreign_key "tables", "restaurants"
 end
