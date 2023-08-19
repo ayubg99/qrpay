@@ -321,6 +321,15 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
+  .special-menu-dashboard-image {
+    width: 100%;
+    object-fit: cover;
+    max-height: 400px;
+    min-height: 400px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
   .special-menu-show-image {
     width: 100%;
     object-fit: cover;
@@ -445,7 +454,7 @@ body {
 }
 
 .btn-dashboard {
-  font-size: 10px !important;
+  font-size: 15px !important;
   color: #fff !important;
 }
 

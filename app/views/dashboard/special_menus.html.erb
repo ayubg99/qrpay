@@ -2,7 +2,7 @@
 
 <section class="home">
 <div class="container dashboard-index" style="height: 100%">
-<h2 class="menu-name" style="margin-top:10px">Menús especiales</h2>
+<h2 style="margin-top:10px">Menús especiales</h2>
 <%= link_to "Nuevo menu", new_restaurant_special_menu_path(@restaurant), class: "btn btn-primary btn-dashboard2", style: "margin-bottom: 20px;" %>
 <div class="row">
 <% @restaurant.special_menus.where(deleted_at: nil).order(created_at: :desc).each_slice(2) do |special_menus_group| %>
@@ -13,12 +13,12 @@
             <%= form_with(url: "#", method: :post, local:true, class: 'special-menu-form') do |form| %>
               <%= form.hidden_field :special_menu_id, value: special_menu.id %>
               <div class="row">
-                <div class="col-4 col-sm-4 col-md-4">
+                <div class="col-5 col-sm-5 col-md-5">
                 <div id="carousel<%= special_menu.id %>" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-inner">
                     <% special_menu.images.each_with_index do |image, index| %>
                       <div class="carousel-item <%= 'active' if index == 0 %>">
-                        <%= image_tag image.image, class: "d-block w-100 special-menu-image" %>
+                        <%= image_tag image.image, class: "d-block w-100 special-menu-dashboard-image" %>
                       </div>
                     <% end %>
                   </div>
@@ -33,7 +33,7 @@
                 </div>
                 <%= link_to "Añadir Imagen", new_restaurant_special_menu_image_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
                 </div>
-                <div class="col-8 col-sm-8 col-md-8">
+                <div class="col-7 col-sm-7 col-md-7">
                   <% special_menu.food_types.each do |food_type| %>
                     <div class="form-group">
                       <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
