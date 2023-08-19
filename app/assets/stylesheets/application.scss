@@ -385,6 +385,8 @@
   margin-bottom: 15px;
   padding: 5px;
   font-size: 20px !important;
+  min-height: 420px;
+
   h6 {
     font-size: 20px !important;
   }
@@ -831,6 +833,30 @@ body {
 
 .faq_area {
   p {
+    font-family: 'Roboto Mono', monospace !important;
+  }
+}
+
+.menu-image-dashboard {
+  width: 100%;
+  max-height: 200px;
+  min-height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.special-menu-image-edit {
+  height: 300px;
+  width: 100px;
+  border-radius: 8px;
+}
+
+.order-table {
+  font-family: 'Roboto Mono', monospace !important;
+  tr, td, tbody, p {
     font-family: 'Roboto Mono', monospace !important;
   }
 }

@@ -9,4 +9,12 @@ class Category < ApplicationRecord
   def name_uppercase 
     self.name = self.name.upcase
   end
+
+  def soft_delete
+    update(deleted_at: Time.now)
+  end
+
+  def active?
+    deleted_at.nil?
+  end
 end

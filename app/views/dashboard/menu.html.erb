@@ -4,8 +4,7 @@
 <div class="container dashboard-index" style="height: 100%">
 <%= link_to 'Nueva categoría', new_restaurant_category_path(@restaurant), class: "btn btn-primary btn-dashboard2 btn-margin-bottom" %> 
 <%= link_to 'Nueva comida', new_restaurant_food_item_path(@restaurant), class: "btn btn-primary btn-dashboard2 btn-margin-bottom" %> 
-<% @restaurant.categories.each_with_index do |category, index| %>
-  <% if category.food_items.present? %>
+<% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
   <h4><%= category.name %>
   <%= link_to "Modificar", edit_restaurant_category_path(@restaurant, category), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
           <%= link_to 'Eliminar', restaurant_category_path(@restaurant, category), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
@@ -19,7 +18,7 @@
                    data-description="<%= food_item.description %>"
                    data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
                    data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
-                <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
+                <%= image_tag food_item.image, class: "menu-image-dashboard menu-item" if food_item.image.attached? %>
                 <h6><%= food_item.name %></h6>
                 <h6><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
                 <%= link_to "Modificar", edit_restaurant_food_item_path(@restaurant, food_item), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
@@ -32,7 +31,6 @@
           <% end %>
         </div>
       <% end %>
-  <% end %>
 <% end %>      
 
       </div>

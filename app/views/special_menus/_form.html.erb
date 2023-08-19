@@ -58,6 +58,22 @@
       <%= form.time_field :end_hour, class: "form-control" %>
     </div>
   </div>
+  
+  <% if @special_menu.images.present? %>
+  <div class="form-group">
+    <%= form.label "Imagenes", class: 'control-label col-sm-2' %>
+      <% @special_menu.images.each_slice(4) do |images| %>
+        <div class="row">
+          <% images.each do |image| %>
+            <div class="col-md-2">
+              <%= image_tag image.image, class: "d-block w-100 special-menu-image-edit" %>
+              <%= link_to 'Eliminar', restaurant_special_menu_image_path(@restaurant, @special_menu, image), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+  </div>
+  <% end %>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-6">
