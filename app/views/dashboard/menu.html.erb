@@ -38,20 +38,14 @@
 
 
 <div class="modal fade" id="foodItemModal" tabindex="-1" role="dialog" aria-labelledby="foodItemModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-food-dashboard" role="document">
-    <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content modal-food text-center">
       <div class="modal-body">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-6 col-sm-6 col-md-6">
               <div id="foodItemImageContainer">
               </div>
-            </div>
-            <div class="col-6 col-sm-6 col-md-6">
               <div id="foodItemDetails">
               </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -65,7 +59,7 @@
       var description = $(this).data('description');
       var imageUrl = $(this).data('image-url');
       
-      var imageContent = '<img src="' + imageUrl + '" alt="' + name + '" class="food-item-image">';
+      var imageContent = '<img src="' + imageUrl + '" alt="' + name + '" class="food-item-popup-image">';
       var detailsContent = '<div class="food-item-name">' + name + '</div>';
       detailsContent += '<div class="food-item-description">' + description + '</div>';
 
