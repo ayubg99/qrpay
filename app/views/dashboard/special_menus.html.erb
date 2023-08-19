@@ -5,65 +5,114 @@
 <h2 class="menu-name" style="margin-top:10px">Menús especiales</h2>
 <%= link_to "Nuevo menu", new_restaurant_special_menu_path(@restaurant), class: "btn btn-primary btn-dashboard2", style: "margin-bottom: 20px;" %>
 <div class="row">
-<% @restaurant.special_menus.where(deleted_at: nil).order(created_at: :desc).each_slice(2) do |special_menus| %>
-  <% special_menus.each do |special_menu| %>
-  <div class="col-6 col-sm-12 col-md-6">
-  <div class="special-menu-container container">
-      <%= form_with(url: '#', method: :post, local: true, data: { menu_id: special_menu.id }, class: 'special-menu-form') do |form| %>
-      <%= form.hidden_field :special_menu_id, value: special_menu.id %>
-      <h4 class="special-menu-name"><%= special_menu.name %></h4>
-      <div class="row">
-        <div class="col-4 col-sm-4 col-md-4">
-          <div id="carousel<%= special_menu.id %>" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <% special_menu.images.each_with_index do |image, index| %>
-                <div class="carousel-item <%= 'active' if index == 0 %>">
-                  <%= image_tag image.image, class: "d-block w-100 special-menu-image" %>
+<% @restaurant.special_menus.where(deleted_at: nil).order(created_at: :desc).each_slice(2) do |special_menus_group| %>
+  <div class="row">
+    <% special_menus_group.each do |special_menu| %>
+        <div class="col-md-6">
+          <div class="special-menu-container container">
+            <%= form_with(url: "#", method: :post, local:true, class: 'special-menu-form') do |form| %>
+              <%= form.hidden_field :special_menu_id, value: special_menu.id %>
+              <div class="row">
+                <div class="col-4 col-sm-4 col-md-4">
+                <div id="carousel<%= special_menu.id %>" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    <% special_menu.images.each_with_index do |image, index| %>
+                      <div class="carousel-item <%= 'active' if index == 0 %>">
+                        <%= image_tag image.image, class: "d-block w-100 special-menu-image" %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <a class="carousel-control-prev" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </a>
                 </div>
-              <% end %>
-            </div>
-            <a class="carousel-control-prev" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carousel<%= special_menu.id %>" role="button" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </a>
-          </div>
-          <%= link_to "Añadir Imagen", new_restaurant_special_menu_image_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
-          <h4><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h4> 
-          <%= form.submit '', class: "btn btn-primary invisible" %>        
-        </div>
-        <div class="col-8 col-sm-8 col-md-8">
-          <p><%= simple_format(special_menu.description, class:"simple-format-description") %></p>
-          <% special_menu.food_types.each do |food_type| %>
-            <div class="form-group">
-              <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
-              <% if food_type.have_to_select_one == true %>
-              <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control'  %>
-              <% else %>
-                <p>
-                  <% food_type.food_items.each do |food_item| %>
-                    <%= food_item.name.upcase %> <% if food_type.food_items.last != food_item %>- <% end %> 
+                <%= link_to "Añadir Imagen", new_restaurant_special_menu_image_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8">
+                  <% special_menu.food_types.each do |food_type| %>
+                    <div class="form-group">
+                      <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
+                      <% if food_type.have_to_select_one == true %>
+                        <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control' %>
+                      <% else %>
+                        <p>
+                          <% food_type.food_items.each do |food_item| %>
+                            <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %>
+                          <% end %>
+                        </p>
+                      <% end %>
+                    </div>
+                    <%= link_to "Modificar", edit_restaurant_special_menu_food_type_path(@restaurant, special_menu, food_type), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
+                    <%= link_to 'Eliminar', restaurant_special_menu_food_type_path(@restaurant, special_menu, food_type), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
+                  <% end %><br>
+                  <%= link_to "Añadir categoría", new_restaurant_special_menu_food_type_path(@restaurant, special_menu), class: "btn btn-primary btn-dashboard btn-margin-top" %>
+                </div>
+              </div>
+              <div class="text-center">
+                  <h4 class="special-menu-name"><%= special_menu.name %></h4>
+                  <h6 class="menu-price"><%= number_to_currency(special_menu.price, precision: 2, unit: '€') %></h6>
+                  <i class='bx bx-user' style="font-size: 30px;"></i> <%= special_menu.minimum_persons %>
                   <% end %>
-                </p>
-              <% end %>
-            </div>
-            <%= link_to "Modificar", edit_restaurant_special_menu_food_type_path(@restaurant, special_menu, food_type), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
-            <%= link_to 'Eliminar', restaurant_special_menu_food_type_path(@restaurant, special_menu, food_type), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
-          <% end %><br>
-          <%= link_to "Añadir categoría", new_restaurant_special_menu_food_type_path(@restaurant, special_menu), class: "btn btn-primary btn-dashboard btn-margin-top" %>
+              </div>
+              <%= link_to "Modificar", edit_restaurant_special_menu_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-dashboard" %>
+              <%= link_to 'Eliminar', restaurant_special_menu_path(@restaurant, special_menu), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-dashboard' %>
+              <i class='bx bx-info-circle btn-margin-top menu-item-info move-right' style="font-size: 40px;" data-toggle="modal" data-target="#menuItemModal"
+                data-name="<%= special_menu.name %>"
+                data-description="<%= special_menu.description %>"
+                data-instructions="<%= special_menu.instructions %>"
+                data-minimum-persons="<%= special_menu.minimum_persons %>"
+              ></i>
+              
+          </div>
         </div>
-        <p style="margin-top:10px"><%= simple_format(special_menu.instructions) %></p>
-      </div>
+      
     <% end %>
-    <%= link_to "Modificar", edit_restaurant_special_menu_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-dashboard" %>
-  <%= link_to 'Eliminar', restaurant_special_menu_path(@restaurant, special_menu), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-dashboard' %>
   </div>
-  </div>
-  <% end %>
 <% end %>
+
 </div>
 </div>
 </section>
+
+
+
+<div class="modal fade" id="menuItemModal" tabindex="-1" role="dialog" aria-labelledby="menuItemModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content modal-food">
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12">
+              <div id="menuItemDetails">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+$(document).ready(function() {
+  $('.menu-item-info').click(function() {
+    var name = $(this).data('name');
+    var description = $(this).data('description');
+    var instructions = $(this).data('instructions');
+    var minimumpersons = $(this).data('minimum-persons');
+    
+    var detailsContent = '<div class="menu-item-name">' + name + '</div>';
+    detailsContent += '<div class="menu-item-description">' + description + '</div>';
+    detailsContent += '<div class="menu-item-instructions">' + instructions + '</div>';
+    detailsContent += '<div class="menu-item-minimum-persons">' + '<i class="bx bx-user" style="font-size: 30px;"></i> ' + minimumpersons + " personas mínimas" + '</div>';
+    $('#menuItemDetails').html(detailsContent);
+  });
+});
+
+</script>
