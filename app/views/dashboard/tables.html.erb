@@ -4,7 +4,7 @@
 <div class="container dashboard-index" style="margin-top: 10px">
 <h2>Tablas</h2>
 <div style="margin-top: 10px">
-    <%= link_to 'Nueva tabla', new_restaurant_table_path(@restaurant), class: "btn btn-primary" %>
+    <%= link_to 'Nueva tabla', new_restaurant_table_path(@restaurant), class: "btn btn-primary btn-dashboard" %>
 </div>
 <div class="row" style="margin-top: 20px"> 
     <% @restaurant.tables.each do |table| %>
