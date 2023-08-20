@@ -37,14 +37,13 @@
                   <% special_menu.food_types.each do |food_type| %>
                     <div class="form-group">
                       <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
+                      <% if !food_type.have_to_select_one %>
+                        <p>
+                          <%= simple_format(food_type.description, style: "font-size: 15px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2") %>
+                        </p>
+                      <% end %>
                       <% if food_type.have_to_select_one == true %>
                         <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control' %>
-                      <% else %>
-                        <p>
-                          <% food_type.food_items.each do |food_item| %>
-                            <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %>
-                          <% end %>
-                        </p>
                       <% end %>
                     </div>
                     <%= link_to "Modificar", edit_restaurant_special_menu_food_type_path(@restaurant, special_menu, food_type), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>

@@ -16,6 +16,11 @@
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
+  <div class="form-group col-md-6">
+    <%= form.label "Descripción", class: "control-label" %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
   <div class="form-group" style="margin-top: 20px">
     <% @restaurant.food_items.where(deleted_at: nil).each do |food_item| %>
       <%= check_box_tag 'food_type[food_item_ids][]', food_item.id %>

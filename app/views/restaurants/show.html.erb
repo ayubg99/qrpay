@@ -69,11 +69,9 @@
                           <div class="form-group">
                             <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
                             <% if !food_type.have_to_select_one %>
-                              <p style="font-size: 20px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2">
-                                <% food_type.food_items.each do |food_item| %>
-                                  <%= food_item.name %> <% if food_type.food_items.last != food_item %><br> <% end %>
-                                <% end %>
-                              </p>
+                            <p>
+                              <%= simple_format(food_type.description.upcase, style: "font-size: 15px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2") %>
+                            </p>
                             <% end %>
                             <% if food_type.have_to_select_one == true %>
                             <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control' %>
