@@ -20,9 +20,12 @@
   <li class="nav-item">
     <a class="nav-link active" href="#" data-category-target="all">TODOS</a>
   </li>
+  <% if @restaurant.special_menus.present? %>
   <li class="nav-item">
-  <a class="nav-link" href="#" data-category-target="#special-menus">MENÚS ESPECIALES</a>
-</li>
+    <a class="nav-link" href="#" data-category-target="#special-menus">MENÚS ESPECIALES</a>
+  </li>
+  <% end %>
+
   <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
     <% if category.food_items.where(deleted_at: nil).present? %>
       <li class="nav-item">
@@ -34,8 +37,9 @@
 </ul>
       <div class="col-md-12 tables-margin-top">
       <div id="special-menus" class="special-menus category-content special-menus-content">
-      <h5 class="menu-name">MENÚS ESPECIALES</h5>
-    
+      <% if @restaurant.special_menus.present? %>
+        <h5 class="menu-name">MENÚS ESPECIALES</h5>
+      <% end %>
       <% @restaurant.special_menus.where(deleted_at: nil).order(created_at: :desc).each_slice(1) do |special_menus_group| %>
         <div class="row">
           <% special_menus_group.each do |special_menu| %>
