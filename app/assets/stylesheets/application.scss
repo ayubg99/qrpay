@@ -508,29 +508,14 @@ body {
   text-align: center !important;
 }
 
-body.dark-mode .custom-fixed-nav-tabs .nav-link {
+.custom-fixed-nav-tabs .nav-link {
   color: #fff;
   border: none;
   font-size: 30px;
   line-height: 2.5rem;
 }
 
-body.dark-mode .custom-fixed-nav-tabs .nav-link.active {
-  color: #fff;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #8000ff;
-  background-color: #8000ff;
-}
-
-body.light-mode .custom-fixed-nav-tabs .nav-link {
-  color: black;
-  border: none;
-  font-size: 30px;
-  line-height: 2.5rem;
-}
-
-body.light-mode .custom-fixed-nav-tabs .nav-link.active {
+.custom-fixed-nav-tabs .nav-link.active {
   color: #fff;
   padding: 8px;
   border-radius: 5px;

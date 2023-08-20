@@ -11,7 +11,6 @@
 <% end %>
 
 </div>
-<button id="mode-toggle" class="btn btn-primary">Dark / light</button>
 
 
 
@@ -165,8 +164,6 @@
       </div>
     </div>
 </div>
-
-
 
 <!-- Payment Method Selection Modal -->
 <div class="modal fade" id="paymentMethodModal" tabindex="-1" role="dialog" aria-labelledby="paymentMethodModalLabel" aria-hidden="true">
@@ -338,51 +335,8 @@
 
 
 <style> 
-
-
-body.light-mode {
-  background-color: white;
-  color: black;
-}
-
-
-
-/* Additional styles for dark mode */
-body.dark-mode {
-  background-color: black;
-  color: white;
-
+body {
+  background-color: black; 
+  color: #fff;
 }
 </style>
-
-
-<!-- Update the script section to include mode persistence -->
-<script>
-  // Function to toggle between light and dark mode
-  function toggleMode() {
-    const body = document.body;
-    body.classList.toggle('dark-mode');
-    body.classList.toggle('light-mode');
-    
-    // Store the selected mode in localStorage
-    const selectedMode = body.classList.contains('dark-mode') ? 'dark' : 'light';
-    localStorage.setItem('selectedMode', selectedMode);
-    
-    // Update link colors
-    const categoryLinks = document.querySelectorAll('.category-link');
-    categoryLinks.forEach(link => {
-      link.classList.toggle('dark-mode', body.classList.contains('dark-mode'));
-      link.classList.toggle('light-mode', body.classList.contains('light-mode'));
-    });
-  }
-
-  // Add event listener to the toggle button
-  const toggleButton = document.getElementById('mode-toggle');
-  toggleButton.addEventListener('click', toggleMode);
-
-  // Check for a previously selected mode and apply it
-  const storedMode = localStorage.getItem('selectedMode');
-  if (storedMode === 'dark' || storedMode === null) {
-    document.body.classList.add('dark-mode');
-  }
-</script>
