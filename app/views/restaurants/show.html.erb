@@ -65,7 +65,7 @@
                       </div>
                       </div>
                       <div class="col-6 col-sm-6 col-md-6">
-                        <% special_menu.food_types.order(created_at: :desc).each do |food_type| %>
+                        <% special_menu.food_types.order(created_at: :asc).each do |food_type| %>
                           <div class="form-group">
                             <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
                             <% if !food_type.have_to_select_one %>
