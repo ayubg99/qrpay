@@ -382,7 +382,7 @@ body.dark-mode {
 
   // Check for a previously selected mode and apply it
   const storedMode = localStorage.getItem('selectedMode');
-  if (storedMode === 'dark') {
+  if (storedMode === 'dark' || storedMode === null) {
     document.body.classList.add('dark-mode');
   }
 </script>
