@@ -69,9 +69,9 @@
                           <div class="form-group">
                             <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
                             <% if !food_type.have_to_select_one %>
-                              <p style="font-size: 20px; line-height: 1.2">
+                              <p style="font-size: 20px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2">
                                 <% food_type.food_items.each do |food_item| %>
-                                  <%= food_item.name %> <% if food_type.food_items.last != food_item %>- <% end %>
+                                  <%= food_item.name %> <% if food_type.food_items.last != food_item %><br> <% end %>
                                 <% end %>
                               </p>
                             <% end %>
