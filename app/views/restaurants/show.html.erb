@@ -36,11 +36,11 @@
       <div id="special-menus" class="special-menus category-content special-menus-content">
       <h5 class="menu-name">MENÚS ESPECIALES</h5>
     
-      <% @restaurant.special_menus.where(deleted_at: nil).order(created_at: :desc).each_slice(2) do |special_menus_group| %>
+      <% @restaurant.special_menus.where(deleted_at: nil).order(created_at: :desc).each_slice(1) do |special_menus_group| %>
         <div class="row">
           <% special_menus_group.each do |special_menu| %>
             <% if special_menu.in_time_range? %>
-              <div class="col-md-6">
+              <div class="col-12 col-sm col-md-12">
                 <div class="special-menu-container container">
                   <%= form_with(url: add_to_cart_restaurant_cart_path(@restaurant), method: :post, local:true, class: 'special-menu-form') do |form| %>
                     <%= form.hidden_field :special_menu_id, value: special_menu.id %>
