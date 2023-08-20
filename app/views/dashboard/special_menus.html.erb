@@ -34,7 +34,7 @@
                 <%= link_to "Añadir Imagen", new_restaurant_special_menu_image_path(@restaurant, special_menu), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
                 </div>
                 <div class="col-7 col-sm-7 col-md-7">
-                  <% special_menu.food_types.order(created_at: :desc).each do |food_type| %>
+                  <% special_menu.food_types.order(created_at: :asc).each do |food_type| %>
                     <div class="form-group">
                       <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
                       <% if !food_type.have_to_select_one %>
