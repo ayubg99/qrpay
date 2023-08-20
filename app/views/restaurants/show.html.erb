@@ -71,7 +71,7 @@
                             <% if !food_type.have_to_select_one %>
                             <p>
                               <%= simple_format(food_type.description.upcase, style: "font-size: 15px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2") %>
-                            </p>
+                            </p> 
                             <% end %>
                             <% if food_type.have_to_select_one == true %>
                             <%= form.collection_select "food_item_ids[#{food_type.id}]", food_type.food_items, :id, :name, { prompt: true, selected: food_type.food_items.first.id }, class: 'form-control' %>
