@@ -39,7 +39,7 @@
                       <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
                       <% if !food_type.have_to_select_one %>
                         <p>
-                          <%= simple_format(food_type.description, style: "font-size: 15px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2") %>
+                          <%= simple_format(food_type.description, style: "font-size: 20px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2") %>
                         </p>
                       <% end %>
                       <% if food_type.have_to_select_one == true %>
