@@ -1,4 +1,4 @@
-<%= form_for([@restaurant, @order], html: {class: "form-horizontal", id: "stripe-payment-form", data: { clientSecret: @client_secret }}) do |form| %>
+<%= form_for([@restaurant, @order], html: {class: "form-horizontal", id: "stripe-payment-form", remote: true, data: { clientSecret: @client_secret }}) do |form| %>
   <% if flash[:error].present? %>
     <div class="alert alert-danger">
       <%= flash[:error] %>
@@ -22,7 +22,7 @@
       <h2 id="payment-method-value"></h2>
       
       <div class="form-group">
-          <%= form.submit "Pedir", class: "btn btn-primary btn-margin-top", style: "width: 100%; font-size: 35px !important; padding: 10px", id: "submit-order" %>
+          <%= form.submit "Pedir", class: "btn btn-primary btn-margin-top", style: "width: 100%; font-size: 35px !important; padding: 10px" %>
       </div>
 
     <script>

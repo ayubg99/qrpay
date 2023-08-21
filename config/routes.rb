@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get '/admin_dashboard_contacts', to: 'admin_dashboard#contacts', as: 'admin_dashboard_contacts'
   resources :restaurants do 
     get '/dashboard', to: 'dashboard#index', as: 'dashboard'
-    get '/dashboard/orders', to: 'dashboard#orders', as: 'dashboard_orders'
+    get '/dashboard/orders', to: 'dashboard#orders', as: 'dashboard_orders', format: :js
     get '/dashboard/history', to: 'dashboard#history', as: 'dashboard_history'
     get '/dashboard/tables', to: 'dashboard#tables', as: 'dashboard_tables'
     get '/dashboard/menu', to: 'dashboard#menu', as: 'dashboard_menu'
