@@ -1,4 +1,4 @@
-<tr>
+<tr class="order-row">
   <td><h6><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></h6></td>
   <td>
   <% order.cart_items.each do |cart_item| %>              
@@ -19,7 +19,7 @@
       <% cart_item.special_menu.food_types.where(have_to_select_one: nil).each do |food_type| %>
         <% food_type.food_items.each do |food_item| %>
           <p class="order-food-item" style="display: inline;"><%= cart_item.quantity %>x
-          <%= food_item.name %><% if food_type.food_items.last != food_item %>, <% end %></p>  
+          <%= food_item.name %><% if food_type.food_items.last != food_item %><br> <% end %></p>  
         <% end %>
       <% end %>
     <br>
@@ -27,7 +27,7 @@
       <% cart_item.cart_item_food_items.each do |cart_item_food_item| %>
         <p class="order-food-item" style="display: inline;">
         <%= cart_item.quantity %>x
-          <%= cart_item_food_item.food_item.name %><% if order.cart_items.where(special_menu_id: nil).last.cart_item_food_items.first != cart_item_food_item %>, <% end %></p>
+          <%= cart_item_food_item.food_item.name %><% if order.cart_items.where(special_menu_id: nil).last.cart_item_food_items.first != cart_item_food_item %><br> <% end %></p>
       <% end %>
     <% end %>
   <% end %>

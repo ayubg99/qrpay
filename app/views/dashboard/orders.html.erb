@@ -22,8 +22,42 @@
 </section>
 
 
+<audio id="notification-sound" controls preload="auto">
+  <source src="<%= asset_path('order.mp3') %>" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 <script>
-var restaurantId = <%= @restaurant.id %>
-// app/assets/javascripts/orders.js
+document.addEventListener("DOMContentLoaded", function() {
+  var restaurantId = <%= @restaurant.id %>;
+  const notificationSound = document.getElementById('notification-sound');
+  let currentOrderCount = 0;
+
+  function refreshOrdersContainer() {
+    $.get('/restaurants/' + restaurantId + '/dashboard/orders', function(data) {
+      const newOrderCount = $(data).find('.order-row').length; // Update this selector
+
+      // Compare order counts to detect new orders
+      if (newOrderCount > currentOrderCount) {
+        // Play the notification sound for new orders
+        notificationSound.play();
+      }
+
+      currentOrderCount = newOrderCount;
+
+      // Update the orders-container
+      $('#orders-container').html($(data).find('#orders-container').html());
+    });
+  }
+
+  // Call the function to refresh the content after a certain interval
+  setInterval(refreshOrdersContainer, 5000); // Refresh every 5 seconds
+});
 
 </script>
+
+
+<style>
+    #notification-sound {
+      display: none; 
+    }
+</style>
