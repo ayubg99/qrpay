@@ -26,8 +26,9 @@
   <source src="<%= asset_path('order.mp3') %>" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   var restaurantId = <%= @restaurant.id %>;
   const notificationSound = document.getElementById('notification-sound');
   let currentOrderCount = 0;
