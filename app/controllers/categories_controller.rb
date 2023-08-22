@@ -1,8 +1,7 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_restaurant_if_no_admin
+  before_action :authenticate_restaurant!
   before_action :set_category, only: %i[ edit update destroy ]
   before_action :set_restaurant
-  before_action :check_restaurant_authorization
     
   def new
     @category = Category.new

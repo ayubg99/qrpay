@@ -1,8 +1,7 @@
 class TablesController < ApplicationController
-  before_action :authenticate_restaurant_if_no_admin
+  before_action :authenticate_restaurant!
   before_action :set_table, only: %i[ edit update destroy download_qr_code ]
   before_action :set_restaurant
-  before_action :check_restaurant_authorization
 
   def new
     @table = Table.new

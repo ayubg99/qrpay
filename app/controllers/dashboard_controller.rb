@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-    before_action :authenticate_restaurant_if_no_admin
+    before_action :authenticate_restaurant!
     before_action :check_password, only: [:index, :payment_information]
     before_action :set_restaurant
 
