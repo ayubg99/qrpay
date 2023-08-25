@@ -15,7 +15,7 @@ class Table < ApplicationRecord
     # qrcode = RQRCode::QRCode.new("http://#{host}/posts/#{id}")
     #host = Rails.application.config.action_controller.default_url_options[:host]
     
-    qrcode = RQRCode::QRCode.new('https://nameless-journey-71604-bcaa0875548a.herokuapp.com' + restaurant_path(self.restaurant, table_number: self.table_number))
+    qrcode = RQRCode::QRCode.new('https://www.bamboo-app.es' + restaurant_path(self.restaurant, table_number: self.table_number))
 
     # Create a new PNG object
     png = qrcode.as_png(
