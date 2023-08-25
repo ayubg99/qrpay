@@ -870,3 +870,149 @@ body {
     font-family: 'Roboto Mono', monospace !important;
   }
 }
+
+$font-primary: 'Poppins',Arial, sans-serif;
+
+$primary: #fe59d7;
+
+@mixin gradient-background(){
+	background: rgba(42,26,94,1);
+	background: -moz-linear-gradient(45deg, rgba(42,26,94,1) 0%, rgba(81,38,167,1) 100%);
+	background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(42,26,94,1)), color-stop(100%, rgba(81,38,167,1)));
+	background: -webkit-linear-gradient(45deg, rgba(42,26,94,1) 0%, rgba(81,38,167,1) 100%);
+	background: -o-linear-gradient(45deg, rgba(42,26,94,1) 0%, rgba(81,38,167,1) 100%);
+	background: -ms-linear-gradient(45deg, rgba(42,26,94,1) 0%, rgba(81,38,167,1) 100%);
+	background: linear-gradient(45deg, rgba(42,26,94,1) 0%, rgba(81,38,167,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2a1a5e', endColorstr='#5126a7', GradientType=1 );
+}
+
+  .footer-09{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-top: 70px;
+    @include gradient-background();
+    .border-top{
+      border-color: rgba(255,255,255,.1) !important;
+    }
+    a{
+      color: $primary;
+      font-size: 20px;
+      &:hover{
+        color: rgba(255,255,255,.9);
+        background-color: transparent !important;
+      }
+      text-decoration: none;
+    }
+    .icon-about {
+        font-size: 30px;
+        margin-right: 10px;
+        position: relative;
+        top: 8px;
+    }
+
+    .text {
+      color: #fff;
+    }
+
+    .about-span {
+      position: relative;
+      top: 8px;
+    }
+
+    
+    ul{
+      list-style-type: none; /* This removes bullet points */
+
+    }
+    p{
+      color: rgba(255,255,255,.3);
+    }
+    .footer-heading{
+      color: #fff;
+      font-size: 22px;
+      margin-bottom: 30px;
+      .icon{
+        width: 40px;
+        margin-right: 10px;
+        border-radius: 50%;
+        height: 40px;
+        display: block;
+        color: $primary;
+        border: 1px solid $primary;
+      }
+    }
+    ul.list-unstyled{
+      li{
+        a{
+          color: rgba(255,255,255,.5);
+        }
+      }
+    }
+    .block-21{
+      .heading{
+        a{
+          color: rgba(255,255,255,.5);
+        }
+      }
+      .meta{
+        div{
+          a{
+            color:rgba(255,255,255,.3);
+          }
+        }
+      }
+    }
+    .block-23{
+      ul{
+        li{
+          color: rgba(255,255,255,.5);
+        }
+      }
+    }
+  
+    .subscribe-form{
+      .form-group {
+        position: relative;
+        margin-bottom: 0;
+        @include border-radius(0);
+        input {
+          background: rgba(0,0,0,.05) !important;
+          border: 2px solid lighten($primary,10%) !important;
+          outline : none !important;
+          color: rgba(255,255,255,.3) !important;
+          font-size: 16px;
+          @include border-radius(0);
+          &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: rgba(255,255,255,.3) !important;
+          }
+          &::-moz-placeholder { /* Firefox 19+ */
+            color: rgba(255,255,255,.3) !important;
+          }
+          &:-ms-input-placeholder { /* IE 10+ */
+            color: rgba(255,255,255,.3) !important;
+          }
+          &:-moz-placeholder { /* Firefox 18- */
+            color: rgba(255,255,255,.3) !important;
+          }
+          &:focus{
+            outline: none !important;
+            box-shadow: none;
+          }
+        }
+        .submit{
+          color: #fff !important;
+          display: block;
+          width: 52px;
+          height: 52px;
+          font-size: 16px;
+          background: lighten($primary,10%) !important;
+          border: none;
+          @include border-radius(0);
+          &:hover, &:focus{
+            text-decoration: none !important;
+            outline: none !important;
+          }
+        }
+      }
+    }
+  }

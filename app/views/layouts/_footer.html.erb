@@ -1,3 +1,62 @@
-<footer class="text-center py-3">
-    <p>&copy; 2023 Bamboo | <%= link_to "Terminos y Privacidad", terms_path, class:"terms-link" %></p>
-</footer>
+
+
+<footer class="footer-09">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+						<h2 class="footer-heading d-flex">
+							<span class="icon d-flex align-items-center justify-content-center"><ion-icon name="locate-outline"></ion-icon></span>
+							<span class="about-span">Info</span>
+						</h2>
+            <span class="text">Carrer de Trafalgar 31, 4, Valencia, España</span><br>
+            <span class="text">+34 61 00 88 557</span><br>
+					</div>
+
+					<div class="col-md-5">
+                        <%= link_to 'https://www.instagram.com/bambooapp_es/', class: "footer-heading d-flex align-items-center", style: "margin-top: 40px" do %>
+                        <span class="icon d-flex align-items-center justify-content-center">
+                          <%= tag.ion_icon name: "logo-instagram" %>
+                        </span>
+                        Instagram
+                      <% end %>
+                      
+                        <h2 class="footer-heading d-flex align-items-center"><span class="icon d-flex align-items-center justify-content-center"><ion-icon name="logo-linkedin"></ion-icon></span>Linkedin</h2>
+						<div class="block-24">
+							<div class="row no-gutters">
+								<div class="col-4 col-md-4 p-1">
+									<a href="#" class="img rounded" style="background-image: url(images/insta-1.jpg);"></a>
+								</div>
+								<div class="col-4 col-md-4 p-1">
+									<a href="#" class="img rounded" style="background-image: url(images/insta-2.jpg);"></a>
+								</div>
+								<div class="col-4 col-md-4 p-1">
+									<a href="#" class="img rounded" style="background-image: url(images/insta-3.jpg);"></a>
+								</div>
+								<div class="col-4 col-md-4 p-1">
+									<a href="#" class="img rounded" style="background-image: url(images/insta-4.jpg);"></a>
+								</div>
+								<div class="col-4 col-md-4 p-1">
+									<a href="#" class="img rounded" style="background-image: url(images/insta-5.jpg);"></a>
+								</div>
+								<div class="col-4 col-md-4 p-1">
+									<a href="#" class="img rounded" style="background-image: url(images/insta-6.jpg);"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-5 pt-4 border-top">
+          <div class="col-md-6 col-lg-8">
+            <p class="copyright">
+  Copyright &copy;2023 Bamboo</p>
+          </div>
+          <div class="col-md-6 col-lg-4 text-md-right">
+          <%= link_to "Terminos y Privacidad", terms_path, class:"terms-link" %>
+          
+          </div>
+        </div>
+			</div>
+		</footer>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
