@@ -107,56 +107,43 @@
     </div>
     
 
-      <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
-        <% if category.food_items.where(deleted_at: nil).present? %>
-          <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
-            <h5 class="category-name"><%= category.name %></h5>
-            <% category.food_items.where(deleted_at: nil).each_slice(1) do |food_items_slice| %>
-              <div class="row">
-                <% food_items_slice.each do |food_item| %>
-                  <div class="col-12 col-sm-12 col-md-12">
-                    <div class="food-item-container">
-                      <div class="row">
-                      <div class="col-md-2">
-                        <div class="food-item-image food-info" data-toggle="modal" data-target="#foodItemModal"
-                        data-name="<%= food_item.name %>"
-                        data-description="<%= food_item.description %>"
-                        data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                        data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
-                          <%= image_tag food_item.image, class: "menu-image menu-item" if food_item.image.attached? %>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                      <h6 class="food-info" data-toggle="modal" data-target="#foodItemModal"
-                      data-name="<%= food_item.name %>"
-                      data-description="<%= food_item.description %>"
-                      data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                      data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= food_item.name %></h6>
-                      </div>
-                      <div class="col-md-2" >
-                      <h6 class="food-info" data-toggle="modal" data-target="#foodItemModal"
-                      data-name="<%= food_item.name %>"
-                      data-description="<%= food_item.description %>"
-                      data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                      data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-                      </div>
-                      <div class="col-md-2">
-                      <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
-                        <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
-                      <% end %>
-                      </div>
-                        
-                        
-                      
-                      </div>
-                    </div>
+    <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
+      <h4 class="category-name"><%= category.name %>
+              </h4>
+          <% category.food_items.where(deleted_at: nil).each_slice(2) do |food_items_slice| %>
+            <div class="row">
+              <% food_items_slice.each do |food_item| %>
+                <div class="col-6 col-sm-6 col-md-6">
+                  <div class="food-item-show text-center">
+                  <div class="food-info" data-toggle="modal" data-target="#foodItemModal"
+                       data-name="<%= food_item.name %>"
+                       data-description="<%= food_item.description %>"
+                       data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
+                       data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
+                    <%= image_tag food_item.image, class: "menu-image-restaurant menu-item" if food_item.image.attached? %>
                   </div>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
+                    <h6 class="food-info" data-toggle="modal" data-target="#foodItemModal"
+                    data-name="<%= food_item.name %>"
+                    data-description="<%= food_item.description %>"
+                    data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
+                    data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= food_item.name %></h6>
+                    <h6 class="food-info food-price" data-toggle="modal" data-target="#foodItemModal"
+                    data-name="<%= food_item.name %>"
+                    data-description="<%= food_item.description %>"
+                    data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
+                    data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
+                  <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
+                    <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
+                  <% end %>
+                  <% if food_item.minimum_persons.present? %>
+                    <h6><i class='bx bx-user btn-margin-top'></i> <%= food_item.minimum_persons %></h6>
+                  <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+    <% end %>  
       
       
       </div>

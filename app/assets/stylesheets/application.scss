@@ -404,6 +404,29 @@
   }   
 }
 
+.food-item-show {
+  border-radius: 5%;
+  border: 1px solid #e7e7e7;
+  margin-bottom: 15px;
+  padding: 5px;
+  font-size: 25px !important;
+  min-height: 440px;
+  h6 {
+    font-size: 25px !important;
+  }
+  &:hover {
+    cursor: pointer;
+  }   
+  input {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  .food-price {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
 #card-element {
   padding: 10px;
   border: 1px solid #ccc;
@@ -775,8 +798,11 @@ body {
   }
 }
 
-.show-add-btn {
-  font-size: 30px;
+.add-to-cart {
+  font-size: 27px !important;
+  position: relative;
+  bottom: 1px;
+  padding: 1px;
 }
 
 /* Move the carousel controls inside the carousel items */
@@ -851,6 +877,17 @@ body {
   width: 100%;
   max-height: 200px;
   min-height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.menu-image-restaurant {
+  width: 100%;
+  max-height: 250px;
+  min-height: 250px;
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
