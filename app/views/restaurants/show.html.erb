@@ -107,9 +107,8 @@
     </div>
     <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
       <% if category.food_items.where(deleted_at: nil).present? %>
-      <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
-      <h4 class="category-name"><%= category.name %>
-              </h4>
+        <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
+          <h4 class="category-name"><%= category.name %></h4>
           <% category.food_items.where(deleted_at: nil).each_slice(2) do |food_items_slice| %>
             <div class="row">
               <% food_items_slice.each do |food_item| %>
@@ -151,25 +150,27 @@
             </div>
           <% end %>
         </div>
-        <% end %>
-        <% end %>  
-      
-      
-      </div>
+      <% end %>
+    <% end %>
+    <div class="allergies">
+      <% allergies_with_associations = @restaurant.food_items.map(&:allergies).flatten.uniq %>
+      <% if allergies_with_associations.any? %>
+        <h6 style="font-weight: bold">Posibles alergias</h6>
+      <% end %>
+      <% allergies_with_associations.each do |allergy| %>
+        <div class="allergy-circle" style="background-color: <%= allergy.color %>;"></div>
+        <%= allergy.name %>
+      <% end %>
+    </div>  
+  </div>
       <div class="col-md-5 tables-margin-top">
         <!-- Cart -->
         <%= render 'shared/cart' %>
       </div>
     </div>
 
-    <div class="allergies">
-      <h6 style="font-weight: bold">Posibles alergias</h6>
-      <% allergies_with_associations = Allergy.joins(:food_items).distinct %>
-      <% allergies_with_associations.each do |allergy| %>
-        <div class="allergy-circle" style="background-color: <%= allergy.color %>;"></div>
-        <%= allergy.name %>
-      <% end %>
-    </div>
+
+
 </div>
 
 <!-- Payment Method Selection Modal -->
