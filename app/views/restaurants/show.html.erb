@@ -105,13 +105,6 @@
         </div>
       <% end %>
     </div>
-    <div class="allergies">
-      <h6 style="font-weight: bold">Posibles alergias</h6>
-      <% Allergy.all.each do |allergy| %>
-        <div class="allergy-circle" style="background-color: <%= allergy.color %>;"></div>
-        <%= allergy.name %>
-      <% end %>
-    </div>
     <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
       <% if category.food_items.where(deleted_at: nil).present? %>
       <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
@@ -167,6 +160,15 @@
         <!-- Cart -->
         <%= render 'shared/cart' %>
       </div>
+    </div>
+
+    <div class="allergies">
+      <h6 style="font-weight: bold">Posibles alergias</h6>
+      <% allergies_with_associations = Allergy.joins(:food_items).distinct %>
+      <% allergies_with_associations.each do |allergy| %>
+        <div class="allergy-circle" style="background-color: <%= allergy.color %>;"></div>
+        <%= allergy.name %>
+      <% end %>
     </div>
 </div>
 
