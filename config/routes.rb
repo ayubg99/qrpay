@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     sessions: 'restaurants/sessions' 
   }
 
+  resources :allergies
+  
   get '/admin_dashboard', to: 'admin_dashboard#index', as: 'admin_dashboard'
   get '/admin_dashboard_restaurants', to: 'admin_dashboard#restaurants', as: 'admin_dashboard_restaurants'
   get '/admin_dashboard_contacts', to: 'admin_dashboard#contacts', as: 'admin_dashboard_contacts'

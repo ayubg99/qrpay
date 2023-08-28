@@ -1,0 +1,11 @@
+<%= render 'layouts/header_admin' %>
+
+<section class="home" style="height: 100%; padding-top: 80px">
+  <div class="container">
+  <%= link_to admin_dashboard_path, class: 'btn btn-primary btn-margin-bottom' do %>
+    <%= content_tag :i, '', class: 'bx bx-arrow-back' %>
+  <% end %>
+  <h1>Modificar allergy</h1>
+  <%= render 'form', allergy: @allergy %>
+  </div>
+</section>

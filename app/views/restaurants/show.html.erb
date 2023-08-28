@@ -74,7 +74,7 @@
                             <%= form.label "food_item_ids[#{food_type.id}]", food_type.name %>
                             <% if !food_type.have_to_select_one %>
                             <p>
-                              <%= simple_format(food_type.description.upcase, style: "font-size: 20px; font-weight:bold; color: rgb(128, 0, 255); line-height: 1.2") %>
+                              <%= simple_format(food_type.description, style: "font-size: 18px;") %>
                             </p>
                             <% end %>
                             <% if food_type.have_to_select_one == true %>
@@ -105,8 +105,13 @@
         </div>
       <% end %>
     </div>
-    
-
+    <div class="allergies">
+      <h6 style="font-weight: bold">Posibles alergias</h6>
+      <% Allergy.all.each do |allergy| %>
+        <div class="allergy-circle" style="background-color: <%= allergy.color %>;"></div>
+        <%= allergy.name %>
+      <% end %>
+    </div>
     <% @restaurant.categories.where(deleted_at: nil).each_with_index do |category, index| %>
       <% if category.food_items.where(deleted_at: nil).present? %>
       <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
@@ -138,8 +143,15 @@
                     <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
                   <% end %>
                   <% if food_item.minimum_persons.present? %>
-                    <h6><i class='bx bx-user btn-margin-top'></i> <%= food_item.minimum_persons %></h6>
+                  <div class="move-left">
+                    <i class='bx bx-user btn-margin-top' style="font-size: 30px;"></i> <%= food_item.minimum_persons %>
+                  </div>
                   <% end %>
+                  <div class="move-right" style="margin-right: 15px">
+                  <% food_item.allergies.each do |allergy| %>
+                    <div class="allergy-circle-food" style="background-color: <%= allergy.color %>;"></div>
+                  <% end %>
+                  </div>
                   </div>
                 </div>
               <% end %>

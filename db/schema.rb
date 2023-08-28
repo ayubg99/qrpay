@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_20_134734) do
+ActiveRecord::Schema.define(version: 2023_08_28_151628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 2023_08_20_134734) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "allergies", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cart_item_food_items", force: :cascade do |t|
@@ -128,6 +135,13 @@ ActiveRecord::Schema.define(version: 2023_08_20_134734) do
     t.datetime "updated_at", null: false
     t.integer "table_number"
     t.string "payment_method"
+  end
+
+  create_table "food_item_allergies", force: :cascade do |t|
+    t.bigint "food_item_id"
+    t.bigint "allergy_id"
+    t.index ["allergy_id"], name: "index_food_item_allergies_on_allergy_id"
+    t.index ["food_item_id"], name: "index_food_item_allergies_on_food_item_id"
   end
 
   create_table "food_items", force: :cascade do |t|
@@ -274,6 +288,8 @@ ActiveRecord::Schema.define(version: 2023_08_20_134734) do
   add_foreign_key "carts", "restaurants"
   add_foreign_key "categories", "restaurants"
   add_foreign_key "daily_revenues", "restaurants"
+  add_foreign_key "food_item_allergies", "allergies"
+  add_foreign_key "food_item_allergies", "food_items"
   add_foreign_key "food_items", "categories"
   add_foreign_key "food_items", "restaurants"
   add_foreign_key "food_type_food_items", "food_items"

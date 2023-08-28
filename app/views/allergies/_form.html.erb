@@ -1,0 +1,15 @@
+<%= form_for @allergy do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= f.label :color %>
+      <%= f.color_field :color, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= f.submit 'Save', class: 'btn btn-primary' %>
+    </div>
+  <% end %>

@@ -6,7 +6,9 @@ class FoodItem < ApplicationRecord
   has_many :cart_item_food_items, dependent: :destroy
   has_many :cart_items, through: :cart_item_food_items
   has_many :special_menu_food_items, dependent: :destroy
-  
+
+  has_and_belongs_to_many :allergies, join_table: :food_item_allergies
+
   has_one_attached :image
   before_save :name_uppercase
   

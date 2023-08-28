@@ -24,8 +24,15 @@
                 <%= link_to "Modificar", edit_restaurant_food_item_path(@restaurant, food_item), class: "btn btn-primary btn-margin-bottom btn-margin-top btn-dashboard" %>
                 <%= link_to 'Eliminar', restaurant_food_item_path(@restaurant, food_item), method: :delete, class: 'btn btn-danger btn-margin-bottom btn-margin-top btn-dashboard' %>
                 <% if food_item.minimum_persons.present? %>
-                  <h6><i class='bx bx-user btn-margin-top'></i> <%= food_item.minimum_persons %></h6>
+                <div class="move-left">
+                  <i class='bx bx-user btn-margin-top' style="font-size: 30px;"></i> <%= food_item.minimum_persons %>
+                </div>
                 <% end %>
+                <div class="move-right" style="margin-right: 15px">
+                <% food_item.allergies.each do |allergy| %>
+                  <div class="allergy-circle-food" style="background-color: <%= allergy.color %>;"></div>
+                <% end %>
+                </div>
               </div>
             </div>
           <% end %>

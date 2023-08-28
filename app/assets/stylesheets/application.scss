@@ -389,6 +389,7 @@
 }
 
 .food-item-dashboard {
+  position: relative;
   border-radius: 5%;
   border: 1px solid #e7e7e7;
   margin-bottom: 15px;
@@ -405,6 +406,7 @@
 }
 
 .food-item-show {
+  position: relative;
   border-radius: 5%;
   border: 1px solid #e7e7e7;
   margin-bottom: 15px;
@@ -841,6 +843,14 @@ body {
   margin-right: 15px;
 }
 
+.move-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 20px;
+  margin-left: 15px;
+}
+
 .menu-item-name {
   font-weight: bold;
   font-size: 30px;
@@ -1053,3 +1063,24 @@ $primary: #fe59d7;
       }
     }
   }
+
+
+.allergy-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.allergy-circle-food { 
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.allergies {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
