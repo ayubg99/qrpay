@@ -21,10 +21,18 @@ class CartsController < ApplicationController
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity
       end
-    elsif params[:special_menu_id].present? && params[:food_item_ids].present?
-      @cart_item = @cart.add_special_menu(params[:special_menu_id], params[:food_item_ids])
+    elsif params[:special_menu_id].present?
+      if params[:food_item_ids].present?
+        @cart_item = @cart.add_special_menu(params[:special_menu_id], params[:food_item_ids])
+      else
+        @cart_item = @cart.add_special_menu(params[:special_menu_id], {})
+      end
       if @cart_item.save
-        render json: { cart_item_id: @cart_item.id, food_item_ids: params[:food_item_ids].values.map(&:to_i).sort, restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, total_price: @cart.total_price }
+        if params[:food_item_ids].present?
+          render json: { cart_item_id: @cart_item.id, food_item_ids: params[:food_item_ids].values.map(&:to_i).sort, restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, total_price: @cart.total_price }
+        else
+          render json: { cart_item_id: @cart_item.id, food_item_ids: [], restaurant_id: @restaurant.friendly_id, quantity: @cart_item.quantity, cart_item: @cart_item, special_menu: @cart_item.special_menu, food_items: @cart_item.food_items, total_price: @cart.total_price }
+        end
       else
         render json: { error: 'Failed to add item to cart' }, status: :unprocessable_entity   
       end
