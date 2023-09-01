@@ -14,6 +14,7 @@ class Restaurant < ApplicationRecord
     has_many :deleted_orders, dependent: :destroy
     has_many :daily_revenues
     has_many :monthly_revenues
+    belongs_to :provider, optional: true
     
     has_one_attached :image
 

@@ -1,7 +1,8 @@
 class FoodItemsController < ApplicationController
-  before_action :authenticate_restaurant!
-  before_action :set_food_item, only: %i[ show edit update destroy ]
   before_action :set_restaurant
+  before_action :authenticate_restaurant_if_no_admin
+  before_action :check_restaurant_authorization
+  before_action :set_food_item, only: %i[ show edit update destroy ]
 
   def show
   end

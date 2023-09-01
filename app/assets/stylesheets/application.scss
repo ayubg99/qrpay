@@ -39,14 +39,12 @@
   .navbar-nav .nav-link {
     color: #333;
     font-size: 20px;
-    font-weight: bold;
   }
   
   // Change the hover color of the navbar links
   .navbar-nav .nav-link:hover {
     color:rgb(128, 0, 255);
     font-size: 20px;
-    font-weight: bold;
     background: none;
   }
 
@@ -920,7 +918,7 @@ body {
 
 $font-primary: 'Poppins',Arial, sans-serif;
 
-$primary: #fe59d7;
+$primary: rgb(128, 0, 255);
 
 @mixin gradient-background(){
 	background: rgba(42,26,94,1);
@@ -942,7 +940,7 @@ $primary: #fe59d7;
       border-color: rgba(255,255,255,.1) !important;
     }
     a{
-      color: $primary;
+      color: #fff;
       font-size: 20px;
       &:hover{
         color: rgba(255,255,255,.9);
@@ -984,8 +982,8 @@ $primary: #fe59d7;
         border-radius: 50%;
         height: 40px;
         display: block;
-        color: $primary;
-        border: 1px solid $primary;
+        color: #fff;
+        border: 1px solid #fff;
       }
     }
     ul.list-unstyled{

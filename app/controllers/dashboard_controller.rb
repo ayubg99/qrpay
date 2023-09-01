@@ -1,7 +1,8 @@
 class DashboardController < ApplicationController
-    before_action :authenticate_restaurant!
-    before_action :check_password, only: [:index, :payment_information]
     before_action :set_restaurant
+    before_action :authenticate_restaurant_if_no_admin
+    before_action :check_restaurant_authorization
+    before_action :check_password, only: [:index, :payment_information]
 
     def index
         @current_day_revenue = @restaurant.daily_revenues.where(day: Date.today.day, month: Date.today.month, year: Date.today.year).sum(:revenue)

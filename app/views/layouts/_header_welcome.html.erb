@@ -15,9 +15,6 @@
         <li class="nav-item">
           <%= link_to "Dashboard", restaurant_dashboard_path(current_restaurant), class: 'nav-link' %>
         </li>
-        <li class="nav-item">
-          <%= link_to "Log Out", destroy_restaurant_session_path, method: :delete, class: 'nav-link' %>
-        </li>
       <% else %>
         <li class="nav-item">
           <%= link_to "Log In", new_restaurant_session_path, class: 'nav-link' %>

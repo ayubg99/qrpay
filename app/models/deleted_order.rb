@@ -12,8 +12,9 @@ class DeletedOrder < ApplicationRecord
         current_month = Date.today.month
         current_year = Date.today.year
 
+        restaurant_earning = total_price - (total_price * 0.035) - 0.25
         daily_revenue = restaurant.daily_revenues.find_or_initialize_by(date: date, day: current_day, month: current_month, year: current_year)
-        daily_revenue.revenue = (daily_revenue.revenue || 0) + total_price
+        daily_revenue.revenue = (daily_revenue.revenue || 0) + restaurant_earning
         daily_revenue.save
 
         monthly_revenue = restaurant.monthly_revenues.find_or_initialize_by(month: current_month, year: current_year)
