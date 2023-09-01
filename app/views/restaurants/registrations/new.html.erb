@@ -61,6 +61,11 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
       </div>
 
+      <div class="form-group">
+        <%= f.label :provider_id %>
+        <%= f.collection_select(:provider_id, Provider.all, :id, :name, include_blank: true) %>
+      </div>
+
       <div class="actions">
         <%= f.submit "Guardar", class: "btn btn-primary restaurant-demo-btn" %>
       </div>

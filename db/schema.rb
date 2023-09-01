@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_28_151628) do
+ActiveRecord::Schema.define(version: 2023_09_01_160459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,19 @@ ActiveRecord::Schema.define(version: 2023_08_28_151628) do
     t.index ["restaurant_id"], name: "index_orders_on_restaurant_id"
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["email"], name: "index_providers_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_providers_on_reset_password_token", unique: true
+  end
+
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -240,6 +253,8 @@ ActiveRecord::Schema.define(version: 2023_08_28_151628) do
     t.string "city"
     t.string "country"
     t.string "postal_code"
+    t.bigint "provider_id"
+    t.index ["provider_id"], name: "index_restaurants_on_provider_id"
     t.index ["reset_password_token"], name: "index_restaurants_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_restaurants_on_slug", unique: true
   end
@@ -299,6 +314,7 @@ ActiveRecord::Schema.define(version: 2023_08_28_151628) do
   add_foreign_key "monthly_revenues", "restaurants"
   add_foreign_key "orders", "carts"
   add_foreign_key "orders", "restaurants"
+  add_foreign_key "restaurants", "providers"
   add_foreign_key "special_menu_food_items", "food_items"
   add_foreign_key "special_menu_food_items", "special_menus"
   add_foreign_key "special_menus", "restaurants"
