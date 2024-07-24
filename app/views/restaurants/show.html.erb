@@ -18,7 +18,7 @@
     <div class="row">
     <ul class="nav nav-tabs custom-fixed-nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" href="#" data-category-target="all">TODOS</a>
+    <a class="nav-link active" href="#" data-category-target="all">All</a>
   </li>
   <% if @restaurant.special_menus.present? %>
   <li class="nav-item">
@@ -109,41 +109,43 @@
       <% if category.food_items.where(deleted_at: nil).present? %>
         <div id="category<%= index %>" class="category-content" style="display: <%= index.zero? ? 'block' : 'none' %>;">
           <h4 class="category-name"><%= category.name %></h4>
-          <% category.food_items.where(deleted_at: nil).each_slice(2) do |food_items_slice| %>
-            <div class="row">
+          <% category.food_items.where(deleted_at: nil).each_slice(1) do |food_items_slice| %>
               <% food_items_slice.each do |food_item| %>
-                <div class="col-6 col-sm-6 col-md-6">
-                  <div class="food-item-show text-center">
-                  <div class="food-info" data-toggle="modal" data-target="#foodItemModal"
-                       data-name="<%= food_item.name %>"
-                       data-description="<%= food_item.description %>"
-                       data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                       data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>">
-                    <%= image_tag food_item.image, class: "menu-image-restaurant menu-item" if food_item.image.attached? %>
-                  </div>
-                    <h6 class="food-info" data-toggle="modal" data-target="#foodItemModal"
-                    data-name="<%= food_item.name %>"
-                    data-description="<%= food_item.description %>"
-                    data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                    data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= food_item.name %></h6>
-                    <h6 class="food-info food-price" data-toggle="modal" data-target="#foodItemModal"
-                    data-name="<%= food_item.name %>"
-                    data-description="<%= food_item.description %>"
-                    data-price="<%= number_to_currency(food_item.price, precision: 2, unit: '€') %>"
-                    data-image-url="<%= url_for(food_item.image) if food_item.image.attached? %>"><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
-                  <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local:true do |form| %>
-                    <%= form.submit '+', class: "btn btn-primary show-add-btn" %>
-                  <% end %>
-                  <% if food_item.minimum_persons.present? %>
-                  <div class="move-left">
-                    <i class='bx bx-user btn-margin-top' style="font-size: 30px;"></i> <%= food_item.minimum_persons %>
-                  </div>
-                  <% end %>
-                  <div class="move-right" style="margin-right: 15px">
-                  <% food_item.allergies.each do |allergy| %>
-                    <div class="allergy-circle-food" style="background-color: <%= allergy.color %>;"></div>
-                  <% end %>
-                  </div>
+                <div class="food-item-show">
+                <div class="row">
+                    <div class="col-6 col-sm-6 col-md-6">
+                        <div>
+                          <%= image_tag food_item.image, class: "menu-image-restaurant menu-item" if food_item.image.attached? %>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-6 d-flex flex-column justify-content-between">
+                      <h6><%= food_item.name %></h6>
+                      <p><%= food_item.description %></p>
+                      <div class="row mt-auto" style="margin-bottom: 25px;"> 
+                        <div class="col-7 col-sm-7 col-md-7">
+                          <h6 class="food-price"><%= number_to_currency(food_item.price, precision: 2, unit: '€') %></h6>
+                        </div>
+                        <div class="col-5 col-sm-5 col-md-5">
+    
+                          <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: food_item.id), class: "add-to-cart", method: :post, local: true do |form| %>
+                          <%= form.button class: "btn-transparent" do %>
+                            <%= image_tag 'add.png', alt: 'Add to Cart', class: "show-add-btn" %>
+                          <% end %>
+                        <% end %>
+
+                        </div>
+                      </div>
+                      <% if food_item.minimum_persons.present? %>
+                      <div class="move-left">
+                        <i class='bx bx-user btn-margin-top' style="font-size: 30px;"></i> <%= food_item.minimum_persons %>
+                      </div>
+                      <% end %>
+                      <div class="move-right" style="margin-right: 15px">
+                        <% food_item.allergies.each do |allergy| %>
+                          <div class="allergy-circle-food" style="background-color: <%= allergy.color %>;"></div>
+                        <% end %>
+                      </div>
+                    </div>
                   </div>
                 </div>
               <% end %>
@@ -177,14 +179,17 @@
 <div class="modal fade" id="paymentMethodModal" tabindex="-1" role="dialog" aria-labelledby="paymentMethodModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-edit" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="paymentMethodModalLabel" style="font-size: 35px !important;">Forma de pago</h5>
-      </div>
+    <%= link_to restaurant_path(@restaurant, table_number: params[:table_number]), class: 'btn-transparent', style: "margin-right: 20px; position: relative; top: 5px" do %>
+      <%= image_tag 'left.png', alt: 'CARTA', class: "back-btn" %>
+    <% end %>
+            <h5 class="modal-title" id="paymentMethodModalLabel" style="font-size: 35px !important; margin-left: 20px;">Forma de pago</h5>
+
+
       <div class="modal-body">
         <div class="row text-center">
           <div class="col-6 col-md-6 col-sm-6">
             <%= image_tag "card.png", alt: "Visa", class: "payment-option selected", data: { method: "Tarjeta Bancaría" } %>
-            <h6 class="control-label">Tarjeta Bancaría <br> Apple Pay <br> Google Pay</h6>
+            <h6 class="control-label">Tarjeta Bancaría</h6>
           </div>
           <div class="col-6 col-md-6 col-sm-6">  
             <%= image_tag "money-euro.png", alt: "PayPal", class: "payment-option", data: { method: "Efectivo" } %>
@@ -192,16 +197,10 @@
           </div>
         </div>
         <div class="text-center" style="padding-bottom: 35px;">
-        <!-- Update the button to trigger the AJAX request -->
         <button type="button" class="btn btn-primary btn-margin-top" style="width: 100%; font-size: 35px !important; padding: 15px" id="select-payment-method">Continuar</button>
         </div>
       </div>
 
-      <div class="row justify-content-end" style="padding-bottom: 35px;">
-      <div class="col-auto">
-        <%= link_to "CARTA", restaurant_path(@restaurant, table_number: params[:table_number]), class: 'carta-link', style: "margin: 20px" %>
-      </div>
-    </div>
 
     </div>
   </div>
@@ -341,10 +340,3 @@
   });
 </script>
 
-
-<style> 
-body {
-  background-color: black; 
-  color: #fff;
-}
-</style>

@@ -2,9 +2,10 @@
 <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-edit" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cartModalLabel">Tu pedido</h5>
-      </div>
+      <%= link_to restaurant_path(@restaurant, table_number: params[:table_number]), class: 'btn-transparent', style: "margin-right: 20px; position: relative; top: 5px" do %>
+        <%= image_tag 'left.png', alt: 'CARTA', class: "back-btn" %>
+      <% end %>
+        <h5 class="modal-title" id="cartModalLabel"></h5>
       <div class="modal-body">
 
         <% if current_cart.present? %>
@@ -43,10 +44,15 @@
               <h5 class="cart-item-quantity quantity">x <%= cart_item.quantity %></h5>
             </div>
             <div class="col-2 col-sm-2 col-md-2 cart-buttons-wrapper">
-            <%= link_to '-', remove_from_cart_restaurant_cart_path(@restaurant, cart_item_id: cart_item.id), method: :delete, class: "btn btn-danger remove-cart-item", remote: true %>
-            <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: cart_item_food_item.food_item_id), class: "add-to-cart", method: :post, local:true do |form| %>
-              <%= form.submit '+', class: "btn btn-primary" %>
+            <%= link_to remove_from_cart_restaurant_cart_path(@restaurant, cart_item_id: cart_item.id), method: :delete, class: "btn-transparent remove-cart-item", remote: true do %>
+              <%= image_tag 'minus.png', alt: 'Remove from Cart', class: "cart-add-btn" %>
             <% end %>
+                        <%= form_with url: add_to_cart_restaurant_cart_path(@restaurant, food_item_id: cart_item_food_item.food_item_id), class: "add-to-cart", method: :post, local: true do |form| %>
+              <%= form.button class: "btn-transparent" do %>
+                <%= image_tag 'add.png', alt: 'Add to Cart', class: "cart-add-btn" %>
+              <% end %>
+            <% end %>
+            
             </div>
             <div class="col-2 col-sm-2 col-md-2">
               <h5 class="price"><%= number_to_currency(cart_item_food_item.food_item.price * cart_item.quantity, precision: 2, unit: '€') %></h5>
@@ -56,18 +62,13 @@
             <% end %>
           <% end %>
         </div>
-        <h5 id="cart-total-price">Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h5>
+        <h5 class="cart-total-price">Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h5>
         <%= link_to 'Pedir', '#', class: 'btn btn-primary', style:"margin-top: 20px; width: 100%; font-size: 35px !important; padding: 10px", 'data-toggle' => 'modal', 'data-target' => '#paymentMethodModal' %>
         <% else %>
           <p>Your cart is empty.</p>
         <% end %>
       </div>
-      <div class="row justify-content-end" style="padding-bottom: 20px; margin-top: 30px">
-        <div class="col-auto">
-        <%= link_to 'Vaciar', clear_cart_restaurant_cart_path(@restaurant, table_number: params[:table_number]), method: :delete, class: 'btn btn-danger clear-cart' %>
-        <%= link_to "CARTA", restaurant_path(@restaurant, table_number: params[:table_number]), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 5px" %>
-        </div>
-    </div>
+
     </div>
   </div>
 </div>

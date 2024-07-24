@@ -1,6 +1,9 @@
 <div class="modal new-order-modal fade" id="orderModal">
   <div class="modal-dialog modal-dialog-centered modal-dialog-edit">
     <div class="modal-content">
+    <%= link_to restaurant_path(@restaurant, table_number: params[:table_number]), class: 'btn-transparent', style: "margin-right: 20px; position: relative; top: 5px" do %>
+      <%= image_tag 'left.png', alt: 'CARTA', class: "back-btn" %>
+    <% end %>
       <div class="modal-header">
         <h5 class="modal-title">Tu pedido</h5>
       </div>
@@ -43,14 +46,9 @@
             <% end %>
           <% end %>
         <% end %>
-        <h3>Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h3>
+        <h3 class="cart-total-price">Total: <%= number_to_currency(current_cart.total_price, precision: 2, unit: '€') %></h3>
         <%= render 'form', order: @order %>
       <div>
-      <div class="row justify-content-end" style="padding-bottom: 20px; margin-top: 30px">
-        <div class="col-auto">
-        <%= link_to "CARTA", restaurant_path(@restaurant, table_number: params[:table_number]), class: 'carta-link', style: "margin-right: 20px; position: relative; top: 1px" %>
-        </div>
-      </div>
     </div>
   </div>
 </div>
